@@ -70,7 +70,7 @@ public class CodeGeneratorMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-
+        System.out.println("hello");
         saveClassLoader();
         LogFactory.setLogFactory(new MavenLogFactory(this));
         calculateClassPath();
