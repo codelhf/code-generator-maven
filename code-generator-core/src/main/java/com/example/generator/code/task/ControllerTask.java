@@ -5,11 +5,6 @@ import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
 import com.example.generator.code.task.base.FreemarkerUtil;
 import com.example.generator.db.ColumnInfo;
-import com.example.generator.code.generator.ControllerGenerator;
-import com.example.generator.code.task.base.BaseTask;
-import com.example.generator.code.task.base.FreemarkerUtil;
-import com.example.generator.db.ColumnInfo;
-import com.example.generator.util.StringUtil;
 import com.example.generator.util.StringUtil;
 import freemarker.template.TemplateException;
 

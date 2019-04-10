@@ -20,7 +20,11 @@ import java.util.Map;
  */
 public class CommonTask {
 
-    private Configuration configuration = ConfigUtil.getConfiguration();
+    private Configuration configuration;
+
+    public CommonTask(Configuration config) {
+        this.configuration = config;
+    }
 
     public void run() throws IOException, TemplateException {
         // 生成Common填充数据

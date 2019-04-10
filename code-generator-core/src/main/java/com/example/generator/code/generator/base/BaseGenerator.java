@@ -1,5 +1,6 @@
 package com.example.generator.code.generator.base;
 
+import com.example.generator.code.BaseInfo;
 import com.example.generator.config.Configuration;
 import com.example.generator.config.util.ConfigUtil;
 import com.example.generator.util.DateTimeUtil;
@@ -13,7 +14,7 @@ import java.util.List;
  * @Auther: liuhf
  * @CreateTime: 2019/3/23 10:29
  */
-public class BaseGenerator {
+public class BaseGenerator extends BaseInfo {
 
     /**
      * 返回类类名
@@ -28,9 +29,9 @@ public class BaseGenerator {
      * @CreateTime: ${createTime}
      */
     public static String generateRemark(String title, String description) {
-        Configuration configuration = ConfigUtil.getConfiguration();
-        String company = configuration.getCommentGenerator().getCompany();
-        String author = configuration.getCommentGenerator().getAuthor();
+        BaseGenerator baseGenerator = new BaseGenerator();
+        String company = baseGenerator.configuration.getCommentGenerator().getCompany();
+        String author = baseGenerator.configuration.getCommentGenerator().getAuthor();
         String createTime = DateTimeUtil.dateToStr(new Date());
         StringBuilder sb = new StringBuilder();
         sb.append("/**\n");
@@ -55,9 +56,9 @@ public class BaseGenerator {
      */
     public static String generateFunctionRemark(String title, String description,
                                                 List<String> params, String returns) {
-        Configuration configuration = ConfigUtil.getConfiguration();
-        String company = configuration.getCommentGenerator().getCompany();
-        String author = configuration.getCommentGenerator().getAuthor();
+        BaseGenerator baseGenerator = new BaseGenerator();
+        String company = baseGenerator.configuration.getCommentGenerator().getCompany();
+        String author = baseGenerator.configuration.getCommentGenerator().getAuthor();
         String createTime = DateTimeUtil.dateToStr(new Date());
         StringBuilder sb = new StringBuilder();
         sb.append("/**\n");

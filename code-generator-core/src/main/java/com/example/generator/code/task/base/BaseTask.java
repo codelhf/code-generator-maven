@@ -1,5 +1,6 @@
 package com.example.generator.code.task.base;
 
+import com.example.generator.code.BaseInfo;
 import com.example.generator.config.Configuration;
 import com.example.generator.config.util.ConfigUtil;
 import com.example.generator.db.ColumnInfo;
@@ -14,18 +15,7 @@ import java.util.List;
  * @Auther: liuhf
  * @CreateTime: 2019/3/16 21:17
  */
-public abstract class BaseTask implements Serializable {
-    protected boolean isView;
-    protected String tableName;
-    protected String className;
-    protected String parentTableName;
-    protected String parentClassName;
-    protected String foreignKey;
-    protected String parentForeignKey;
-    protected String relationalTableName;
-    protected List<ColumnInfo> tableInfo;
-    protected List<ColumnInfo> parentTableInfo;
-    protected Configuration configuration = ConfigUtil.getConfiguration();
+public abstract class BaseTask extends BaseInfo implements Serializable {
 
     /**
      * Controller、Service、ServiceImpl、Dao

@@ -12,7 +12,7 @@
         <!--代码注释配置-->
         <property name="author" value="liuhf"/>
         <property name="company" value="example"/>
-        <property name="basePackageName" value="com.example.generator"/>
+        <property name="basePackageName" value="com.example.generator.demo"/>
         <property name="suppressAllComments" value="true"/>
         <property name="suppressDate" value="true"/>
         <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
@@ -49,9 +49,9 @@
         <!--是否允许子包，即targetPackage.schemaName.tableName-->
         <property name="enableSubPackages" value="false"/>
         <property name="targetProject" value="./src/main/java"/>
-        <property name="controller" value="com.example.generator.controller"/>
-        <property name="service" value="com.example.generator.service"/>
-        <property name="serviceImpl" value="com.example.generator.service.impl"/>
+        <property name="controller" value="com.example.generator.dome.controller"/>
+        <property name="service" value="com.example.generator.dome.service"/>
+        <property name="serviceImpl" value="com.example.generator.dome.service.impl"/>
     </serviceGenerator>
     <!--dao层开始要和service能够分开,提供是否重写文件功能-->
     <commonGenerator>
@@ -61,7 +61,7 @@
         <property name="enableSubPackages" value="false"/>
         <dtoGenerator>
             <property name="targetProject" value="./src/main/java"/>
-            <property name="targetPackage" value="com.example.generator.service.dto"/>
+            <property name="targetPackage" value="com.example.generator.dome.service.dto"/>
             <!--是否对dto添加全参构造函数, 添加全参构造函数时需添加无参构造-->
             <property name="allConstructor" value="true"/>
             <!--是否对dto中char类型的列进行trim操作-->
@@ -73,7 +73,7 @@
         </dtoGenerator>
         <modelGenerator>
             <property name="targetProject" value="./src/main/java"/>
-            <property name="targetPackage" value="com.example.generator.po"/>
+            <property name="targetPackage" value="com.example.generator.dome.po"/>
             <!--是否对model添加全参构造函数, 添加全参构造函数时需添加无参构造-->
             <property name="allConstructor" value="true"/>
             <!--是否对model中char类型的列进行trim操作-->
@@ -91,7 +91,7 @@
         -->
         <daoGenerator>
             <property name="targetProject" value="./src/main/java"/>
-            <property name="targetPackage" value="com.example.generator.dao"/>
+            <property name="targetPackage" value="com.example.generator.dome.dao"/>
         </daoGenerator>
         <mapperGenerator>
             <property name="targetProject" value="./src/main/resources"/>

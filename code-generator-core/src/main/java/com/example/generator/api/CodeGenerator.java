@@ -6,12 +6,6 @@ import com.example.generator.code.invoker.SingleInvoker;
 import com.example.generator.code.invoker.base.Invoker;
 import com.example.generator.code.task.CommonTask;
 import com.example.generator.config.*;
-import com.example.generator.code.invoker.Many2ManyInvoker;
-import com.example.generator.code.invoker.One2ManyInvoker;
-import com.example.generator.code.invoker.base.Invoker;
-import com.example.generator.code.task.CommonTask;
-import com.example.generator.config.*;
-import com.example.generator.util.Messages;
 import com.example.generator.util.Messages;
 import freemarker.template.TemplateException;
 
@@ -61,7 +55,7 @@ public class CodeGenerator {
 
         try {
             //generate common
-            CommonTask commonTask = new CommonTask();
+            CommonTask commonTask = new CommonTask(configuration);
             commonTask.run();
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
@@ -73,7 +67,7 @@ public class CodeGenerator {
             String domainName = tableConfiguration.getDomainName();
             List<ColumnOverride> columnOverrideList = tableConfiguration.getColumnOverrides();
             GeneratedKey generatedKey = tableConfiguration.getGeneratedKey();
-            single(tableName, domainName, columnOverrideList, generatedKey, false);
+            single(configuration, tableName, domainName, columnOverrideList, generatedKey, false);
         }
 
         List<ViewConfiguration> viewConfigurationList = configuration.getViewsConfiguration();
@@ -81,16 +75,19 @@ public class CodeGenerator {
             String viewName = viewConfiguration.getViewName();
             String domainName = viewConfiguration.getDomainName();
             List<ColumnOverride> columnOverrideList = viewConfiguration.getColumnOverrides();
-            single(viewName, domainName, columnOverrideList, null, true);
+            single(configuration, viewName, domainName, columnOverrideList, null, true);
         }
         callback.done();
     }
 
-    public static void single(String tableName, String className, List<ColumnOverride> columnOverrideList,
+    public static void single(Configuration configuration,
+                              String tableName, String className,
+                              List<ColumnOverride> columnOverrideList,
                               GeneratedKey generatedKey, boolean isView) {
         Invoker invoker = new SingleInvoker.Builder()
-                .setTableName(tableName)
-                .setClassName(className)
+                .configuration(configuration)
+                .tableName(tableName)
+                .className(className)
                 .columnOverrideList(columnOverrideList)
                 .generatedKey(generatedKey)
                 .isView(isView)

@@ -3,8 +3,7 @@ package com.example.generator.code.invoker;
 import com.example.generator.code.invoker.base.BaseBuilder;
 import com.example.generator.code.invoker.base.BaseInvoker;
 import com.example.generator.code.task.*;
-import com.example.generator.config.ColumnOverride;
-import com.example.generator.config.GeneratedKey;
+import com.example.generator.config.*;
 import com.example.generator.db.ColumnInfo;
 import com.example.generator.code.invoker.base.BaseBuilder;
 import com.example.generator.code.invoker.base.BaseInvoker;
@@ -79,12 +78,17 @@ public class SingleInvoker extends BaseInvoker {
     public static class Builder extends BaseBuilder {
         private SingleInvoker invoker = new SingleInvoker();
 
-        public Builder setTableName(String tableName) {
+        public Builder configuration(Configuration configuration) {
+            invoker.setConfiguration(configuration);
+            return this;
+        }
+
+        public Builder tableName(String tableName) {
             invoker.setTableName(tableName);
             return this;
         }
 
-        public Builder setClassName(String className) {
+        public Builder className(String className) {
             invoker.setClassName(className);
             return this;
         }

@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
  * @CreateTime: 2019/3/16 21:17
  */
 public class Messages {
-    private static final String BUNDLE_NAME = "org.mybatis.generator.internal.util.messages.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "messages.properties"; //$NON-NLS-1$
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
             .getBundle(BUNDLE_NAME);

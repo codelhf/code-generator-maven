@@ -94,7 +94,8 @@ public class CodeGeneratorMojo extends AbstractMojo {
 //        }
 //        ClassLoader cl = ClassloaderUtil.getCustomClassloader(resourceDirectories);
 //        ObjectFactory.addExternalClassLoader(cl);
-        Configuration config = ConfigUtil.getConfiguration(configurationFile);
+        ConfigUtil configUtil = new ConfigUtil();
+        Configuration config = configUtil.getConfiguration(configurationFile);
 
 //        ShellCallback callback = new MavenShellCallback(this);
         CodeGenerator codeGenerator = new CodeGenerator(config);
