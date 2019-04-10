@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sitech.devops.auto.inter.dao.InterfaceMapper">
+    <resultMap id="BaseResultMap" type="com.sitech.devops.auto.inter.pojo.Interface">
+        <id column="id" jdbcType="CHAR" property="id"/>
+        <result column="project_id" jdbcType="CHAR" property="projectId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="method" jdbcType="VARCHAR" property="method"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="group_name" jdbcType="VARCHAR" property="groupName"/>
+        <result column="req_head_id" jdbcType="CHAR" property="reqHeadId"/>
+        <result column="req_head" jdbcType="VARCHAR" property="reqHead"/>
+        <result column="req_type" jdbcType="VARCHAR" property="reqType"/>
+        <result column="req_params" jdbcType="VARCHAR" property="reqParams"/>
+        <result column="req_pretty" jdbcType="VARCHAR" property="reqPretty"/>
+        <result column="res_head_id" jdbcType="CHAR" property="resHeadId"/>
+        <result column="res_head" jdbcType="VARCHAR" property="resHead"/>
+        <result column="res_type" jdbcType="VARCHAR" property="resType"/>
+        <result column="res_params" jdbcType="VARCHAR" property="resParams"/>
+        <result column="res_pretty" jdbcType="VARCHAR" property="resPretty"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="dev_name" jdbcType="VARCHAR" property="devName"/>
+        <result column="dev_contact" jdbcType="VARCHAR" property="devContact"/>
+        <result column="time_out" jdbcType="VARCHAR" property="timeOut"/>
+        <result column="code_type" jdbcType="VARCHAR" property="codeType"/>
+        <result column="encrypt_type" jdbcType="VARCHAR" property="encryptType"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, project_id, name, method, path, group_name, req_head_id, req_head, req_type,
+    req_params, req_pretty, res_head_id, res_head, res_type, res_params, res_pretty,
+    remark, dev_name, dev_contact, time_out, code_type, encrypt_type, status, create_user,
+    update_user, create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from info_interface
+        where id = #{id,jdbcType=CHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from info_interface
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+    <insert id="insert" parameterType="com.sitech.devops.auto.inter.pojo.Interface">
+    insert into info_interface (id, project_id, name,
+      method, path, group_name,
+      req_head_id, req_head, req_type,
+      req_params, req_pretty, res_head_id,
+      res_head, res_type, res_params,
+      res_pretty, remark, dev_name,
+      dev_contact, time_out, code_type,
+      encrypt_type, status, create_user,
+      update_user, create_time, update_time
+      )
+    values (#{id,jdbcType=CHAR}, #{projectId,jdbcType=CHAR}, #{name,jdbcType=VARCHAR},
+      #{method,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR},
+      #{reqHeadId,jdbcType=CHAR}, #{reqHead,jdbcType=VARCHAR}, #{reqType,jdbcType=VARCHAR},
+      #{reqParams,jdbcType=VARCHAR}, #{reqPretty,jdbcType=VARCHAR}, #{resHeadId,jdbcType=CHAR},
+      #{resHead,jdbcType=VARCHAR}, #{resType,jdbcType=VARCHAR}, #{resParams,jdbcType=VARCHAR},
+      #{resPretty,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{devName,jdbcType=VARCHAR},
+      #{devContact,jdbcType=VARCHAR}, #{timeOut,jdbcType=VARCHAR}, #{codeType,jdbcType=VARCHAR},
+      #{encryptType,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR},
+      #{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.sitech.devops.auto.inter.pojo.Interface">
+        insert into info_interface
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="method != null">
+                method,
+            </if>
+            <if test="path != null">
+                path,
+            </if>
+            <if test="groupName != null">
+                group_name,
+            </if>
+            <if test="reqHeadId != null">
+                req_head_id,
+            </if>
+            <if test="reqHead != null">
+                req_head,
+            </if>
+            <if test="reqType != null">
+                req_type,
+            </if>
+            <if test="reqParams != null">
+                req_params,
+            </if>
+            <if test="reqPretty != null">
+                req_pretty,
+            </if>
+            <if test="resHeadId != null">
+                res_head_id,
+            </if>
+            <if test="resHead != null">
+                res_head,
+            </if>
+            <if test="resType != null">
+                res_type,
+            </if>
+            <if test="resParams != null">
+                res_params,
+            </if>
+            <if test="resPretty != null">
+                res_pretty,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="devName != null">
+                dev_name,
+            </if>
+            <if test="devContact != null">
+                dev_contact,
+            </if>
+            <if test="timeOut != null">
+                time_out,
+            </if>
+            <if test="codeType != null">
+                code_type,
+            </if>
+            <if test="encryptType != null">
+                encrypt_type,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=CHAR},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=CHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="method != null">
+                #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="groupName != null">
+                #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="reqHeadId != null">
+                #{reqHeadId,jdbcType=CHAR},
+            </if>
+            <if test="reqHead != null">
+                #{reqHead,jdbcType=VARCHAR},
+            </if>
+            <if test="reqType != null">
+                #{reqType,jdbcType=VARCHAR},
+            </if>
+            <if test="reqParams != null">
+                #{reqParams,jdbcType=VARCHAR},
+            </if>
+            <if test="reqPretty != null">
+                #{reqPretty,jdbcType=VARCHAR},
+            </if>
+            <if test="resHeadId != null">
+                #{resHeadId,jdbcType=CHAR},
+            </if>
+            <if test="resHead != null">
+                #{resHead,jdbcType=VARCHAR},
+            </if>
+            <if test="resType != null">
+                #{resType,jdbcType=VARCHAR},
+            </if>
+            <if test="resParams != null">
+                #{resParams,jdbcType=VARCHAR},
+            </if>
+            <if test="resPretty != null">
+                #{resPretty,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="devName != null">
+                #{devName,jdbcType=VARCHAR},
+            </if>
+            <if test="devContact != null">
+                #{devContact,jdbcType=VARCHAR},
+            </if>
+            <if test="timeOut != null">
+                #{timeOut,jdbcType=VARCHAR},
+            </if>
+            <if test="codeType != null">
+                #{codeType,jdbcType=VARCHAR},
+            </if>
+            <if test="encryptType != null">
+                #{encryptType,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.sitech.devops.auto.inter.pojo.Interface">
+        update info_interface
+        <set>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=CHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="method != null">
+                method = #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                path = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="groupName != null">
+                group_name = #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="reqHeadId != null">
+                req_head_id = #{reqHeadId,jdbcType=CHAR},
+            </if>
+            <if test="reqHead != null">
+                req_head = #{reqHead,jdbcType=VARCHAR},
+            </if>
+            <if test="reqType != null">
+                req_type = #{reqType,jdbcType=VARCHAR},
+            </if>
+            <if test="reqParams != null">
+                req_params = #{reqParams,jdbcType=VARCHAR},
+            </if>
+            <if test="reqPretty != null">
+                req_pretty = #{reqPretty,jdbcType=VARCHAR},
+            </if>
+            <if test="resHeadId != null">
+                res_head_id = #{resHeadId,jdbcType=CHAR},
+            </if>
+            <if test="resHead != null">
+                res_head = #{resHead,jdbcType=VARCHAR},
+            </if>
+            <if test="resType != null">
+                res_type = #{resType,jdbcType=VARCHAR},
+            </if>
+            <if test="resParams != null">
+                res_params = #{resParams,jdbcType=VARCHAR},
+            </if>
+            <if test="resPretty != null">
+                res_pretty = #{resPretty,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="devName != null">
+                dev_name = #{devName,jdbcType=VARCHAR},
+            </if>
+            <if test="devContact != null">
+                dev_contact = #{devContact,jdbcType=VARCHAR},
+            </if>
+            <if test="timeOut != null">
+                time_out = #{timeOut,jdbcType=VARCHAR},
+            </if>
+            <if test="codeType != null">
+                code_type = #{codeType,jdbcType=VARCHAR},
+            </if>
+            <if test="encryptType != null">
+                encrypt_type = #{encryptType,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=CHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sitech.devops.auto.inter.pojo.Interface">
+    update info_interface
+    set project_id = #{projectId,jdbcType=CHAR},
+      name = #{name,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      req_head_id = #{reqHeadId,jdbcType=CHAR},
+      req_head = #{reqHead,jdbcType=VARCHAR},
+      req_type = #{reqType,jdbcType=VARCHAR},
+      req_params = #{reqParams,jdbcType=VARCHAR},
+      req_pretty = #{reqPretty,jdbcType=VARCHAR},
+      res_head_id = #{resHeadId,jdbcType=CHAR},
+      res_head = #{resHead,jdbcType=VARCHAR},
+      res_type = #{resType,jdbcType=VARCHAR},
+      res_params = #{resParams,jdbcType=VARCHAR},
+      res_pretty = #{resPretty,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      dev_name = #{devName,jdbcType=VARCHAR},
+      dev_contact = #{devContact,jdbcType=VARCHAR},
+      time_out = #{timeOut,jdbcType=VARCHAR},
+      code_type = #{codeType,jdbcType=VARCHAR},
+      encrypt_type = #{encryptType,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+
+    <select id="selectInterfaceList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from info_interface
+        where project_id = #{projectId}
+        and status = #{status}
+        <if test="name != null">
+            and name like #{name}
+        </if>
+        <if test="path != null">
+            and path like #{path}
+        </if>
+        <if test="devName != null">
+            and dev_name like #{devName}
+        </if>
+        <if test="devContact != null">
+            and dev_contact like #{devContact}
+        </if>
+        <if test="groupName != null">
+            group by #{groupName}
+        </if>
+    </select>
+
+    <select id="getAllInterface" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from info_interface
+        where project_id = #{projectId}
+        and status = #{status}
+    </select>
+
+    <select id="checkName" parameterType="map" resultType="int">
+        select count(1)
+        from info_interface
+        where project_id = #{projectId}
+        and name = #{name}
+        and status = #{status}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+    </select>
+
+    <select id="checkPath" parameterType="map" resultType="int">
+        select count(1)
+        from info_interface
+        where project_id = #{projectId}
+        and method = #{method}
+        and path = #{path}
+        and status = #{status}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+    </select>
+
+    <delete id="deleteByIds" parameterType="map">
+        update info_interface
+        set status = #{status}
+        where project_id = #{projectId}
+        and id in
+        <foreach close=")" collection="idList" index="index" item="id" open="(" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="checkReqHeadIdsUsed" parameterType="string" resultType="int">
+    select count(1)
+    from info_interface
+    where req_head_id = #{reqHeadId}
+  </select>
+
+    <select id="checkResHeadIdsUsed" parameterType="string" resultType="int">
+    select count(1)
+    from info_interface
+    where res_head_id = #{resHeadId}
+  </select>
+</mapper>

@@ -121,7 +121,4 @@ $RECYCLE.BIN/
 hs_err_pid*
 
 .idea/
-code-generator-core/
-code-generator-maven-plugin/
 generator.iml
-pom.xml
