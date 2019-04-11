@@ -33,7 +33,7 @@ public class ControllerGenerator extends BaseGenerator {
     public static String list(String ClassName) {
         StringBuilder sb = new StringBuilder();
         sb.append("@GetMapping(\"\")\n    ");
-        sb.append("public ").append(responseClass).append("<Object> list(@RequestParam(\"pageNum\") Integer pageNum,\n    ");
+        sb.append("public ").append(responseClass).append("<PageInfo> list(@RequestParam(\"pageNum\") Integer pageNum,\n    ");
         sb.append("                                   @RequestParam(\"pageSize\") Integer pageSize,\n    ");
         sb.append("                                   @RequestParam(\"params\") Map<String, String> params) {\n    ");
         sb.append("    return i").append(ClassName).append("Service.list(pageNum, pageSize, params);\n    ");

@@ -4,27 +4,16 @@ package ${DaoPackageName};
 import ${DaoPackageName}.base.${baseMapper};
 </#if>
 import ${EntityPackageName}.${ClassName};
-//import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 <#if Remark??>
 ${Remark}
 </#if>
-//@Mapper
+@Mapper
 public interface ${ClassName}Mapper <#if baseMapper??>extends ${baseMapper}<${ClassName}></#if> {
-
-<#if selectAllListByKeyword??>
-    ${selectAllListByKeyword}
-</#if>
-
-<#if selectPageListByKeyword??>
-    ${selectPageListByKeyword}
-</#if>
-
-<#if selectByPrimaryKey??>
-    ${selectByPrimaryKey}
-</#if>
 
 <#if deleteByPrimaryKey??>
     ${deleteByPrimaryKey}
@@ -38,11 +27,23 @@ public interface ${ClassName}Mapper <#if baseMapper??>extends ${baseMapper}<${Cl
     ${insertSelective}
 </#if>
 
+<#if selectByPrimaryKey??>
+    ${selectByPrimaryKey}
+</#if>
+
 <#if updateByPrimaryKeySelective??>
     ${updateByPrimaryKeySelective}
 </#if>
 
 <#if updateByPrimaryKey??>
     ${updateByPrimaryKey}
+</#if>
+
+<#if selectPageList??>
+    ${selectPageList}
+</#if>
+
+<#if deleteByIdList??>
+    ${deleteByIdList}
 </#if>
 }

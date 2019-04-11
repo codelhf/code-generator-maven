@@ -62,7 +62,7 @@ public class ControllerTask extends BaseTask {
         String targetProject = configuration.getServiceGenerator().getTargetProject();
         String targetPackage = configuration.getServiceGenerator().getController();
 
-        String filePath = FileUtil.getProjectPath(configuration.getConfigFilePath()) + targetProject + FileUtil.package2Path(targetPackage);
+        String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
         String fileName = className + "Controller.java";
 
         int type = FreemarkerUtil.FileTypeEnum.CONTROLLER.getCode();

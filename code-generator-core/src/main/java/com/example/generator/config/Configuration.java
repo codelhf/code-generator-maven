@@ -41,11 +41,11 @@ public class Configuration implements Serializable {
     /**
      * 表格
      */
-    private List<TableConfiguration> tablesConfiguration;
+    private List<TableConfiguration> tablesConfiguration = new ArrayList<>();
     /**
      * 视图
      */
-    private List<ViewConfiguration> viewsConfiguration;
+    private List<ViewConfiguration> viewsConfiguration = new ArrayList<>();
     /**
      * jdk8
      */
@@ -82,17 +82,15 @@ public class Configuration implements Serializable {
             commonGenerator.validate(errors);
         }
 
-        if (tablesConfiguration == null || viewsConfiguration == null) {
-            errors.add("tablesConfiguration or viewsConfiguration can not be empty");
-        } else if (tablesConfiguration.size() == 0 && viewsConfiguration.size() == 0) {
-            errors.add("tablesConfiguration has no table configuration or viewsConfiguration has no view configuration");
+        if (tablesConfiguration == null && viewsConfiguration == null) {
+            errors.add("tablesConfiguration or viewsConfiguration can not be empty and has no table");
         } else {
-            if (tablesConfiguration.size() > 0) {
+            if (tablesConfiguration != null && tablesConfiguration.size() > 0) {
                 for (int i = 0, iLength = tablesConfiguration.size(); i < iLength; i++) {
                     tablesConfiguration.get(i).validate(errors, i);
                 }
             }
-            if (viewsConfiguration.size() > 0) {
+            if (viewsConfiguration != null && viewsConfiguration.size() > 0) {
                 for (int i = 0, iLength = viewsConfiguration.size(); i < iLength; i++) {
                     viewsConfiguration.get(i).validate(errors, i);
                 }

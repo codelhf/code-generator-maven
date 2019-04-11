@@ -2,6 +2,7 @@ package ${ServicePackageName};
 
 import ${BasePackageName}.common.${ResponseClass};
 import ${EntityDTOPackageName}.${ClassName}DTO;
+import com.github.pagehelper.PageInfo;
 
 import java.util.Map;
 
@@ -44,5 +45,4 @@ public interface I${ClassName}Service {
 <#if delete??>
 	${delete}
 </#if>
-
 }

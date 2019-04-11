@@ -65,7 +65,7 @@ public class ServiceImplTask extends BaseTask {
         String targetProject = configuration.getServiceGenerator().getTargetProject();
         String targetPackage = configuration.getServiceGenerator().getServiceImpl();
 
-        String filePath = FileUtil.getProjectPath(configuration.getConfigFilePath()) + targetProject + FileUtil.package2Path(targetPackage);
+        String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
         String fileName = className + "ServiceImpl.java";
         int type = FreemarkerUtil.FileTypeEnum.SERVICE_IMPL.getCode();
         boolean generate = configuration.getServiceGenerator().isGenerator();

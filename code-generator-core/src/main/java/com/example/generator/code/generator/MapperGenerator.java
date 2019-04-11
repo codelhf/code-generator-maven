@@ -43,30 +43,6 @@ public class MapperGenerator extends BaseGenerator {
         return sb.toString();
     }
 
-    public static String selectAllListByKeyword(String tableName) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<select id=\"selectPageListByKeyword\" resultMap=\"BaseResultMap\">\n");
-        sb.append("    select <include refid=\"Base_Column_List\"/>\n");
-        sb.append("    from ").append(tableName).append("\n");
-        sb.append("</select>");
-        return sb.toString();
-    }
-
-    public static String selectPageListByKeyword(String entityPackageName, String className, String tableName, List<ColumnInfo> tableInfo) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<select id=\"selectPageListByKeyword\" parameterType=\"").append(entityPackageName).append(".").append(className).append(" resultMap=\"BaseResultMap\">\n");
-        sb.append("    select <include refid=\"Base_Column_List\"/>\n");
-        sb.append("    from ").append(tableName).append("\n");
-        sb.append("    <where>\n");
-        for (ColumnInfo columnInfo: tableInfo) {
-            sb.append("        <if test=\"").append(columnInfo.getPropertyName()).append(" != null\">\n");
-            sb.append("            and ").append(columnInfo.getColumnName()).append(" like #{").append(columnInfo.getPropertyName()).append("}\n");
-            sb.append("        </if>\n");
-        }
-        sb.append("</select>");
-        return sb.toString();
-    }
-
     public static String selectByPrimaryKey(String tableName, ColumnInfo primaryKeyColumn) {
         StringBuilder sb = new StringBuilder();
         sb.append("<select id=\"selectByPrimaryKey\" parameterType=\"").append(primaryKeyColumn.getJavaType()).append(" resultMap=\"BaseResultMap\">\n");
@@ -163,6 +139,34 @@ public class MapperGenerator extends BaseGenerator {
         sb.substring(0, sb.lastIndexOf(","));
         sb.append("    where ").append(primaryKeyColumn.getColumnName()).append(" = #{").append(primaryKeyColumn.getPropertyName()).append("}\n");
         sb.append("</update>");
+        return sb.toString();
+    }
+
+    public static String selectPageList(String entityPackageName, String className, String tableName, List<ColumnInfo> tableInfo) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<select id=\"selectPageList\" parameterType=\"").append(entityPackageName).append(".").append(className).append(" resultMap=\"BaseResultMap\">\n");
+        sb.append("    select <include refid=\"Base_Column_List\"/>\n");
+        sb.append("    from ").append(tableName).append("\n");
+        sb.append("    <where>\n");
+        for (ColumnInfo columnInfo: tableInfo) {
+            sb.append("        <if test=\"").append(columnInfo.getPropertyName()).append(" != null\">\n");
+            sb.append("            and ").append(columnInfo.getColumnName()).append(" like #{").append(columnInfo.getPropertyName()).append("}\n");
+            sb.append("        </if>\n");
+        }
+        sb.append("</select>");
+        return sb.toString();
+    }
+
+    public static String deleteByIdList(String tableName, ColumnInfo primaryKeyColumn) {
+        StringBuilder sb = new StringBuilder();
+        String columnName = primaryKeyColumn.getColumnName();
+        String propertyName = primaryKeyColumn.getPropertyName();
+        sb.append("<delete id=\"deleteByIdList\" parameterType=\"map\">\n");
+        sb.append("    delete from ").append(tableName).append("\n");
+        sb.append("    where ").append(columnName).append(" in\n");
+        sb.append("    <foreach collection=\"").append(propertyName).append("List\" index=\"index\" item=\"").append(propertyName).append("\" open=\"(\" separator=\",\" close=\")\" >\n");
+        sb.append("        #{").append(propertyName).append("}");
+        sb.append("    </foreach>");
         return sb.toString();
     }
 }

@@ -21,7 +21,7 @@ public class ServiceGenerator extends BaseGenerator {
         params.add("pageNum");
         params.add("pageSize");
         params.add("params");
-        String returns = responseClass + "<Object>";
+        String returns = responseClass + "<PageInfo>";
         return generateFunctionRemark(title, description, params, returns, configuration);
     }
 
@@ -30,7 +30,7 @@ public class ServiceGenerator extends BaseGenerator {
      */
     public static String list() {
         StringBuilder sb = new StringBuilder();
-        sb.append(responseClass).append("<Object> list(Integer pageNum, Integer pageSize, Map<String, String> params);");
+        sb.append(responseClass).append("<PageInfo> list(Integer pageNum, Integer pageSize, Map<String, String> params);");
         return sb.toString();
     }
 
@@ -38,7 +38,7 @@ public class ServiceGenerator extends BaseGenerator {
         String title = "insert";
         String description = "保存" + ClassName + "对象";
         List<String> params = new ArrayList<>();
-        params.add(className);
+        params.add(className + "DTO");
         String returns = responseClass + "<String>";
         return generateFunctionRemark(title, description, params, returns, configuration);
     }
@@ -57,7 +57,7 @@ public class ServiceGenerator extends BaseGenerator {
         String description = "查询" + ClassName + "对象";
         List<String> params = new ArrayList<>();
         params.add(primaryKeyColumn.getPropertyName());
-        String returns = responseClass + "<" + ClassName + ">";
+        String returns = responseClass + "<" + ClassName + "DTO>";
         return generateFunctionRemark(title, description, params, returns, configuration);
     }
 
@@ -77,7 +77,7 @@ public class ServiceGenerator extends BaseGenerator {
         String description = "更新" + ClassName + "对象";
         List<String> params = new ArrayList<>();
         params.add(primaryKeyColumn.getPropertyName());
-        params.add(className);
+        params.add(className + "DTO");
         String returns = responseClass + "<String>";
         return generateFunctionRemark(title, description, params, returns, configuration);
     }

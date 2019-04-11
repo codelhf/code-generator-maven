@@ -5,6 +5,7 @@ import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
 import com.example.generator.code.task.base.FreemarkerUtil;
 import com.example.generator.config.Configuration;
+import com.example.generator.config.DataSource;
 import com.example.generator.db.ColumnInfo;
 import com.example.generator.util.StringUtil;
 import freemarker.template.TemplateException;
@@ -42,23 +43,24 @@ public class DaoTask extends BaseTask {
         daoData.put("Remark", DaoGenerator.generateRemark(title, description, configuration));
 
         boolean useMapper = false;
+        ColumnInfo primaryKeyColumn = getPrimaryKeyColumnInfo(tableInfo);
         if (!useMapper) {
-            daoData.put("selectAllListByKeyword", DaoGenerator.selectAllListByKeyword(className));
-            daoData.put("selectPageListByKeyword", DaoGenerator.selectPageListByKeyword(className, new ArrayList<>()));
-            daoData.put("selectByPrimaryKey", DaoGenerator.selectByPrimaryKey(className, tableInfo));
+            daoData.put("selectPageList", DaoGenerator.selectPageList(className));
+            daoData.put("selectByPrimaryKey", DaoGenerator.selectByPrimaryKey(className, primaryKeyColumn));
             if (!isView) {
-                daoData.put("deleteByPrimaryKey", DaoGenerator.deleteByPrimaryKey(tableInfo));
+                daoData.put("deleteByPrimaryKey", DaoGenerator.deleteByPrimaryKey(primaryKeyColumn));
                 daoData.put("insert", DaoGenerator.insert(className));
                 daoData.put("insertSelective", DaoGenerator.insertSelective(className));
                 daoData.put("updateByPrimaryKeySelective", DaoGenerator.updateByPrimaryKeySelective(className));
                 daoData.put("updateByPrimaryKey", DaoGenerator.updateByPrimaryKey(className));
+                daoData.put("deleteByIdList", DaoGenerator.deleteByIdList(primaryKeyColumn));
             }
         } else {
             daoData.put("baseMapper", isView ? "ViewMapper" : "TableMapper");
             String targetProject = configuration.getCommonGenerator().getDaoGenerator().getTargetProject();
             String targetPackage = configuration.getCommonGenerator().getDaoGenerator().getTargetPackage();
 
-            String filePath = FileUtil.getProjectPath(configuration.getConfigFilePath()) + targetProject + FileUtil.package2Path(targetPackage) + "/base";
+            String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
             String fileName = "TableMapper.java";
             int type = FreemarkerUtil.FileTypeEnum.DAO_TABLE_MAPPER.getCode();
             FileUtil.generateToCode(filePath, fileName, daoData, type, true, true);
@@ -71,7 +73,7 @@ public class DaoTask extends BaseTask {
         String targetProject = configuration.getCommonGenerator().getDaoGenerator().getTargetProject();
         String targetPackage = configuration.getCommonGenerator().getDaoGenerator().getTargetPackage();
 
-        String filePath = FileUtil.getProjectPath(configuration.getConfigFilePath()) + targetProject + FileUtil.package2Path(targetPackage);
+        String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
         String fileName = className + "Mapper.java";
         int type = FreemarkerUtil.FileTypeEnum.DAO.getCode();
         boolean override = configuration.getCommonGenerator().isOverwrite();

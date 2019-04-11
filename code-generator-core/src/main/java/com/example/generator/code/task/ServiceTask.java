@@ -60,7 +60,7 @@ public class ServiceTask extends BaseTask {
         String targetProject = configuration.getServiceGenerator().getTargetProject();
         String targetPackage = configuration.getServiceGenerator().getService();
 
-        String filePath = FileUtil.getProjectPath(configuration.getConfigFilePath()) + targetProject + FileUtil.package2Path(targetPackage);
+        String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
         String fileName = "I" + className + "Service.java";
         int type = FreemarkerUtil.FileTypeEnum.SERVICE.getCode();
         boolean generate = configuration.getServiceGenerator().isGenerator();

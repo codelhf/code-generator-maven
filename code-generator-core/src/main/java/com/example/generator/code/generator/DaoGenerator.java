@@ -3,8 +3,6 @@ package com.example.generator.code.generator;
 import com.example.generator.code.generator.base.BaseGenerator;
 import com.example.generator.db.ColumnInfo;
 
-import java.util.List;
-
 /**
  * @Description: TODO
  * @Auther: liuhf
@@ -12,71 +10,52 @@ import java.util.List;
  */
 public class DaoGenerator extends BaseGenerator {
 
-    public static String selectAllListByKeyword(String className) {
+    public static String deleteByPrimaryKey(ColumnInfo primaryKeyColumn) {
         StringBuilder sb = new StringBuilder();
-        sb.append("List<").append(className).append("> selectAllListByKeyword();");
+        sb.append("int deleteByPrimaryKey(").append(primaryKeyColumn.getJavaType()).append(" ").append(primaryKeyColumn.getPropertyName()).append(");");
         return sb.toString();
     }
 
-    public static String selectPageListByKeyword(String className, List<String> params) {
+    public static String insert(String ClassName) {
         StringBuilder sb = new StringBuilder();
-        sb.append("List<").append(className).append("> selectPageListByKeyword(");
-        int length = params.size();
-        for (int i = 0; i < length; i++) {
-            sb.append("@param(\"").append(params.get(i)).append("\") ").append(params.get(i));
-            if (i != length -1) {
-                sb.append(",");
-            }
-        }
-        sb.append(");");
+        sb.append("int insert(").append(ClassName).append(" record);");
         return sb.toString();
     }
 
-    public static String selectByPrimaryKey(String className, List<ColumnInfo> tableInfo) {
+    public static String insertSelective(String ClassName) {
         StringBuilder sb = new StringBuilder();
-        sb.append(className).append(" selectByPrimaryKey(");
-        for (ColumnInfo columnInfo : tableInfo) {
-            if (columnInfo.isPrimaryKey()) {
-                sb.append(columnInfo.getJavaType()).append(" ").append(columnInfo.getColumnName());
-            }
-        }
-        sb.append(");");
+        sb.append("int insertSelective(").append(ClassName).append(" record);");
         return sb.toString();
     }
 
-    public static String deleteByPrimaryKey(List<ColumnInfo> tableInfo) {
+    public static String selectByPrimaryKey(String ClassName, ColumnInfo primaryKeyColumn) {
         StringBuilder sb = new StringBuilder();
-        sb.append("int deleteByPrimaryKey(");
-        for (ColumnInfo columnInfo : tableInfo) {
-            if (columnInfo.isPrimaryKey()) {
-                sb.append(columnInfo.getJavaType()).append(" ").append(columnInfo.getColumnName());
-            }
-        }
-        sb.append(");");
+        sb.append(ClassName).append(" selectByPrimaryKey(").append(primaryKeyColumn.getJavaType()).append(" ").append(primaryKeyColumn.getPropertyName()).append(");");
         return sb.toString();
     }
 
-    public static String insert(String className) {
+    public static String updateByPrimaryKeySelective(String ClassName) {
         StringBuilder sb = new StringBuilder();
-        sb.append("int insert(").append(className).append(" record);");
+        sb.append("int updateByPrimaryKeySelective(").append(ClassName).append(" record);");
         return sb.toString();
     }
 
-    public static String insertSelective(String className) {
+    public static String updateByPrimaryKey(String ClassName) {
         StringBuilder sb = new StringBuilder();
-        sb.append("int insertSelective(").append(className).append(" record);");
+        sb.append("int updateByPrimaryKey(").append(ClassName).append(" record);");
         return sb.toString();
     }
 
-    public static String updateByPrimaryKeySelective(String className) {
+    public static String selectPageList(String ClassName) {
         StringBuilder sb = new StringBuilder();
-        sb.append("int updateByPrimaryKeySelective(").append(className).append(" record);");
+        sb.append("List<").append(ClassName).append("> selectPageList(").append(ClassName).append(" example);");
         return sb.toString();
     }
 
-    public static String updateByPrimaryKey(String className) {
+    public static String deleteByIdList(ColumnInfo primaryKeyColumn) {
         StringBuilder sb = new StringBuilder();
-        sb.append("int updateByPrimaryKey(").append(className).append(" record);");
+        String propertyName = primaryKeyColumn.getPropertyName();
+        sb.append("int deleteByIdList(@Param(\"").append(propertyName).append("List\") List<String> ").append(propertyName).append("List);");
         return sb.toString();
     }
 }

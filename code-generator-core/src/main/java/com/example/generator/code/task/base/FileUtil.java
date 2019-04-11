@@ -60,6 +60,15 @@ public class FileUtil {
         fos.close();
     }
 
+    public static String getGeneratePath(String configFilePath, String targetProject, String targetPackage) {
+        StringBuilder sb = new StringBuilder();
+        if (!targetProject.endsWith("/")) {
+            targetProject = targetProject + "/";
+        }
+        sb.append(getProjectPath(configFilePath)).append(targetProject).append(package2Path(targetPackage));
+        return sb.toString();
+    }
+
     /**
      * 获取项目路径
      */

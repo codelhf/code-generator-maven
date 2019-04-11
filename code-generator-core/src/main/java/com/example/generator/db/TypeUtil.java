@@ -153,4 +153,13 @@ public class TypeUtil {
         }
     }
 
+    public static String jdbcTypeToJavaType(String jdbcType) {
+        switch (jdbcType) {
+            case "VARCHAR":
+                return "String";
+            default:
+                return "Object";
+        }
+    }
+
 }

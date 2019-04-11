@@ -77,8 +77,8 @@ public class EntityGenerator extends BaseGenerator {
      */
     public static String generateNoArgsConstructor(String className) {
         StringBuilder sb = new StringBuilder();
-        sb.append("public ").append(className).append("() { \n");
-        sb.append("    super(); \n");
+        sb.append("public ").append(className).append(" () {\n    ");
+        sb.append("    super(); \n    ");
         sb.append("}");
         return sb.toString();
     }
@@ -97,7 +97,7 @@ public class EntityGenerator extends BaseGenerator {
         int length = tableInfo.size();
         for (int i = 0; i < length; i++) {
             sb.append(tableInfo.get(i).getJavaType()).append(" ").append(tableInfo.get(i).getPropertyName());
-            if (i != (length - 1)) {
+            if (i != length - 1) {
                 sb.append(", ");
             }
         }

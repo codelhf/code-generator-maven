@@ -7,6 +7,7 @@ import com.example.generator.config.ColumnOverride;
 import com.example.generator.config.Configuration;
 import com.example.generator.config.GeneratedKey;
 import com.example.generator.db.ColumnInfo;
+import com.example.generator.db.TypeUtil;
 import com.example.generator.util.StringUtil;
 
 import java.sql.SQLException;
@@ -51,7 +52,7 @@ public class SingleInvoker extends BaseInvoker {
                 for (ColumnOverride columnOverride: columnOverrideList) {
                     if (column.equals(columnOverride.getColumnName())) {
                         columnInfo.setJdbcType(columnOverride.getJdbcType());
-                        columnInfo.setJavaType(columnOverride.getJavaType());
+//                        columnInfo.setJavaType(TypeUtil.jdbcTypeToJavaType(columnOverride.getJdbcType()));
                         break;
                     }
                 }

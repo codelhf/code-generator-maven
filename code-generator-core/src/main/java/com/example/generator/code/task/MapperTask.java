@@ -57,8 +57,7 @@ public class MapperTask extends BaseTask {
         mapperData.put("baseResultMap", MapperGenerator.baseResultMap(entityPackageName, className, tableInfo));
         mapperData.put("baseColumnList", MapperGenerator.baseColumnList(tableInfo));
         if (!userMapper) {
-            mapperData.put("selectAllListByKeyword", MapperGenerator.selectAllListByKeyword(tableName));
-            mapperData.put("selectPageListByKeyword", MapperGenerator.selectPageListByKeyword(entityPackageName, className, tableName, tableInfo));
+            mapperData.put("selectPageList", MapperGenerator.selectPageList(entityPackageName, className, tableName, tableInfo));
             mapperData.put("selectByPrimaryKey", MapperGenerator.selectByPrimaryKey(tableName, primaryKeyColumnInfo));
             if (!isView) {
                 mapperData.put("deleteByPrimaryKey", MapperGenerator.deleteByPrimaryKey(tableName, primaryKeyColumnInfo));
@@ -66,13 +65,14 @@ public class MapperTask extends BaseTask {
                 mapperData.put("insertSelective", MapperGenerator.insertSelective(entityPackageName, className, tableName, tableInfo));
                 mapperData.put("updateByPrimaryKeySelective", MapperGenerator.updateByPrimaryKeySelective(entityPackageName, className, tableName, tableInfo, primaryKeyColumnInfo));
                 mapperData.put("updateByPrimaryKey", MapperGenerator.updateByPrimaryKey(entityPackageName, className, tableName, tableInfo, primaryKeyColumnInfo));
+                mapperData.put("deleteByIdList", MapperGenerator.deleteByIdList(tableName, primaryKeyColumnInfo));
             }
         }
 
         String targetProject = configuration.getCommonGenerator().getMapperGenerator().getTargetProject();
         String targetPackage = configuration.getCommonGenerator().getMapperGenerator().getTargetPackage();
 
-        String filePath = FileUtil.getProjectPath(configuration.getConfigFilePath()) + targetProject + FileUtil.package2Path(targetPackage);
+        String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
         String fileName = className + "Mapper.xml";
         int type = FreemarkerUtil.FileTypeEnum.MAPPER.getCode();
         boolean override = configuration.getCommonGenerator().isOverwrite();

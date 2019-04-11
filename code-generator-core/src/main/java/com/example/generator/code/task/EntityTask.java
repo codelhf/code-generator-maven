@@ -85,7 +85,7 @@ public class EntityTask extends BaseTask {
         String targetProject = configuration.getCommonGenerator().getModelGenerator().getTargetProject();
         String targetPackage = configuration.getCommonGenerator().getModelGenerator().getTargetPackage();
 
-        String filePath = FileUtil.getProjectPath(configuration.getConfigFilePath()) + targetProject + FileUtil.package2Path(targetPackage);
+        String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
         String fileName = className + ".java";
         int type = FreemarkerUtil.FileTypeEnum.ENTITY.getCode();
         boolean override = configuration.getCommonGenerator().isOverwrite();

@@ -3,6 +3,7 @@ package ${ControllerPackageName};
 import ${BasePackageName}.common.${ResponseClass};
 import ${EntityDTOPackageName}.${ClassName}DTO;
 import ${ServicePackageName}.I${ClassName}Service;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
@@ -53,5 +54,4 @@ public class ${ClassName}Controller {
 <#if delete??>
     ${delete}
 </#if>
-
 }

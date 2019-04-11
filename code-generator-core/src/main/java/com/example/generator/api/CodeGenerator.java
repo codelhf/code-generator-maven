@@ -62,20 +62,24 @@ public class CodeGenerator {
         }
 
         List<TableConfiguration> tableConfigurationList = configuration.getTablesConfiguration();
-        for (TableConfiguration tableConfiguration: tableConfigurationList) {
-            String tableName = tableConfiguration.getTableName();
-            String domainName = tableConfiguration.getDomainName();
-            List<ColumnOverride> columnOverrideList = tableConfiguration.getColumnOverrides();
-            GeneratedKey generatedKey = tableConfiguration.getGeneratedKey();
-            single(tableName, domainName, columnOverrideList, generatedKey, false, configuration);
+        if (tableConfigurationList != null) {
+            for (TableConfiguration tableConfiguration: tableConfigurationList) {
+                String tableName = tableConfiguration.getTableName();
+                String domainName = tableConfiguration.getDomainName();
+                List<ColumnOverride> columnOverrideList = tableConfiguration.getColumnOverrides();
+                GeneratedKey generatedKey = tableConfiguration.getGeneratedKey();
+                single(tableName, domainName, columnOverrideList, generatedKey, false, configuration);
+            }
         }
 
         List<ViewConfiguration> viewConfigurationList = configuration.getViewsConfiguration();
-        for (ViewConfiguration viewConfiguration: viewConfigurationList) {
-            String viewName = viewConfiguration.getViewName();
-            String domainName = viewConfiguration.getDomainName();
-            List<ColumnOverride> columnOverrideList = viewConfiguration.getColumnOverrides();
-            single(viewName, domainName, columnOverrideList, null, true, configuration);
+        if (viewConfigurationList != null) {
+            for (ViewConfiguration viewConfiguration: viewConfigurationList) {
+                String viewName = viewConfiguration.getViewName();
+                String domainName = viewConfiguration.getDomainName();
+                List<ColumnOverride> columnOverrideList = viewConfiguration.getColumnOverrides();
+                single(viewName, domainName, columnOverrideList, null, true, configuration);
+            }
         }
         callback.done();
     }

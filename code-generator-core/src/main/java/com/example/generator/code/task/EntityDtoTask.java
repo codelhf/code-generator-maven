@@ -53,23 +53,23 @@ public class EntityDtoTask extends BaseTask {
 
         String title = className + "DTO";
         String description = className + "实体类DTO";
-        entityDtoData.put("Remark", EntityGenerator.generateRemark(title, description, configuration));
+        entityDtoData.put("Remark", EntityDtoGenerator.generateRemark(title, description, configuration));
         boolean useLombok = configuration.getCommonGenerator().getModelGenerator().isUseLombok();
         if (useLombok) {
-            entityDtoData.put("Lombok", EntityGenerator.generateLombok());
+            entityDtoData.put("Lombok", EntityDtoGenerator.generateLombok());
         }
         entityDtoData.put("Properties", EntityDtoGenerator.generateProperties(tableInfo));
         if (!useLombok) {
             entityDtoData.put("Constructor", "Constructor");
-            entityDtoData.put("AllArgsConstructor", EntityDtoGenerator.generateAllArgsConstructor(className, tableInfo));
-            entityDtoData.put("NoArgsConstructor", EntityDtoGenerator.generateNoArgsConstructor(className));
+            entityDtoData.put("AllArgsConstructor", EntityDtoGenerator.generateAllArgsConstructor(className + "DTO", tableInfo));
+            entityDtoData.put("NoArgsConstructor", EntityDtoGenerator.generateNoArgsConstructor(className + "DTO"));
             entityDtoData.put("Methods", EntityDtoGenerator.generateMethods(tableInfo));
         }
 
         String targetProject = configuration.getCommonGenerator().getDtoGenerator().getTargetProject();
         String targetPackage = configuration.getCommonGenerator().getDtoGenerator().getTargetPackage();
 
-        String filePath = FileUtil.getProjectPath(configuration.getConfigFilePath()) + targetProject + FileUtil.package2Path(targetPackage);
+        String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(),targetProject, targetPackage);
         String fileName = className + "DTO.java";
         int type = FreemarkerUtil.FileTypeEnum.ENTITY_DTO.getCode();
         boolean override = configuration.getCommonGenerator().isOverwrite();
