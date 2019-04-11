@@ -1,4 +1,4 @@
-package ${BasePackageName}.common;
+package com.example.generator.demo.common;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @Title: ExceptionResolver
  * @Description: 异常捕获处理类
- * @Company: ${Company}
- * @Author: ${Author}
- * @CreateTime: ${CreateTime}
+ * @Company: example
+ * @Author: liuhf
+ * @CreateTime: 2019-04-11 10:52:02
  */
 @Component
 @Slf4j

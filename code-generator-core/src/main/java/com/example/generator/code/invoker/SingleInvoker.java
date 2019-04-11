@@ -3,15 +3,10 @@ package com.example.generator.code.invoker;
 import com.example.generator.code.invoker.base.BaseBuilder;
 import com.example.generator.code.invoker.base.BaseInvoker;
 import com.example.generator.code.task.*;
-import com.example.generator.config.*;
-import com.example.generator.db.ColumnInfo;
-import com.example.generator.code.invoker.base.BaseBuilder;
-import com.example.generator.code.invoker.base.BaseInvoker;
-import com.example.generator.code.task.*;
 import com.example.generator.config.ColumnOverride;
+import com.example.generator.config.Configuration;
 import com.example.generator.config.GeneratedKey;
 import com.example.generator.db.ColumnInfo;
-import com.example.generator.util.StringUtil;
 import com.example.generator.util.StringUtil;
 
 import java.sql.SQLException;
@@ -52,12 +47,14 @@ public class SingleInvoker extends BaseInvoker {
             if (generatedKey != null && column.equals(generatedKey.getColumn())) {
                 columnInfo.setPrimaryKey(true);
             }
-            for (ColumnOverride columnOverride: columnOverrideList) {
-                if (column.equals(columnOverride.getColumnName())) {
-                    columnInfo.setJdbcType(columnOverride.getJdbcType());
-                    columnInfo.setJavaType(columnOverride.getJavaType());
-                    columnInfo.setPropertyName(columnOverride.getJavaProperty());
-                    break;
+            if (columnOverrideList != null) {
+                for (ColumnOverride columnOverride: columnOverrideList) {
+                    if (column.equals(columnOverride.getColumnName())) {
+                        columnInfo.setJdbcType(columnOverride.getJdbcType());
+                        columnInfo.setJavaType(columnOverride.getJavaType());
+                        columnInfo.setPropertyName(columnOverride.getJavaProperty());
+                        break;
+                    }
                 }
             }
         }
@@ -66,13 +63,13 @@ public class SingleInvoker extends BaseInvoker {
 
     @Override
     protected void initTasks() {
-        taskQueue.add(new ControllerTask(className, isView));
-        taskQueue.add(new ServiceTask(className, isView));
-        taskQueue.add(new ServiceImplTask(className, isView));
-        taskQueue.add(new DaoTask(className, isView));
-        taskQueue.add(new MapperTask(className, tableName, tableInfo, isView));
-        taskQueue.add(new EntityTask(className, tableInfo));
-        taskQueue.add(new EntityDtoTask(className, tableInfo));
+        taskQueue.add(new ControllerTask(className, isView, configuration));
+        taskQueue.add(new ServiceTask(className, isView, configuration));
+        taskQueue.add(new ServiceImplTask(className, isView, configuration));
+        taskQueue.add(new DaoTask(className, isView, configuration));
+        taskQueue.add(new MapperTask(className, tableName, tableInfo, isView, configuration));
+        taskQueue.add(new EntityTask(className, tableInfo, configuration));
+        taskQueue.add(new EntityDtoTask(className, tableInfo, configuration));
     }
 
     public static class Builder extends BaseBuilder {
@@ -118,8 +115,11 @@ public class SingleInvoker extends BaseInvoker {
 
         @Override
         public void checkBeforeBuild() throws Exception {
+            if (invoker.getConfiguration() == null) {
+                throw new RuntimeException("configuration can not be null");
+            }
             if (StringUtil.isBlank(invoker.getTableName())) {
-                throw new Exception("Expect table's name, but get a blank String.");
+                throw new RuntimeException("Expect table's name, but get a blank String.");
             }
             if (StringUtil.isBlank(invoker.getClassName())) {
                 invoker.setClassName(StringUtil.tableName2ClassName(invoker.getTableName()));

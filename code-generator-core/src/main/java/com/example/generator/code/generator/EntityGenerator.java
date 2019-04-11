@@ -2,9 +2,6 @@ package com.example.generator.code.generator;
 
 import com.example.generator.code.generator.base.BaseGenerator;
 import com.example.generator.db.ColumnInfo;
-import com.example.generator.code.generator.base.BaseGenerator;
-import com.example.generator.db.ColumnInfo;
-import com.example.generator.util.StringUtil;
 import com.example.generator.util.StringUtil;
 
 import java.sql.Types;

@@ -25,7 +25,7 @@
         <property name="driverLocation" value="src/main/resources/mysql-connector-java-5.1.6-bin.jar"/>
         <!--driverClass非必须参数-->
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/auto_test?characterEncoding=utf-8"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/lottery?characterEncoding=utf-8"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
     </dataSource>
@@ -101,25 +101,16 @@
 
     <!-- 数据库对应数据表-->
     <tablesConfiguration>
-        <table tableName="user" domainObjectName="User" mapperName="UserMapper">
+        <table tableName="lottery_people" domainObjectName="People">
         </table>
-        <table tableName="info_case" domainObjectName="Case" mapperName="CaseMapper">
-            <columnOverride columnName="req_params" jdbcType="VARCHAR"/>
-            <columnOverride columnName="res_params" jdbcType="VARCHAR"/>
-        </table>
-        <table tableName="info_case_gp" domainObjectName="CaseGp" mapperName="CaseGpMapper">
+        <table tableName="lottery_prize" domainObjectName="Prize">
+            <columnOverride columnName="image" jdbcType="VARCHAR"/>
         </table>
     </tablesConfiguration>
 
     <!-- 数据库对应数据视图-->
     <viewsConfiguration>
-        <view viewName="v_user" domainObjectName="VUser">
-        </view>
-        <view viewName="v_case" domainObjectName="VCase">
-            <columnOverride columnName="req_params" jdbcType="VARCHAR"/>
-            <columnOverride columnName="res_params" jdbcType="VARCHAR"/>
-        </view>
-        <view viewName="v_case_gp" domainObjectName="VCaseGp">
+        <view viewName="lottery_result" domainObjectName="Result">
         </view>
     </viewsConfiguration>
 

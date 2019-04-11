@@ -1,8 +1,8 @@
 package com.example.generator.code.generator;
 
 import com.example.generator.code.generator.base.BaseGenerator;
+import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
-import com.example.generator.code.generator.base.BaseGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ServiceGenerator extends BaseGenerator {
 
-    public static String listRemark(String ClassName) {
+    public static String listRemark(String ClassName, Configuration configuration) {
         String title = "list";
         String description = "查询" + ClassName + "列表";
         List<String> params = new ArrayList<>();
@@ -22,7 +22,7 @@ public class ServiceGenerator extends BaseGenerator {
         params.add("pageSize");
         params.add("params");
         String returns = responseClass + "<Object>";
-        return generateFunctionRemark(title, description, params, returns);
+        return generateFunctionRemark(title, description, params, returns, configuration);
     }
 
     /**
@@ -34,13 +34,13 @@ public class ServiceGenerator extends BaseGenerator {
         return sb.toString();
     }
 
-    public static String insertRemark(String ClassName, String className) {
+    public static String insertRemark(String ClassName, String className, Configuration configuration) {
         String title = "insert";
         String description = "保存" + ClassName + "对象";
         List<String> params = new ArrayList<>();
         params.add(className);
         String returns = responseClass + "<String>";
-        return generateFunctionRemark(title, description, params, returns);
+        return generateFunctionRemark(title, description, params, returns, configuration);
     }
 
     /**
@@ -52,13 +52,13 @@ public class ServiceGenerator extends BaseGenerator {
         return sb.toString();
     }
 
-    public static String selectRemark(String ClassName, ColumnInfo primaryKeyColumn) {
+    public static String selectRemark(String ClassName, ColumnInfo primaryKeyColumn, Configuration configuration) {
         String title = "select";
         String description = "查询" + ClassName + "对象";
         List<String> params = new ArrayList<>();
         params.add(primaryKeyColumn.getPropertyName());
         String returns = responseClass + "<" + ClassName + ">";
-        return generateFunctionRemark(title, description, params, returns);
+        return generateFunctionRemark(title, description, params, returns, configuration);
     }
 
     /**
@@ -72,14 +72,14 @@ public class ServiceGenerator extends BaseGenerator {
         return sb.toString();
     }
 
-    public static String updateRemark(String ClassName, String className, ColumnInfo primaryKeyColumn) {
+    public static String updateRemark(String ClassName, String className, ColumnInfo primaryKeyColumn, Configuration configuration) {
         String title = "update";
         String description = "更新" + ClassName + "对象";
         List<String> params = new ArrayList<>();
         params.add(primaryKeyColumn.getPropertyName());
         params.add(className);
         String returns = responseClass + "<String>";
-        return generateFunctionRemark(title, description, params, returns);
+        return generateFunctionRemark(title, description, params, returns, configuration);
     }
 
     /**
@@ -93,13 +93,13 @@ public class ServiceGenerator extends BaseGenerator {
         return sb.toString();
     }
 
-    public static String deleteRemark(String ClassName, ColumnInfo primaryKeyColumn) {
+    public static String deleteRemark(String ClassName, ColumnInfo primaryKeyColumn, Configuration configuration) {
         String title = "delete";
         String description = "批量删除" + ClassName + "对象";
         List<String> params = new ArrayList<>();
         params.add(primaryKeyColumn.getPropertyName() + "s");
         String returns = responseClass + "<String>";
-        return generateFunctionRemark(title, description, params, returns);
+        return generateFunctionRemark(title, description, params, returns, configuration);
     }
 
     /**

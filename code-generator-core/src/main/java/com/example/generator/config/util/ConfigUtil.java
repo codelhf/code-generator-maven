@@ -31,6 +31,7 @@ public class ConfigUtil {
                 ConfigurationYmlParser parser = new ConfigurationYmlParser(errors);
                 configuration = parser.parseConfiguration(configurationFile);
             }
+            configuration.setConfigFilePath(configurationFile.getAbsolutePath());
             configuration.validate();
         } catch (Exception e) {
             e.printStackTrace();

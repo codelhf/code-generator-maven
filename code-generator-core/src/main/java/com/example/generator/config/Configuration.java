@@ -11,9 +11,13 @@ import java.util.List;
  */
 public class Configuration implements Serializable {
     /**
-     * 配置文件
+     * 数据库配置文件
      */
     private String resource;
+    /**
+     * generatorConfig配置文件路径
+     */
+    private String configFilePath;
     /**
      * 注释控制器
      */
@@ -49,6 +53,9 @@ public class Configuration implements Serializable {
 
     public void validate() throws InvalidConfigurationException {
         List<String> errors = new ArrayList<>();
+        if (configFilePath == null || "".equals(configFilePath.trim())) {
+            errors.add("configFilePath can not be empty");
+        }
         if (commentGenerator == null) {
             errors.add("commentGenerator can not be empty");
         } else {
@@ -75,18 +82,20 @@ public class Configuration implements Serializable {
             commonGenerator.validate(errors);
         }
 
-        if (tablesConfiguration == null) {
-            errors.add("tablesConfiguration can not be empty");
-        } else if (tablesConfiguration.size() == 0) {
-            errors.add("tablesConfiguration has no table configuration");
+        if (tablesConfiguration == null || viewsConfiguration == null) {
+            errors.add("tablesConfiguration or viewsConfiguration can not be empty");
+        } else if (tablesConfiguration.size() == 0 && viewsConfiguration.size() == 0) {
+            errors.add("tablesConfiguration has no table configuration or viewsConfiguration has no view configuration");
         } else {
-            for (int i = 0, iLength = tablesConfiguration.size(); i < iLength; i++) {
-                tablesConfiguration.get(i).validate(errors, i);
+            if (tablesConfiguration.size() > 0) {
+                for (int i = 0, iLength = tablesConfiguration.size(); i < iLength; i++) {
+                    tablesConfiguration.get(i).validate(errors, i);
+                }
             }
-        }
-        if (viewsConfiguration != null && viewsConfiguration.size() > 0) {
-            for (int i = 0, iLength = viewsConfiguration.size(); i < iLength; i++) {
-                viewsConfiguration.get(i).validate(errors, i);
+            if (viewsConfiguration.size() > 0) {
+                for (int i = 0, iLength = viewsConfiguration.size(); i < iLength; i++) {
+                    viewsConfiguration.get(i).validate(errors, i);
+                }
             }
         }
 
@@ -101,6 +110,14 @@ public class Configuration implements Serializable {
 
     public void setResource(String resource) {
         this.resource = resource;
+    }
+
+    public String getConfigFilePath() {
+        return configFilePath;
+    }
+
+    public void setConfigFilePath(String configFilePath) {
+        this.configFilePath = configFilePath;
     }
 
     public CommentGenerator getCommentGenerator() {

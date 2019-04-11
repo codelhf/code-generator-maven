@@ -3,11 +3,7 @@ package com.example.generator.code.invoker;
 import com.example.generator.code.invoker.base.BaseBuilder;
 import com.example.generator.code.invoker.base.BaseInvoker;
 import com.example.generator.code.task.*;
-import com.example.generator.code.invoker.base.BaseBuilder;
-import com.example.generator.code.invoker.base.BaseInvoker;
-import com.example.generator.code.task.DaoTask;
-import com.example.generator.code.task.EntityDtoTask;
-import com.example.generator.util.StringUtil;
+import com.example.generator.config.Configuration;
 import com.example.generator.util.StringUtil;
 
 import java.sql.SQLException;
@@ -27,18 +23,22 @@ public class Many2ManyInvoker extends BaseInvoker {
 
     @Override
     protected void initTasks() {
-        taskQueue.add(new ControllerTask(className, false));
-        taskQueue.add(new ServiceTask(className, false));
-        taskQueue.add(new DaoTask(className, false));
-        taskQueue.add(new MapperTask(tableName, className, parentTableName, parentClassName, foreignKey, parentForeignKey, relationalTableName, tableInfo, parentTableInfo, false));
-        taskQueue.add(new EntityTask(className, parentClassName, foreignKey, parentForeignKey, tableInfo));
-        taskQueue.add(new EntityTask(parentClassName, parentTableInfo));
-        taskQueue.add(new EntityDtoTask(className, parentClassName, foreignKey, parentForeignKey, tableInfo));
-        taskQueue.add(new EntityDtoTask(parentClassName, parentTableInfo));
+        taskQueue.add(new ControllerTask(className, false, configuration));
+        taskQueue.add(new ServiceTask(className, false, configuration));
+        taskQueue.add(new ServiceImplTask(className, false, configuration));
+        taskQueue.add(new DaoTask(className, false, configuration));
+        taskQueue.add(new MapperTask(tableName, className, parentTableName, parentClassName, foreignKey, parentForeignKey, relationalTableName, tableInfo, parentTableInfo, false, configuration));
+        taskQueue.add(new EntityTask(className, parentClassName, foreignKey, parentForeignKey, tableInfo, configuration));
+        taskQueue.add(new EntityDtoTask(className, parentClassName, foreignKey, parentForeignKey, tableInfo, configuration));
     }
 
     public static class Builder extends BaseBuilder {
         private Many2ManyInvoker invoker = new Many2ManyInvoker();
+
+        public Builder setConfiguration(Configuration configuration) {
+            invoker.setConfiguration(configuration);
+            return this;
+        }
 
         public Builder setTableName(String tableName) {
             invoker.setTableName(tableName);

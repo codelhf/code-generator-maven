@@ -4,8 +4,7 @@ import com.example.generator.code.generator.DaoGenerator;
 import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
 import com.example.generator.code.task.base.FreemarkerUtil;
-import com.example.generator.code.task.base.BaseTask;
-import com.example.generator.util.StringUtil;
+import com.example.generator.config.Configuration;
 import com.example.generator.util.StringUtil;
 import freemarker.template.TemplateException;
 
@@ -20,8 +19,8 @@ import java.util.Map;
  */
 public class DaoTask extends BaseTask {
 
-    public DaoTask(String className, boolean isView) {
-        super(className, isView);
+    public DaoTask(String className, boolean isView, Configuration configuration) {
+        super(className, isView, configuration);
     }
 
     @Override
@@ -35,9 +34,9 @@ public class DaoTask extends BaseTask {
         daoData.put("ClassName", className);
         daoData.put("className", StringUtil.firstToLowerCase(className));
 
-        String title = className;
+        String title = className + "Mapper";
         String description = className + "实体类";
-        daoData.put("Remark", DaoGenerator.generateRemark(title, description));
+        daoData.put("Remark", DaoGenerator.generateRemark(title, description, configuration));
 
         boolean useMapper = false;
         if (!useMapper) {
@@ -56,7 +55,7 @@ public class DaoTask extends BaseTask {
             String targetProject = configuration.getCommonGenerator().getDaoGenerator().getTargetProject();
             String targetPackage = configuration.getCommonGenerator().getDaoGenerator().getTargetPackage();
 
-            String filePath = FileUtil.getBasicProjectPath() + targetProject + FileUtil.package2Path(targetPackage) + "/base";
+            String filePath = FileUtil.getProjectPath(configuration.getConfigFilePath()) + targetProject + FileUtil.package2Path(targetPackage) + "/base";
             String fileName = "TableMapper.java";
             int type = FreemarkerUtil.FileTypeEnum.DAO_TABLE_MAPPER.getCode();
             FileUtil.generateToCode(filePath, fileName, daoData, type, true, true);
@@ -69,7 +68,7 @@ public class DaoTask extends BaseTask {
         String targetProject = configuration.getCommonGenerator().getDaoGenerator().getTargetProject();
         String targetPackage = configuration.getCommonGenerator().getDaoGenerator().getTargetPackage();
 
-        String filePath = FileUtil.getBasicProjectPath() + targetProject + FileUtil.package2Path(targetPackage);
+        String filePath = FileUtil.getProjectPath(configuration.getConfigFilePath()) + targetProject + FileUtil.package2Path(targetPackage);
         String fileName = className + "Mapper.java";
         int type = FreemarkerUtil.FileTypeEnum.DAO.getCode();
         boolean override = configuration.getCommonGenerator().isOverwrite();

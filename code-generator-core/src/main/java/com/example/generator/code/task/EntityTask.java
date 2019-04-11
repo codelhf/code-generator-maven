@@ -4,13 +4,8 @@ import com.example.generator.code.generator.EntityGenerator;
 import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
 import com.example.generator.code.task.base.FreemarkerUtil;
+import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
-import com.example.generator.code.generator.EntityGenerator;
-import com.example.generator.code.task.base.BaseTask;
-import com.example.generator.code.task.base.FileUtil;
-import com.example.generator.code.task.base.FreemarkerUtil;
-import com.example.generator.db.ColumnInfo;
-import com.example.generator.util.StringUtil;
 import com.example.generator.util.StringUtil;
 import freemarker.template.TemplateException;
 
@@ -29,22 +24,22 @@ public class EntityTask extends BaseTask {
     /**
      * 1.单表生成  2.多表时生成子表实体
      */
-    public EntityTask(String className, List<ColumnInfo> tableInfo) {
-        this(className, null, null, tableInfo);
+    public EntityTask(String className, List<ColumnInfo> tableInfo, Configuration configuration) {
+        this(className, null, null, tableInfo, configuration);
     }
 
     /**
      * 一对多关系生成主表实体
      */
-    public EntityTask(String className, String parentClassName, String foreignKey, List<ColumnInfo> tableInfo) {
-        this(className, parentClassName, foreignKey, null, tableInfo);
+    public EntityTask(String className, String parentClassName, String foreignKey, List<ColumnInfo> tableInfo, Configuration configuration) {
+        this(className, parentClassName, foreignKey, null, tableInfo, configuration);
     }
 
     /**
      * 多对多关系生成主表实体
      */
-    public EntityTask(String className, String parentClassName, String foreignKey, String parentForeignKey, List<ColumnInfo> tableInfo) {
-        super(className, parentClassName, foreignKey, parentForeignKey, tableInfo);
+    public EntityTask(String className, String parentClassName, String foreignKey, String parentForeignKey, List<ColumnInfo> tableInfo, Configuration configuration) {
+        super(className, parentClassName, foreignKey, parentForeignKey, tableInfo, configuration);
     }
 
     @Override
@@ -59,7 +54,7 @@ public class EntityTask extends BaseTask {
         entityData.put("EntityPackageName", configuration.getCommonGenerator().getModelGenerator().getTargetPackage());
         entityData.put("ClassName", className);
 
-        entityData.put("Remark", EntityGenerator.generateRemark(title, description));
+        entityData.put("Remark", EntityGenerator.generateRemark(title, description, configuration));
         boolean useLombok = configuration.getCommonGenerator().getModelGenerator().isUseLombok();
         if (useLombok) {
             entityData.put("Lombok", EntityGenerator.generateLombok());
@@ -90,7 +85,7 @@ public class EntityTask extends BaseTask {
         String targetProject = configuration.getCommonGenerator().getModelGenerator().getTargetProject();
         String targetPackage = configuration.getCommonGenerator().getModelGenerator().getTargetPackage();
 
-        String filePath = FileUtil.getBasicProjectPath() + targetProject + FileUtil.package2Path(targetPackage);
+        String filePath = FileUtil.getProjectPath(configuration.getConfigFilePath()) + targetProject + FileUtil.package2Path(targetPackage);
         String fileName = className + ".java";
         int type = FreemarkerUtil.FileTypeEnum.ENTITY.getCode();
         boolean override = configuration.getCommonGenerator().isOverwrite();

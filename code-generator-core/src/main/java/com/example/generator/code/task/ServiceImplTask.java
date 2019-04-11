@@ -4,12 +4,8 @@ import com.example.generator.code.generator.ServiceImplGenerator;
 import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
 import com.example.generator.code.task.base.FreemarkerUtil;
+import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
-import com.example.generator.code.generator.ServiceImplGenerator;
-import com.example.generator.code.task.base.BaseTask;
-import com.example.generator.code.task.base.FreemarkerUtil;
-import com.example.generator.db.ColumnInfo;
-import com.example.generator.util.StringUtil;
 import com.example.generator.util.StringUtil;
 import freemarker.template.TemplateException;
 
@@ -24,8 +20,8 @@ import java.util.Map;
  */
 public class ServiceImplTask extends BaseTask {
 
-    public ServiceImplTask(String className, boolean isView) {
-        super(className, isView);
+    public ServiceImplTask(String className, boolean isView, Configuration configuration) {
+        super(className, isView, configuration);
     }
 
     @Override
@@ -45,26 +41,26 @@ public class ServiceImplTask extends BaseTask {
 
         String title = className + "ServiceImpl";
         String description = className + "业务层";
-        serviceImplData.put("Remark", ServiceImplGenerator.generateRemark(title, description));
+        serviceImplData.put("Remark", ServiceImplGenerator.generateRemark(title, description, configuration));
 
         ColumnInfo primaryKeyColumnInfo = getPrimaryKeyColumnInfo(tableInfo);
-        serviceImplData.put("listRemark", ServiceImplGenerator.listRemark(className));
+        serviceImplData.put("listRemark", ServiceImplGenerator.listRemark(className, configuration));
         serviceImplData.put("list", ServiceImplGenerator.list());
-        serviceImplData.put("selectRemark", ServiceImplGenerator.selectRemark(className, primaryKeyColumnInfo));
+        serviceImplData.put("selectRemark", ServiceImplGenerator.selectRemark(className, primaryKeyColumnInfo, configuration));
         serviceImplData.put("select", ServiceImplGenerator.select(className, primaryKeyColumnInfo));
         if (!isView) {
-            serviceImplData.put("insertRemark", ServiceImplGenerator.insertRemark(className, clazzName));
+            serviceImplData.put("insertRemark", ServiceImplGenerator.insertRemark(className, clazzName, configuration));
             serviceImplData.put("insert", ServiceImplGenerator.insert(className, clazzName));
-            serviceImplData.put("updateRemark", ServiceImplGenerator.updateRemark(className, clazzName, primaryKeyColumnInfo));
+            serviceImplData.put("updateRemark", ServiceImplGenerator.updateRemark(className, clazzName, primaryKeyColumnInfo, configuration));
             serviceImplData.put("update", ServiceImplGenerator.update(className, clazzName, primaryKeyColumnInfo));
-            serviceImplData.put("deleteRemark", ServiceImplGenerator.deleteRemark(className, primaryKeyColumnInfo));
+            serviceImplData.put("deleteRemark", ServiceImplGenerator.deleteRemark(className, primaryKeyColumnInfo, configuration));
             serviceImplData.put("delete", ServiceImplGenerator.delete(primaryKeyColumnInfo));
         }
 
         String targetProject = configuration.getServiceGenerator().getTargetProject();
         String targetPackage = configuration.getServiceGenerator().getServiceImpl();
 
-        String filePath = FileUtil.getBasicProjectPath() + targetProject + FileUtil.package2Path(targetPackage);
+        String filePath = FileUtil.getProjectPath(configuration.getConfigFilePath()) + targetProject + FileUtil.package2Path(targetPackage);
         String fileName = className + "ServiceImpl.java";
         int type = FreemarkerUtil.FileTypeEnum.SERVICE_IMPL.getCode();
         boolean generate = configuration.getServiceGenerator().isGenerator();

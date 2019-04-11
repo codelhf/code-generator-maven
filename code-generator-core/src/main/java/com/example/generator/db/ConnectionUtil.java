@@ -18,16 +18,11 @@ public class ConnectionUtil {
     private Connection connection;
     private Statement statement;
     private ResultSet resultSet;
-    private Configuration configuration;
-
-    public ConnectionUtil(Configuration configuration) {
-        this.configuration = configuration;
-    }
 
     /**
      * 初始化数据库连接
      */
-    public boolean initConnection() {
+    public boolean initConnection(Configuration configuration) {
         try {
             Class.forName(DriverFactory.getDriver(configuration.getDataSource().getUrl()));
             String url = configuration.getDataSource().getUrl();

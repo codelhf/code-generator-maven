@@ -4,6 +4,7 @@ import com.example.generator.code.generator.ControllerGenerator;
 import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
 import com.example.generator.code.task.base.FreemarkerUtil;
+import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
 import com.example.generator.util.StringUtil;
 import freemarker.template.TemplateException;
@@ -19,8 +20,8 @@ import java.util.Map;
  */
 public class ControllerTask extends BaseTask {
 
-    public ControllerTask(String className, boolean isView) {
-        super(className, isView);
+    public ControllerTask(String className, boolean isView, Configuration configuration) {
+        super(className, isView, configuration);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class ControllerTask extends BaseTask {
 
         String title = className + "Controller";
         String description = className + "控制层";
-        controllerData.put("Remark", ControllerGenerator.generateRemark(title, description));
+        controllerData.put("Remark", ControllerGenerator.generateRemark(title, description, configuration));
 
         ColumnInfo primaryKeyColumn = getPrimaryKeyColumnInfo(tableInfo);
         controllerData.put("listRemark", ControllerGenerator.listRemark(className));
@@ -59,7 +60,7 @@ public class ControllerTask extends BaseTask {
         String targetProject = configuration.getServiceGenerator().getTargetProject();
         String targetPackage = configuration.getServiceGenerator().getController();
 
-        String filePath = FileUtil.getBasicProjectPath() + targetProject + FileUtil.package2Path(targetPackage);
+        String filePath = FileUtil.getProjectPath(configuration.getConfigFilePath()) + targetProject + FileUtil.package2Path(targetPackage);
         String fileName = className + "Controller.java";
 
         int type = FreemarkerUtil.FileTypeEnum.CONTROLLER.getCode();

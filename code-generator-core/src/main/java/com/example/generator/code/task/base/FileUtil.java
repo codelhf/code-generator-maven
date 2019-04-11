@@ -2,8 +2,6 @@ package com.example.generator.code.task.base;
 
 import com.example.generator.util.Messages;
 import com.example.generator.util.StringUtil;
-import com.example.generator.util.Messages;
-import com.example.generator.util.StringUtil;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
@@ -65,28 +63,28 @@ public class FileUtil {
     /**
      * 获取项目路径
      */
-    public static String getBasicProjectPath() {
-        String path = new File(FileUtil.class.getClassLoader().getResource("").getFile()).getPath() + File.separator;
+    public static String getProjectPath(String configFilePath) {
+//        String path = new File(FileUtil.class.getClassLoader().getResource("").getFile()).getPath() + File.separator;
         StringBuilder sb = new StringBuilder();
-        sb.append(path, 0, path.indexOf("target")).append("src").append(File.separator).append("main").append(File.separator);
+        sb.append(configFilePath, 0, configFilePath.indexOf("src"));
         return sb.toString();
     }
 
     /**
      * 获取源码路径
      */
-    public static String getSourcePath() {
+    public static String getSourcePath(String configFilePath) {
         StringBuilder sb = new StringBuilder();
-        sb.append(getBasicProjectPath()).append("java").append(File.separator);
+        sb.append(getProjectPath(configFilePath)).append("src").append(File.separator).append("main").append(File.separator).append("java").append(File.separator);
         return sb.toString();
     }
 
     /**
      * 获取资源文件路径
      */
-    public static String getResourcePath() {
+    public static String getResourcePath(String configFilePath) {
         StringBuilder sb = new StringBuilder();
-        sb.append(getBasicProjectPath()).append("resources").append(File.separator);
+        sb.append(getProjectPath(configFilePath)).append("src").append(File.separator).append("main").append(File.separator).append("resources").append(File.separator);
         return sb.toString();
     }
 
@@ -131,8 +129,7 @@ public class FileUtil {
         }
 
         if (answer == null) {
-            throw new RuntimeException(
-                    Messages.getString("RuntimeError.3", directory.getAbsolutePath()));
+            throw new RuntimeException(Messages.getString("RuntimeError.3", directory.getAbsolutePath()));
         }
         return answer;
     }

@@ -67,7 +67,7 @@ public class CodeGenerator {
             String domainName = tableConfiguration.getDomainName();
             List<ColumnOverride> columnOverrideList = tableConfiguration.getColumnOverrides();
             GeneratedKey generatedKey = tableConfiguration.getGeneratedKey();
-            single(configuration, tableName, domainName, columnOverrideList, generatedKey, false);
+            single(tableName, domainName, columnOverrideList, generatedKey, false, configuration);
         }
 
         List<ViewConfiguration> viewConfigurationList = configuration.getViewsConfiguration();
@@ -75,15 +75,14 @@ public class CodeGenerator {
             String viewName = viewConfiguration.getViewName();
             String domainName = viewConfiguration.getDomainName();
             List<ColumnOverride> columnOverrideList = viewConfiguration.getColumnOverrides();
-            single(configuration, viewName, domainName, columnOverrideList, null, true);
+            single(viewName, domainName, columnOverrideList, null, true, configuration);
         }
         callback.done();
     }
 
-    public static void single(Configuration configuration,
-                              String tableName, String className,
-                              List<ColumnOverride> columnOverrideList,
-                              GeneratedKey generatedKey, boolean isView) {
+    public static void single(String tableName, String className,
+                              List<ColumnOverride> columnOverrideList, GeneratedKey generatedKey,
+                              boolean isView, Configuration configuration) {
         Invoker invoker = new SingleInvoker.Builder()
                 .configuration(configuration)
                 .tableName(tableName)
@@ -97,8 +96,9 @@ public class CodeGenerator {
 
     public static void one2many(String tableName, String className,
                                 String parentTableName, String parentClassName,
-                                String foreignKey) {
+                                String foreignKey, Configuration configuration) {
         Invoker invoker = new One2ManyInvoker.Builder()
+                .setConfiguration(configuration)
                 .setTableName(tableName)
                 .setClassName(className)
                 .setParentTableName(parentTableName)
@@ -110,9 +110,10 @@ public class CodeGenerator {
 
     public static void many2many(String tableName, String className,
                                  String parentTableName, String parentClassName,
-                                 String relationTableName,
-                                 String foreignKey, String parentForeignKey) {
+                                 String relationTableName, String foreignKey,
+                                 String parentForeignKey, Configuration configuration) {
         Invoker invoker = new Many2ManyInvoker.Builder()
+                .setConfiguration(configuration)
                 .setTableName(tableName)
                 .setClassName(className)
                 .setParentTableName(parentTableName)

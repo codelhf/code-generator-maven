@@ -3,8 +3,6 @@ package com.example.generator.code.task;
 import com.example.generator.code.task.base.FileUtil;
 import com.example.generator.code.task.base.FreemarkerUtil;
 import com.example.generator.config.Configuration;
-import com.example.generator.config.util.ConfigUtil;
-import com.example.generator.util.DateTimeUtil;
 import com.example.generator.util.DateTimeUtil;
 import freemarker.template.TemplateException;
 
@@ -22,8 +20,8 @@ public class CommonTask {
 
     private Configuration configuration;
 
-    public CommonTask(Configuration config) {
-        this.configuration = config;
+    public CommonTask(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     public void run() throws IOException, TemplateException {
@@ -39,7 +37,7 @@ public class CommonTask {
         commonData.put("Author", author);
         commonData.put("CreateTime", createTime);
 
-        String filePath = FileUtil.getSourcePath() + FileUtil.package2Path(basePackageName + ".common");
+        String filePath = FileUtil.getSourcePath(configuration.getConfigFilePath()) + FileUtil.package2Path(basePackageName + ".common");
 
         String fileName = "ExceptionResolver.java";
         int type = FreemarkerUtil.FileTypeEnum.EXCEPTION_RESOLVER.getCode();

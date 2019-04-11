@@ -1,9 +1,6 @@
 package com.example.generator.code.generator.base;
 
-import com.example.generator.code.BaseInfo;
 import com.example.generator.config.Configuration;
-import com.example.generator.config.util.ConfigUtil;
-import com.example.generator.util.DateTimeUtil;
 import com.example.generator.util.DateTimeUtil;
 
 import java.util.Date;
@@ -14,7 +11,7 @@ import java.util.List;
  * @Auther: liuhf
  * @CreateTime: 2019/3/23 10:29
  */
-public class BaseGenerator extends BaseInfo {
+public class BaseGenerator {
 
     /**
      * 返回类类名
@@ -28,10 +25,9 @@ public class BaseGenerator extends BaseInfo {
      * @Author: ${author}
      * @CreateTime: ${createTime}
      */
-    public static String generateRemark(String title, String description) {
-        BaseGenerator baseGenerator = new BaseGenerator();
-        String company = baseGenerator.configuration.getCommentGenerator().getCompany();
-        String author = baseGenerator.configuration.getCommentGenerator().getAuthor();
+    public static String generateRemark(String title, String description, Configuration configuration) {
+        String company = configuration.getCommentGenerator().getCompany();
+        String author = configuration.getCommentGenerator().getAuthor();
         String createTime = DateTimeUtil.dateToStr(new Date());
         StringBuilder sb = new StringBuilder();
         sb.append("/**\n");
@@ -55,10 +51,10 @@ public class BaseGenerator extends BaseInfo {
      * @return
      */
     public static String generateFunctionRemark(String title, String description,
-                                                List<String> params, String returns) {
-        BaseGenerator baseGenerator = new BaseGenerator();
-        String company = baseGenerator.configuration.getCommentGenerator().getCompany();
-        String author = baseGenerator.configuration.getCommentGenerator().getAuthor();
+                                                List<String> params, String returns,
+                                                Configuration configuration) {
+        String company = configuration.getCommentGenerator().getCompany();
+        String author = configuration.getCommentGenerator().getAuthor();
         String createTime = DateTimeUtil.dateToStr(new Date());
         StringBuilder sb = new StringBuilder();
         sb.append("/**\n");

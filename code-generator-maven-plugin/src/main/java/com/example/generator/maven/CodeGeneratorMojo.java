@@ -70,7 +70,6 @@ public class CodeGeneratorMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        System.out.println("hello");
         saveClassLoader();
         LogFactory.setLogFactory(new MavenLogFactory(this));
         calculateClassPath();
@@ -94,10 +93,9 @@ public class CodeGeneratorMojo extends AbstractMojo {
 //        }
 //        ClassLoader cl = ClassloaderUtil.getCustomClassloader(resourceDirectories);
 //        ObjectFactory.addExternalClassLoader(cl);
+//        ShellCallback callback = new MavenShellCallback(this);
         ConfigUtil configUtil = new ConfigUtil();
         Configuration config = configUtil.getConfiguration(configurationFile);
-
-//        ShellCallback callback = new MavenShellCallback(this);
         CodeGenerator codeGenerator = new CodeGenerator(config);
         codeGenerator.generate(new MavenProgressCallback(getLog(), true));
 
