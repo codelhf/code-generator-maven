@@ -31,8 +31,9 @@ public abstract class BaseTask implements Serializable {
      *
      * @param className
      */
-    public BaseTask(String className, boolean isView, Configuration configuration) {
+    public BaseTask(String className, List<ColumnInfo> tableInfo, boolean isView, Configuration configuration) {
         this.className = className;
+        this.tableInfo = tableInfo;
         this.isView = isView;
         this.configuration = configuration;
     }

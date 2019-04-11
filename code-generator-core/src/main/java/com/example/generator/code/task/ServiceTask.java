@@ -11,6 +11,7 @@ import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,8 +21,8 @@ import java.util.Map;
  */
 public class ServiceTask extends BaseTask {
 
-    public ServiceTask(String className, boolean isView, Configuration configuration) {
-        super(className, isView, configuration);
+    public ServiceTask(String className, List<ColumnInfo> tableInfo, boolean isView, Configuration configuration) {
+        super(className, tableInfo, isView, configuration);
     }
 
     @Override
@@ -31,7 +32,9 @@ public class ServiceTask extends BaseTask {
         Map<String, String> serviceData = new HashMap<>();
 
         serviceData.put("ServicePackageName", configuration.getServiceGenerator().getService());
-        serviceData.put("EntityPackageName", configuration.getCommonGenerator().getModelGenerator().getTargetPackage());
+        serviceData.put("BasePackageName", configuration.getCommentGenerator().getBasePackageName());
+        serviceData.put("ResponseClass", ServiceGenerator.responseClass);
+        serviceData.put("EntityDTOPackageName", configuration.getCommonGenerator().getDtoGenerator().getTargetPackage());
         String clazzName = StringUtil.firstToLowerCase(className);
         serviceData.put("ClassName", className);
         serviceData.put("className", clazzName);
@@ -58,7 +61,7 @@ public class ServiceTask extends BaseTask {
         String targetPackage = configuration.getServiceGenerator().getService();
 
         String filePath = FileUtil.getProjectPath(configuration.getConfigFilePath()) + targetProject + FileUtil.package2Path(targetPackage);
-        String fileName = className + "Service.java";
+        String fileName = "I" + className + "Service.java";
         int type = FreemarkerUtil.FileTypeEnum.SERVICE.getCode();
         boolean generate = configuration.getServiceGenerator().isGenerator();
         // 生成Service文件

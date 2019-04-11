@@ -1,50 +1,48 @@
 package ${DaoPackageName};
 
+<#if baseMapper??>
 import ${DaoPackageName}.base.${baseMapper};
+</#if>
 import ${EntityPackageName}.${ClassName};
-import org.apache.ibatis.annotations.Mapper;
+//import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-<#if Remark? if_exists>
+<#if Remark??>
 ${Remark}
 </#if>
-@Mapper
-public interface ${ClassName}Mapper <#if baseMapper? if_exists>extends ${baseMapper}<${ClassName}></#if> {
-//    int deleteByPrimaryKey(String id);
+//@Mapper
+public interface ${ClassName}Mapper <#if baseMapper??>extends ${baseMapper}<${ClassName}></#if> {
 
-//    int insert(Interface record);
-
-//    int insertSelective(Interface record);
-
-//    Interface selectByPrimaryKey(String id);
-
-//    int updateByPrimaryKeySelective(Interface record);
-
-//    int updateByPrimaryKey(Interface record);
-
-<#if selectAllListByKeyword? if_exists>
+<#if selectAllListByKeyword??>
     ${selectAllListByKeyword}
 </#if>
-<#if selectPageListByKeyword? if_exists>
+
+<#if selectPageListByKeyword??>
     ${selectPageListByKeyword}
 </#if>
-<#if selectByPrimaryKey? if_exists>
+
+<#if selectByPrimaryKey??>
     ${selectByPrimaryKey}
 </#if>
-<#if deleteByPrimaryKey? if_exists>
+
+<#if deleteByPrimaryKey??>
     ${deleteByPrimaryKey}
 </#if>
-<#if insert? if_exists>
+
+<#if insert??>
     ${insert}
 </#if>
-<#if insertSelective? if_exists>
+
+<#if insertSelective??>
     ${insertSelective}
 </#if>
-<#if updateByPrimaryKeySelective? if_exists>
+
+<#if updateByPrimaryKeySelective??>
     ${updateByPrimaryKeySelective}
 </#if>
-<#if updateByPrimaryKey? if_exists>
+
+<#if updateByPrimaryKey??>
     ${updateByPrimaryKey}
 </#if>
 }

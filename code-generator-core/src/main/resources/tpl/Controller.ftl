@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
 
-import java.util.List;
+import java.util.Map;
 
-<#if Remark? if_exists>
-    ${Remark}
+<#if Remark??>
+${Remark}
 </#if>
 @RestController
 @RequestMapping(value = "/${className}")
@@ -19,34 +19,38 @@ public class ${ClassName}Controller {
     @Autowired
     private I${ClassName}Service i${ClassName}Service;
 
-<#if listRemark? if_exists>
+<#if listRemark??>
     ${listRemark}
 </#if>
-<#if list? if_exists>
+<#if list??>
     ${list}
 </#if>
-<#if insert? if_exists>
-    ${insert}
-</#if>
-<#if insertRemark? if_exists>
+
+<#if insertRemark??>
     ${insertRemark}
 </#if>
-<#if selectRemark? if_exists>
+<#if insert??>
+    ${insert}
+</#if>
+
+<#if selectRemark??>
     ${selectRemark}
 </#if>
-<#if select? if_exists>
+<#if select??>
     ${select}
 </#if>
-<#if update? if_exists>
-    ${update}
-</#if>
-<#if updateRemark? if_exists>
+
+<#if updateRemark??>
     ${updateRemark}
 </#if>
-<#if deleteRemark? if_exists>
+<#if update??>
+    ${update}
+</#if>
+
+<#if deleteRemark??>
     ${deleteRemark}
 </#if>
-<#if delete? if_exists>
+<#if delete??>
     ${delete}
 </#if>
 

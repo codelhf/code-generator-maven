@@ -52,7 +52,6 @@ public class SingleInvoker extends BaseInvoker {
                     if (column.equals(columnOverride.getColumnName())) {
                         columnInfo.setJdbcType(columnOverride.getJdbcType());
                         columnInfo.setJavaType(columnOverride.getJavaType());
-                        columnInfo.setPropertyName(columnOverride.getJavaProperty());
                         break;
                     }
                 }
@@ -63,10 +62,10 @@ public class SingleInvoker extends BaseInvoker {
 
     @Override
     protected void initTasks() {
-        taskQueue.add(new ControllerTask(className, isView, configuration));
-        taskQueue.add(new ServiceTask(className, isView, configuration));
-        taskQueue.add(new ServiceImplTask(className, isView, configuration));
-        taskQueue.add(new DaoTask(className, isView, configuration));
+        taskQueue.add(new ControllerTask(className, tableInfo, isView, configuration));
+        taskQueue.add(new ServiceTask(className, tableInfo, isView, configuration));
+        taskQueue.add(new ServiceImplTask(className, tableInfo, isView, configuration));
+        taskQueue.add(new DaoTask(className, tableInfo, isView, configuration));
         taskQueue.add(new MapperTask(className, tableName, tableInfo, isView, configuration));
         taskQueue.add(new EntityTask(className, tableInfo, configuration));
         taskQueue.add(new EntityDtoTask(className, tableInfo, configuration));

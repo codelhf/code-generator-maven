@@ -5,11 +5,14 @@ import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
 import com.example.generator.code.task.base.FreemarkerUtil;
 import com.example.generator.config.Configuration;
+import com.example.generator.db.ColumnInfo;
 import com.example.generator.util.StringUtil;
 import freemarker.template.TemplateException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,8 +22,8 @@ import java.util.Map;
  */
 public class DaoTask extends BaseTask {
 
-    public DaoTask(String className, boolean isView, Configuration configuration) {
-        super(className, isView, configuration);
+    public DaoTask(String className, List<ColumnInfo> tableInfo, boolean isView, Configuration configuration) {
+        super(className, tableInfo, isView, configuration);
     }
 
     @Override
@@ -41,7 +44,7 @@ public class DaoTask extends BaseTask {
         boolean useMapper = false;
         if (!useMapper) {
             daoData.put("selectAllListByKeyword", DaoGenerator.selectAllListByKeyword(className));
-            daoData.put("selectPageListByKeyword", DaoGenerator.selectPageListByKeyword(className, null));
+            daoData.put("selectPageListByKeyword", DaoGenerator.selectPageListByKeyword(className, new ArrayList<>()));
             daoData.put("selectByPrimaryKey", DaoGenerator.selectByPrimaryKey(className, tableInfo));
             if (!isView) {
                 daoData.put("deleteByPrimaryKey", DaoGenerator.deleteByPrimaryKey(tableInfo));

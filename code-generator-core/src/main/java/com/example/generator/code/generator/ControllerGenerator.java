@@ -32,11 +32,11 @@ public class ControllerGenerator extends BaseGenerator {
      */
     public static String list(String ClassName) {
         StringBuilder sb = new StringBuilder();
-        sb.append("@GetMapping(\"\")\n");
-        sb.append("public ").append(responseClass).append("<Object> list(@RequestParam(\"pageNum\") Integer pageNum,\n");
-        sb.append("                                   @RequestParam(\"pageSize\") Integer pageSize,\n");
-        sb.append("                                   @RequestParam(\"params\") Map<String, String> params) {\n");
-        sb.append("    return i").append(ClassName).append("Service.list(pageNum, pageSize, params);\n");
+        sb.append("@GetMapping(\"\")\n    ");
+        sb.append("public ").append(responseClass).append("<Object> list(@RequestParam(\"pageNum\") Integer pageNum,\n    ");
+        sb.append("                                   @RequestParam(\"pageSize\") Integer pageSize,\n    ");
+        sb.append("                                   @RequestParam(\"params\") Map<String, String> params) {\n    ");
+        sb.append("    return i").append(ClassName).append("Service.list(pageNum, pageSize, params);\n    ");
         sb.append("}");
         return sb.toString();
     }
@@ -56,9 +56,9 @@ public class ControllerGenerator extends BaseGenerator {
      */
     public static String insert(String ClassName, String className) {
         StringBuilder sb = new StringBuilder();
-        sb.append("@PostMapping(\"\")\n");
-        sb.append("public ").append(responseClass).append("<String> insert(@RequestBody ").append(ClassName).append("DTO ").append(className).append("DTO) {\n");
-        sb.append("    return i").append(ClassName).append("Service.insert(").append(className).append("DTO);\n");
+        sb.append("@PostMapping(\"\")\n    ");
+        sb.append("public ").append(responseClass).append("<String> insert(@RequestBody ").append(ClassName).append("DTO ").append(className).append("DTO) {\n    ");
+        sb.append("    return i").append(ClassName).append("Service.insert(").append(className).append("DTO);\n    ");
         sb.append("}");
         return sb.toString();
     }
@@ -82,9 +82,9 @@ public class ControllerGenerator extends BaseGenerator {
         String javaType = primaryKeyColumn.getJavaType();
         String propertyName = primaryKeyColumn.getPropertyName();
         StringBuilder sb = new StringBuilder();
-        sb.append("@GetMapping(\"/{").append(propertyName).append("}\")\n");
-        sb.append("public ").append(responseClass).append("<").append(ClassName).append("DTO> select(@PathVariable(\"").append(propertyName).append("\") ").append(javaType).append(" ").append(propertyName).append(")\n");
-        sb.append("    return i").append(ClassName).append("Service.get(").append(propertyName).append(");\n");
+        sb.append("@GetMapping(\"/{").append(propertyName).append("}\")\n    ");
+        sb.append("public ").append(responseClass).append("<").append(ClassName).append("DTO> select(@PathVariable(\"").append(propertyName).append("\") ").append(javaType).append(" ").append(propertyName).append(") {\n    ");
+        sb.append("    return i").append(ClassName).append("Service.select(").append(propertyName).append(");\n    ");
         sb.append("}");
         return sb.toString();
     }
@@ -110,10 +110,10 @@ public class ControllerGenerator extends BaseGenerator {
         String javaType = primaryKeyColumn.getJavaType();
         String propertyName = primaryKeyColumn.getPropertyName();
         StringBuilder sb = new StringBuilder();
-        sb.append("@PutMapping(\"/{").append(propertyName).append("}\")\n");
-        sb.append("public ").append(responseClass).append("<String> update(@PathVariable(\"").append(propertyName).append("\") ").append(javaType).append(" ").append(propertyName).append(",\n");
-        sb.append("                                     @RequestBody ").append(ClassName).append("DTO ").append(className).append("DTO) {\n");
-        sb.append("    return i").append(ClassName).append("Service.update(").append(propertyName).append(", ").append(className).append("DTO);\n");
+        sb.append("@PutMapping(\"/{").append(propertyName).append("}\")\n    ");
+        sb.append("public ").append(responseClass).append("<String> update(@PathVariable(\"").append(propertyName).append("\") ").append(javaType).append(" ").append(propertyName).append(",\n    ");
+        sb.append("                                     @RequestBody ").append(ClassName).append("DTO ").append(className).append("DTO) {\n    ");
+        sb.append("    return i").append(ClassName).append("Service.update(").append(propertyName).append(", ").append(className).append("DTO);\n    ");
         sb.append("}");
         return sb.toString();
     }
@@ -122,7 +122,7 @@ public class ControllerGenerator extends BaseGenerator {
         String propertyName = primaryKeyColumn.getPropertyName();
         String value = "批量删除" + ClassName + "对象";
         List<String> params = new ArrayList<>();
-        params.add("name = \""+ propertyName +"s\", value = \""+ ClassName +"主键字符串,用\",\"分隔\", dataType = String, required = true");
+        params.add("name = \""+ propertyName +"s\", value = \""+ ClassName +"主键字符串,用 , 分隔\", dataType = \"String\", required = true");
         return generatedSwagger2(value, params);
     }
 
@@ -135,9 +135,9 @@ public class ControllerGenerator extends BaseGenerator {
     public static String delete(String ClassName, ColumnInfo primaryKeyColumn) {
         String primaryKeys = primaryKeyColumn.getPropertyName() + "s";
         StringBuilder sb = new StringBuilder();
-        sb.append("@DeleteMapping(\"/{").append(primaryKeys).append("}\")\n");
-        sb.append("public ").append(responseClass).append("<String> delete(@PathVariable(\"").append(primaryKeys).append("\") String ").append(primaryKeys).append(") {\n");
-        sb.append("    return i").append(ClassName).append("Service.delete(").append(primaryKeys).append(");\n");
+        sb.append("@DeleteMapping(\"/{").append(primaryKeys).append("}\")\n    ");
+        sb.append("public ").append(responseClass).append("<String> delete(@PathVariable(\"").append(primaryKeys).append("\") String ").append(primaryKeys).append(") {\n    ");
+        sb.append("    return i").append(ClassName).append("Service.delete(").append(primaryKeys).append(");\n    ");
         sb.append("}");
         return sb.toString();
     }

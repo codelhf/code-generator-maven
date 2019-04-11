@@ -14,7 +14,7 @@ public class DaoGenerator extends BaseGenerator {
 
     public static String selectAllListByKeyword(String className) {
         StringBuilder sb = new StringBuilder();
-        sb.append("List<").append(className).append("> selectAllListByKeyword()");
+        sb.append("List<").append(className).append("> selectAllListByKeyword();");
         return sb.toString();
     }
 
@@ -58,25 +58,25 @@ public class DaoGenerator extends BaseGenerator {
 
     public static String insert(String className) {
         StringBuilder sb = new StringBuilder();
-        sb.append("int insert(").append(className).append("record);");
+        sb.append("int insert(").append(className).append(" record);");
         return sb.toString();
     }
 
     public static String insertSelective(String className) {
         StringBuilder sb = new StringBuilder();
-        sb.append("int insertSelective(").append(className).append("record);");
+        sb.append("int insertSelective(").append(className).append(" record);");
         return sb.toString();
     }
 
     public static String updateByPrimaryKeySelective(String className) {
         StringBuilder sb = new StringBuilder();
-        sb.append("int updateByPrimaryKeySelective(").append(className).append("record);");
+        sb.append("int updateByPrimaryKeySelective(").append(className).append(" record);");
         return sb.toString();
     }
 
     public static String updateByPrimaryKey(String className) {
         StringBuilder sb = new StringBuilder();
-        sb.append("int updateByPrimaryKey(").append(className).append("record);");
+        sb.append("int updateByPrimaryKey(").append(className).append(" record);");
         return sb.toString();
     }
 }

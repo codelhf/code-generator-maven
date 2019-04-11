@@ -23,10 +23,10 @@ public class One2ManyInvoker extends BaseInvoker {
 
     @Override
     protected void initTasks() {
-        taskQueue.add(new ControllerTask(className, false, configuration));
-        taskQueue.add(new ServiceTask(className,false, configuration));
-        taskQueue.add(new ServiceImplTask(className, false, configuration));
-        taskQueue.add(new DaoTask(className, false, configuration));
+        taskQueue.add(new ControllerTask(className, tableInfo,false, configuration));
+        taskQueue.add(new ServiceTask(className, tableInfo,false, configuration));
+        taskQueue.add(new ServiceImplTask(className, tableInfo,false, configuration));
+        taskQueue.add(new DaoTask(className, tableInfo,false, configuration));
         taskQueue.add(new MapperTask(tableName, className, parentTableName, parentClassName, foreignKey, tableInfo, parentTableInfo, false, configuration));
         taskQueue.add(new EntityTask(className, parentClassName, foreignKey, tableInfo, configuration));
         taskQueue.add(new EntityDtoTask(className, parentClassName, foreignKey, tableInfo, configuration));

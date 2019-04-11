@@ -48,10 +48,10 @@
         <property name="generator" value="true"/>
         <!--是否允许子包，即targetPackage.schemaName.tableName-->
         <property name="enableSubPackages" value="false"/>
-        <property name="targetProject" value="./src/main/java"/>
-        <property name="controller" value="com.example.generator.dome.controller"/>
-        <property name="service" value="com.example.generator.dome.service"/>
-        <property name="serviceImpl" value="com.example.generator.dome.service.impl"/>
+        <property name="targetProject" value="./src/main/java/"/>
+        <property name="controller" value="com.example.generator.demo.controller"/>
+        <property name="service" value="com.example.generator.demo.service"/>
+        <property name="serviceImpl" value="com.example.generator.demo.service.impl"/>
     </serviceGenerator>
     <!--dao层开始要和service能够分开,提供是否重写文件功能-->
     <commonGenerator>
@@ -60,8 +60,8 @@
         <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
         <property name="enableSubPackages" value="false"/>
         <dtoGenerator>
-            <property name="targetProject" value="./src/main/java"/>
-            <property name="targetPackage" value="com.example.generator.dome.service.dto"/>
+            <property name="targetProject" value="./src/main/java/"/>
+            <property name="targetPackage" value="com.example.generator.demo.dto"/>
             <!--是否对dto添加全参构造函数, 添加全参构造函数时需添加无参构造-->
             <property name="allConstructor" value="true"/>
             <!--是否对dto中char类型的列进行trim操作-->
@@ -72,8 +72,8 @@
             <property name="useLombok" value="false"/>
         </dtoGenerator>
         <modelGenerator>
-            <property name="targetProject" value="./src/main/java"/>
-            <property name="targetPackage" value="com.example.generator.dome.po"/>
+            <property name="targetProject" value="./src/main/java/"/>
+            <property name="targetPackage" value="com.example.generator.demo.po"/>
             <!--是否对model添加全参构造函数, 添加全参构造函数时需添加无参构造-->
             <property name="allConstructor" value="true"/>
             <!--是否对model中char类型的列进行trim操作-->
@@ -90,27 +90,27 @@
             type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
         -->
         <daoGenerator>
-            <property name="targetProject" value="./src/main/java"/>
-            <property name="targetPackage" value="com.example.generator.dome.dao"/>
+            <property name="targetProject" value="./src/main/java/"/>
+            <property name="targetPackage" value="com.example.generator.demo.dao"/>
         </daoGenerator>
         <mapperGenerator>
-            <property name="targetProject" value="./src/main/resources"/>
+            <property name="targetProject" value="./src/main/resources/"/>
             <property name="targetPackage" value="mappers"/>
         </mapperGenerator>
     </commonGenerator>
 
     <!-- 数据库对应数据表-->
     <tablesConfiguration>
-        <table tableName="lottery_people" domainObjectName="People">
+        <table tableName="lottery_people" domainName="People">
         </table>
-        <table tableName="lottery_prize" domainObjectName="Prize">
+        <table tableName="lottery_prize" domainName="Prize">
             <columnOverride columnName="image" jdbcType="VARCHAR"/>
         </table>
     </tablesConfiguration>
 
     <!-- 数据库对应数据视图-->
     <viewsConfiguration>
-        <view viewName="lottery_result" domainObjectName="Result">
+        <view viewName="lottery_result" domainName="Result">
         </view>
     </viewsConfiguration>
 

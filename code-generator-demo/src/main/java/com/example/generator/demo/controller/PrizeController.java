@@ -1,0 +1,77 @@
+package com.example.generator.demo.controller;
+
+import com.example.generator.demo.common.ServerResponse;
+import com.example.generator.demo.dto.PrizeDTO;
+import com.example.generator.demo.service.IPrizeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.*;
+
+import java.util.Map;
+
+/**
+ * @Title: PrizeController
+ * @Description: Prize控制层
+ * @Company: example
+ * @Author: liuhf
+ * @CreateTime: 2019-04-11 16:10:39
+ */
+@RestController
+@RequestMapping(value = "/prize")
+public class PrizeController {
+
+    @Autowired
+    private IPrizeService iPrizeService;
+
+    @ApiOperation(value = "查询Prize列表")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "pageNum", value = "分页当前页码", dataType = "Integer", required = false),
+        @ApiImplicitParam(name = "pageSize", value = "分页一页大小", dataType = "Integer", required = false),
+        @ApiImplicitParam(name = "params", value = "其他查询参数", dataType = "Map", required = false),
+        })
+    @GetMapping("")
+    public ServerResponse<Object> list(@RequestParam("pageNum") Integer pageNum,
+                                       @RequestParam("pageSize") Integer pageSize,
+                                       @RequestParam("params") Map<String, String> params) {
+        return iPrizeService.list(pageNum, pageSize, params);
+    }
+
+    @ApiOperation(value = "保存Prize对象")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "prizeDTO", value = "PrizeDTO对象", dataType = "PrizeDTO", required = true),
+        })
+    @PostMapping("")
+    public ServerResponse<String> insert(@RequestBody PrizeDTO prizeDTO) {
+        return iPrizeService.insert(prizeDTO);
+    }
+
+    @ApiOperation(value = "查询Prize对象")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "id", value = "Prize主键", dataType = "int", required = true),
+        })
+    @GetMapping("/{id}")
+    public ServerResponse<PrizeDTO> select(@PathVariable("id") int id) {
+        return iPrizeService.select(id);
+    }
+
+    @ApiOperation(value = "更新Prize对象")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "id", value = "Prize主键", dataType = "int", required = true),
+        @ApiImplicitParam(name = "prizeDTO", value = "PrizeDTO对象", dataType = "PrizeDTO", required = true),
+        })
+    @PutMapping("/{id}")
+    public ServerResponse<String> update(@PathVariable("id") int id,
+                                         @RequestBody PrizeDTO prizeDTO) {
+        return iPrizeService.update(id, prizeDTO);
+    }
+
+    @ApiOperation(value = "批量删除Prize对象")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "ids", value = "Prize主键字符串,用","分隔", dataType = String, required = true),
+        })
+    @DeleteMapping("/{ids}")
+    public ServerResponse<String> delete(@PathVariable("ids") String ids) {
+        return iPrizeService.delete(ids);
+    }
+
+}

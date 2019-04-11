@@ -103,9 +103,9 @@ public class EntityGenerator extends BaseGenerator {
         }
         sb.append(") { \n");
         for (int i = 0; i < length; i++) {
-            sb.append("    this.").append(tableInfo.get(i).getPropertyName()).append(" = ").append(tableInfo.get(i).getPropertyName()).append("; \n");
+            sb.append("        this.").append(tableInfo.get(i).getPropertyName()).append(" = ").append(tableInfo.get(i).getPropertyName()).append("; \n");
         }
-        sb.append("}");
+        sb.append("    }");
         return sb.toString();
     }
 
@@ -123,11 +123,11 @@ public class EntityGenerator extends BaseGenerator {
                 sb.append("    ");
             }
             if (tableInfo.get(i).getType() == Types.BIT || tableInfo.get(i).getType() == Types.TINYINT) {
-                sb.append("    ").append("public ").append(tableInfo.get(i).getJavaType()).append(" is").append(StringUtil.firstToUpperCase(tableInfo.get(i).getPropertyName())).append("(){ return ").append(tableInfo.get(i).getPropertyName()).append(";} \n");
+                sb.append("public ").append(tableInfo.get(i).getJavaType()).append(" is").append(StringUtil.firstToUpperCase(tableInfo.get(i).getPropertyName())).append("(){ return ").append(tableInfo.get(i).getPropertyName()).append(";} \n\n");
             } else {
-                sb.append("    ").append("public ").append(tableInfo.get(i).getJavaType()).append(" get").append(StringUtil.firstToUpperCase(tableInfo.get(i).getPropertyName())).append("(){ return ").append(tableInfo.get(i).getPropertyName()).append(";} \n");
+                sb.append("public ").append(tableInfo.get(i).getJavaType()).append(" get").append(StringUtil.firstToUpperCase(tableInfo.get(i).getPropertyName())).append("(){ return ").append(tableInfo.get(i).getPropertyName()).append(";} \n\n");
             }
-            sb.append("public void set").append(StringUtil.firstToUpperCase(tableInfo.get(i).getPropertyName())).append(" (").append(tableInfo.get(i).getJavaType()).append(" ").append(tableInfo.get(i).getPropertyName()).append(") {this.").append(tableInfo.get(i).getPropertyName()).append(" = ").append(tableInfo.get(i).getPropertyName()).append(";} \n");
+            sb.append("    public void set").append(StringUtil.firstToUpperCase(tableInfo.get(i).getPropertyName())).append(" (").append(tableInfo.get(i).getJavaType()).append(" ").append(tableInfo.get(i).getPropertyName()).append(") {this.").append(tableInfo.get(i).getPropertyName()).append(" = ").append(tableInfo.get(i).getPropertyName()).append(";}\n\n");
         }
         return sb.toString();
     }

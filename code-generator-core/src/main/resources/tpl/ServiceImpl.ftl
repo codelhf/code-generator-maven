@@ -1,55 +1,57 @@
 package ${ServiceImplPackageName};
 
-import ${DaoPackageName}.${ClassName}Mapper;
+import ${BasePackageName}.common.${ResponseClass};
 import ${EntityPackageName}.${ClassName};
 import ${EntityDTOPackageName}.${ClassName}DTO;
+import ${ServicePackageName}.I${ClassName}Service;
+import ${DaoPackageName}.${ClassName}Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
-<#if Remark? if_exists>
+<#if Remark??>
 ${Remark}
 </#if>
 @Service
-public class ${ClassName}Service {
+public class ${ClassName}ServiceImpl implements I${ClassName}Service {
 
     @Autowired
     private ${ClassName}Mapper ${className}Mapper;
 
-<#if listRemark? if_exists>
+<#if listRemark??>
     ${listRemark}
 </#if>
-<#if list? if_exists>
+<#if list??>
     ${list}
 </#if>
 
-<#if insertRemark? if_exists>
+<#if insertRemark??>
     ${insertRemark}
 </#if>
-<#if insert? if_exists>
+<#if insert??>
     ${insert}
 </#if>
 
-<#if selectRemark? if_exists>
+<#if selectRemark??>
     ${selectRemark}
 </#if>
-<#if select? if_exists>
+<#if select??>
     ${select}
 </#if>
 
-<#if updateRemark? if_exists>
+<#if updateRemark??>
     ${updateRemark}
 </#if>
-<#if update? if_exists>
+<#if update??>
     ${update}
 </#if>
 
-<#if deleteRemark? if_exists>
+<#if deleteRemark??>
     ${deleteRemark}
 </#if>
-<#if delete? if_exists>
+<#if delete??>
     ${delete}
 </#if>
-
 }

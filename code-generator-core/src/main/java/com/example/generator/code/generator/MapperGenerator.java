@@ -94,8 +94,8 @@ public class MapperGenerator extends BaseGenerator {
             sb1.append(columnInfo.getColumnName()).append(", ");
             sb2.append("#{").append(columnInfo.getPropertyName()).append(", jdbcType=").append(columnInfo.getJdbcType()).append("}, ");
         }
-        sb1.substring(0, sb.lastIndexOf(","));
-        sb2.substring(0, sb.lastIndexOf(","));
+        sb1.substring(0, sb1.lastIndexOf(","));
+        sb2.substring(0, sb2.lastIndexOf(","));
         sb.append("<insert id=\"insert\" parameterType=\"").append(entityPackageName).append(".").append(className).append("\">\n");
         sb.append("    insert into ").append(tableName).append("\n (");
         sb.append(sb1);

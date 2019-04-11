@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${DaoPackageName}.${ClassName}Mapper">
-<#if baseResultMap? if_exists>
-    ${BaseResultMap}
+<#if baseResultMap??>
+    ${BaseResultMap?html}
 </#if>
-<#if baseColumnList? if_exists>
-    ${baseColumnList}
+<#if baseColumnList??>
+    ${baseColumnList?html}
 </#if>
-<#if selectAllListByKeyword? if_exists>
-    ${selectAllListByKeyword}
+<#if selectAllListByKeyword??>
+    ${selectAllListByKeyword?html}
 </#if>
-<#if selectPageListByKeyword? if_exists>
-    ${selectPageListByKeyword}
+<#if selectPageListByKeyword??>
+    ${selectPageListByKeyword?html}
 </#if>
-<#if selectByPrimaryKey? if_exists>
-    ${selectByPrimaryKey}
+<#if selectByPrimaryKey??>
+    ${selectByPrimaryKey?html}
 </#if>
-<#if deleteByPrimaryKey? if_exists>
-    ${deleteByPrimaryKey}
+<#if deleteByPrimaryKey??>
+    ${deleteByPrimaryKey?html}
 </#if>
-<#if insert? if_exists>
-    ${insert}
+<#if insert??>
+    ${insert?html}
 </#if>
-<#if insertSelective? if_exists>
-    ${insertSelective}
+<#if insertSelective??>
+    ${insertSelective?html}
 </#if>
-<#if updateByPrimaryKeySelective? if_exists>
-    ${updateByPrimaryKeySelective}
+<#if updateByPrimaryKeySelective??>
+    ${updateByPrimaryKeySelective?html}
 </#if>
 <#if updateByPrimaryKey??>
-    ${updateByPrimaryKey}
+    ${updateByPrimaryKey?html}
 </#if>
 </mapper>

@@ -57,17 +57,17 @@ public class BaseGenerator {
         String author = configuration.getCommentGenerator().getAuthor();
         String createTime = DateTimeUtil.dateToStr(new Date());
         StringBuilder sb = new StringBuilder();
-        sb.append("/**\n");
-        sb.append(" * @Title: ").append(title).append("\n");
-        sb.append(" * @Description: ").append(description).append("\n");
-        sb.append(" * @Company: ").append(company).append("\n");
-        sb.append(" * @Author: ").append(author).append("\n");
-        sb.append(" * @CreateTime: ").append(createTime).append("\n");
-        sb.append(" * \n");
+        sb.append("/**\n    ");
+        sb.append(" * @Title: ").append(title).append("\n    ");
+        sb.append(" * @Description: ").append(description).append("\n    ");
+        sb.append(" * @Company: ").append(company).append("\n    ");
+        sb.append(" * @Author: ").append(author).append("\n    ");
+        sb.append(" * @CreateTime: ").append(createTime).append("\n    ");
+        sb.append(" * \n    ");
         for (String param : params) {
-            sb.append(" * @param ").append(param).append("\n");
+            sb.append(" * @param ").append(param).append("\n    ");
         }
-        sb.append(" * @return ").append(returns).append("\n");
+        sb.append(" * @return ").append(returns).append("\n    ");
         sb.append(" */");
         return sb.toString();
     }
@@ -99,17 +99,15 @@ public class BaseGenerator {
 
     public static String generatedSwagger2(String value, List<String> params) {
         StringBuilder sb = new StringBuilder();
-        sb.append("/**\n");
-        sb.append(" * @ApiOperation(value = \"").append(value).append("\")\n");
+        sb.append("@ApiOperation(value = \"").append(value).append("\")\n    ");
         if (params.size() > 0) {
-            sb.append(" * @ApiImplicitParams({\n");
+            sb.append("@ApiImplicitParams({\n    ");
             for (String param: params) {
-                sb.append(" *     @ApiImplicitParam(").append(param).append("),\n");
+                sb.append("    @ApiImplicitParam(").append(param).append("),\n    ");
             }
             sb.substring(0, sb.lastIndexOf(","));
-            sb.append(" * })\n");
+            sb.append("})");
         }
-        sb.append(" */");
         return sb.toString();
     }
 }

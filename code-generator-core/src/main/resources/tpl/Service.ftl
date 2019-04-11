@@ -3,45 +3,45 @@ package ${ServicePackageName};
 import ${BasePackageName}.common.${ResponseClass};
 import ${EntityDTOPackageName}.${ClassName}DTO;
 
-import java.util.List;
+import java.util.Map;
 
-<#if Remark? if_exists>
+<#if Remark??>
 ${Remark}
 </#if>
 public interface I${ClassName}Service {
 
-<#if listRemark? if_exists>
+<#if listRemark??>
 	${listRemark}
 </#if>
-<#if list? if_exists>
+<#if list??>
 	${list}
 </#if>
 
-<#if insertRemark? if_exists>
+<#if insertRemark??>
 	${insertRemark}
 </#if>
-<#if insert? if_exists>
+<#if insert??>
 	${insert}
 </#if>
 
-<#if selectRemark? if_exists>
+<#if selectRemark??>
 	${selectRemark}
 </#if>
-<#if select? if_exists>
+<#if select??>
 	${select}
 </#if>
 
-<#if updateRemark? if_exists>
+<#if updateRemark??>
 	${updateRemark}
 </#if>
-<#if update? if_exists>
+<#if update??>
 	${update}
 </#if>
 
-<#if deleteRemark? if_exists>
+<#if deleteRemark??>
 	${deleteRemark}
 </#if>
-<#if delete? if_exists>
+<#if delete??>
 	${delete}
 </#if>
 

@@ -25,16 +25,16 @@ public class ServiceImplGenerator extends ServiceGenerator {
      */
     public static String list(String ClassName, String className) {
         StringBuilder sb = new StringBuilder();
-        sb.append("public ").append(BaseGenerator.responseClass).append("<PageInfo> list(Integer pageNum, Integer pageSize, Map<String, String> params) {\n");
-        sb.append("    if (pageNum != null && pageSize != null) {\n");
-        sb.append("        PageHelper.startPage(pageNum, pageSize);\n");
-        sb.append("    }\n");
-        sb.append("    ").append(ClassName).append(" ").append(className).append(" = null;\n");
-        sb.append("    if (CollectionUtils.isNotEmpty(params)) {\n");
-        sb.append("        ").append(className).append(" = JSON.parseObject(JSON.toString(params));\n");
-        sb.append("    }\n");
-        sb.append("    List<").append(ClassName).append("> ").append(className).append("List = ").append(className).append("Mapper.selectList(").append(className).append(");\n");
-        sb.append("    return ").append(BaseGenerator.responseClass).append("createBySuccess(").append(className).append("List);\n");
+        sb.append("public ").append(BaseGenerator.responseClass).append("<PageInfo> list(Integer pageNum, Integer pageSize, Map<String, String> params) {\n        ");
+        sb.append("    if (pageNum != null && pageSize != null) {\n    ");
+        sb.append("        PageHelper.startPage(pageNum, pageSize);\n    ");
+        sb.append("    }\n    ");
+        sb.append("    ").append(ClassName).append(" ").append(className).append(" = null;\n    ");
+        sb.append("    if (CollectionUtils.isNotEmpty(params)) {\n    ");
+        sb.append("        ").append(className).append(" = JSON.parseObject(JSON.toString(params));\n    ");
+        sb.append("    }\n    ");
+        sb.append("    List<").append(ClassName).append("> ").append(className).append("List = ").append(className).append("Mapper.selectList(").append(className).append(");\n    ");
+        sb.append("    return ").append(BaseGenerator.responseClass).append(".createBySuccess(").append(className).append("List);\n    ");
         sb.append("}");
         return sb.toString();
     }
@@ -55,15 +55,16 @@ public class ServiceImplGenerator extends ServiceGenerator {
         String javaType = primaryKeyColumn.getJavaType();
         String propertyName = primaryKeyColumn.getPropertyName();
         StringBuilder sb = new StringBuilder();
-        sb.append("public ").append(BaseGenerator.responseClass).append("<").append(ClassName).append("> select(").append(javaType).append(" ").append(propertyName).append(") {\n");
-        sb.append("    if (StringUtil.isBlank(").append(propertyName).append(")) {\n");
-        sb.append("        return ").append(BaseGenerator.responseClass).append(".createByErrorMessage(\"").append(propertyName).append("不能为空\");\n");
-        sb.append("    }\n");
-        sb.append("    ").append(ClassName).append(" ").append(className).append(" = ").append(className).append("Mapper.selectByPrimaryKey(").append(propertyName).append(");\n");
-        sb.append("    if (").append(className).append(" == null) {\n");
-        sb.append("        return ").append(BaseGenerator.responseClass).append(".createByErrorMessage(\"").append(ClassName).append("不存在\");\n");
-        sb.append("    }\n");
-        sb.append("    return ").append(BaseGenerator.responseClass).append(".createBySuccess(").append(className).append(");\n");
+        sb.append("public ").append(BaseGenerator.responseClass).append("<").append(ClassName).append("DTO> select(").append(javaType).append(" ").append(propertyName).append(") {\n    ");
+        sb.append("    if (StringUtil.isBlank(").append(propertyName).append(")) {\n    ");
+        sb.append("        return ").append(BaseGenerator.responseClass).append(".createByErrorMessage(\"").append(propertyName).append("不能为空\");\n    ");
+        sb.append("    }\n    ");
+        sb.append("    ").append(ClassName).append(" ").append(className).append(" = ").append(className).append("Mapper.selectByPrimaryKey(").append(propertyName).append(");\n    ");
+        sb.append("    if (").append(className).append(" == null) {\n    ");
+        sb.append("        return ").append(BaseGenerator.responseClass).append(".createByErrorMessage(\"").append(ClassName).append("不存在\");\n    ");
+        sb.append("    }\n    ");
+        sb.append("    return ").append(BaseGenerator.responseClass).append(".createBySuccess(BeanUtils.copy(").append(className).append("));\n    ");
+        sb.append("}");
         return sb.toString();
     }
 
@@ -79,13 +80,13 @@ public class ServiceImplGenerator extends ServiceGenerator {
      */
     public static String insert(String ClassName, String className) {
         StringBuilder sb = new StringBuilder();
-        sb.append("public ").append(BaseGenerator.responseClass).append("<String> insert(").append(ClassName).append("DTO ").append(className).append("DTO) {\n");
-        sb.append("    ").append(ClassName).append(" ").append(className).append(" = BeanUtils.copy(").append(className).append("DTO);\n");
-        sb.append("    int rowCount = ").append(className).append("Mapper.insertSelective(").append(className).append(");\n");
-        sb.append("    if (rowCount == 0) {\n");
-        sb.append("        return ").append(BaseGenerator.responseClass).append(".createByErrorMessage(\"新增").append(ClassName).append("失败\");\n");
-        sb.append("    }\n");
-        sb.append("    return ").append(BaseGenerator.responseClass).append(".createBySuccessMessage(\"新增").append(ClassName).append("成功\");\n");
+        sb.append("public ").append(BaseGenerator.responseClass).append("<String> insert(").append(ClassName).append("DTO ").append(className).append("DTO) {\n    ");
+        sb.append("    ").append(ClassName).append(" ").append(className).append(" = BeanUtils.copy(").append(className).append("DTO);\n    ");
+        sb.append("    int rowCount = ").append(className).append("Mapper.insertSelective(").append(className).append(");\n    ");
+        sb.append("    if (rowCount == 0) {\n    ");
+        sb.append("        return ").append(BaseGenerator.responseClass).append(".createByErrorMessage(\"新增").append(ClassName).append("失败\");\n    ");
+        sb.append("    }\n    ");
+        sb.append("    return ").append(BaseGenerator.responseClass).append(".createBySuccessMessage(\"新增").append(ClassName).append("成功\");\n    ");
         sb.append("}");
         return sb.toString();
     }
@@ -109,17 +110,17 @@ public class ServiceImplGenerator extends ServiceGenerator {
         String javaType = primaryKeyColumn.getJavaType();
         String propertyName = primaryKeyColumn.getPropertyName();
         StringBuilder sb = new StringBuilder();
-        sb.append("public ").append(BaseGenerator.responseClass).append("<String> update(").append(javaType).append(" ").append(propertyName).append(", ").append(ClassName).append(" ").append(className).append(") {\n");
-        sb.append("    if (StringUtil.isBlank(").append(propertyName).append(")) {\n");
-        sb.append("        return ").append(BaseGenerator.responseClass).append(".createByErrorMessage(\"").append(propertyName).append("不能为空\");\n");
-        sb.append("    }\n");
-        sb.append("    ").append(ClassName).append(" ").append(className).append(" = BeanUtils.copy(").append(className).append("DTO);\n");
-//        sb.append("    ").append(className).append(".setId(").append(propertyName).append(");\n");
-        sb.append("    int rowCount = ").append(className).append("Mapper.updateByPrimaryKeySelective(").append(className).append(");\n");
-        sb.append("    if (rowCount == 0) {\n");
-        sb.append("        return ").append(BaseGenerator.responseClass).append(".createByErrorMessage(\"更新").append(ClassName).append("失败\");\n");
-        sb.append("    }\n");
-        sb.append("    return ").append(BaseGenerator.responseClass).append(".createBySuccessMessage(\"更新").append(ClassName).append("成功\");\n");
+        sb.append("public ").append(BaseGenerator.responseClass).append("<String> update(").append(javaType).append(" ").append(propertyName).append(", ").append(ClassName).append("DTO ").append(className).append("DTO) {\n    ");
+        sb.append("    if (StringUtil.isBlank(").append(propertyName).append(")) {\n    ");
+        sb.append("        return ").append(BaseGenerator.responseClass).append(".createByErrorMessage(\"").append(propertyName).append("不能为空\");\n    ");
+        sb.append("    }\n    ");
+        sb.append("    ").append(ClassName).append(" ").append(className).append(" = BeanUtils.copy(").append(className).append("DTO);\n    ");
+//        sb.append("    ").append(className).append(".setId(").append(propertyName).append(");\n    ");
+        sb.append("    int rowCount = ").append(className).append("Mapper.updateByPrimaryKeySelective(").append(className).append(");\n    ");
+        sb.append("    if (rowCount == 0) {\n    ");
+        sb.append("        return ").append(BaseGenerator.responseClass).append(".createByErrorMessage(\"更新").append(ClassName).append("失败\");\n    ");
+        sb.append("    }\n    ");
+        sb.append("    return ").append(BaseGenerator.responseClass).append(".createBySuccessMessage(\"更新").append(ClassName).append("成功\");\n    ");
         sb.append("}");
         return sb.toString();
     }
@@ -140,16 +141,16 @@ public class ServiceImplGenerator extends ServiceGenerator {
     public static String delete(String ClassName, String className, ColumnInfo primaryKeyColumn) {
         String propertyName = primaryKeyColumn.getPropertyName();
         StringBuilder sb = new StringBuilder();
-        sb.append("public ").append(BaseGenerator.responseClass).append("<String> delete(String ").append(propertyName).append("s) {\n");
-        sb.append("    List<String> idList = ").append(propertyName).append("s.split(\",\");\n");
-        sb.append("    if (idList == null || idList.size() == 0) {\n");
-        sb.append("        return ").append(BaseGenerator.responseClass).append(".createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), \"").append(propertyName).append("不能为空\");\n");
-        sb.append("    }\n");
-        sb.append("    int rowCount = ").append(className).append("Mapper.deleteByIdList(idList);\n");
-        sb.append("    if (rowCount == 0 || rowCount < idList.size()) {\n");
-        sb.append("        return ").append(BaseGenerator.responseClass).append(".createByErrorMessage(\"批量删除").append(ClassName).append("失败\");\n");
-        sb.append("    }\n");
-        sb.append("    return ").append(BaseGenerator.responseClass).append(".createBySuccessMessage(\"批量删除").append(ClassName).append("成功\");\n");
+        sb.append("public ").append(BaseGenerator.responseClass).append("<String> delete(String ").append(propertyName).append("s) {\n    ");
+        sb.append("    List<String> idList = ").append(propertyName).append("s.split(\",\");\n    ");
+        sb.append("    if (idList == null || idList.size() == 0) {\n    ");
+        sb.append("        return ").append(BaseGenerator.responseClass).append(".createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), \"").append(propertyName).append("不能为空\");\n    ");
+        sb.append("    }\n    ");
+        sb.append("    int rowCount = ").append(className).append("Mapper.deleteByIdList(idList);\n    ");
+        sb.append("    if (rowCount == 0 || rowCount < idList.size()) {\n    ");
+        sb.append("        return ").append(BaseGenerator.responseClass).append(".createByErrorMessage(\"批量删除").append(ClassName).append("失败\");\n    ");
+        sb.append("    }\n    ");
+        sb.append("    return ").append(BaseGenerator.responseClass).append(".createBySuccessMessage(\"批量删除").append(ClassName).append("成功\");\n    ");
         sb.append("}");
         return sb.toString();
     }

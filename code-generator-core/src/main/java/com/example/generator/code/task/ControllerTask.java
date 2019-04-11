@@ -11,6 +11,7 @@ import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,8 +21,8 @@ import java.util.Map;
  */
 public class ControllerTask extends BaseTask {
 
-    public ControllerTask(String className, boolean isView, Configuration configuration) {
-        super(className, isView, configuration);
+    public ControllerTask(String className, List<ColumnInfo> tableInfo, boolean isView, Configuration configuration) {
+        super(className, tableInfo, isView, configuration);
     }
 
     @Override
@@ -32,8 +33,9 @@ public class ControllerTask extends BaseTask {
 
         controllerData.put("ControllerPackageName", configuration.getServiceGenerator().getController());
         controllerData.put("BasePackageName", configuration.getCommentGenerator().getBasePackageName());
+        controllerData.put("ResponseClass", ControllerGenerator.responseClass);
+        controllerData.put("EntityDTOPackageName", configuration.getCommonGenerator().getDtoGenerator().getTargetPackage());
         controllerData.put("ServicePackageName", configuration.getServiceGenerator().getService());
-        controllerData.put("EntityPackageName", configuration.getCommonGenerator().getModelGenerator().getTargetPackage());
 
         String clazzName = StringUtil.firstToLowerCase(className);
         controllerData.put("ClassName", className);
