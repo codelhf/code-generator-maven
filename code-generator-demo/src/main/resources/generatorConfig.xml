@@ -110,8 +110,8 @@
 
     <!-- 数据库对应数据视图-->
     <viewsConfiguration>
-        <view viewName="lottery_result" domainName="Result">
-        </view>
+        <!--<view viewName="lottery_result" domainName="Result">-->
+        <!--</view>-->
     </viewsConfiguration>
 
     <!-- mybatis插件的搭建 -->

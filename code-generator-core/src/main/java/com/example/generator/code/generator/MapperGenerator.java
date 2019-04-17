@@ -18,16 +18,16 @@ public class MapperGenerator extends BaseGenerator {
         sb.append("<resultMap id=\"BaseResultMap\" type=\"").append(entityPackageName).append(".").append(className).append("\">\n");
         for (ColumnInfo columnInfo: tableInfo) {
             if (columnInfo.isPrimaryKey()) {
-                sb.append("    <id column=\"").append(columnInfo.getColumnName())
-                        .append("\" jdbcType=\"").append(columnInfo.getJavaType())
-                        .append("\" property=\"").append(columnInfo.getJavaType()).append("\">\n");
+                sb.append("        <id ");
             } else {
-                sb.append("    <result column=\"").append(columnInfo.getColumnName())
-                        .append("\" jdbcType=\"").append(columnInfo.getJavaType())
-                        .append("\" property=\"").append(columnInfo.getJavaType()).append("\">\n");
+                sb.append("        <result ");
             }
+            sb.append("column=\"").append(columnInfo.getColumnName())
+                    .append("\" jdbcType=\"").append(columnInfo.getJdbcType())
+                    .append("\" property=\"").append(columnInfo.getPropertyName())
+                    .append("\"/>\n");
         }
-        sb.append("</resultMap>");
+        sb.append("    </resultMap>");
         return sb.toString();
     }
 
@@ -38,14 +38,14 @@ public class MapperGenerator extends BaseGenerator {
         for (ColumnInfo columnInfo: tableInfo) {
             sb.append(columnInfo.getColumnName()).append(", ");
         }
-        sb.substring(0, sb.lastIndexOf(","));
-        sb.append("</sql>");
+        String columnList = sb.substring(0, sb.lastIndexOf(","));
+        sb.append(columnList).append("\n</sql>");
         return sb.toString();
     }
 
     public static String selectByPrimaryKey(String tableName, ColumnInfo primaryKeyColumn) {
         StringBuilder sb = new StringBuilder();
-        sb.append("<select id=\"selectByPrimaryKey\" parameterType=\"").append(primaryKeyColumn.getJavaType()).append(" resultMap=\"BaseResultMap\">\n");
+        sb.append("<select id=\"selectByPrimaryKey\" parameterType=\"").append(primaryKeyColumn.getJavaType()).append("\" resultMap=\"BaseResultMap\">\n");
         sb.append("    select <include refid=\"Base_Column_List\"/>\n");
         sb.append("    from ").append(tableName).append("\n");
         sb.append("    where ").append(primaryKeyColumn.getColumnName()).append(" = #{").append(primaryKeyColumn.getPropertyName()).append("}\n");
@@ -70,14 +70,14 @@ public class MapperGenerator extends BaseGenerator {
             sb1.append(columnInfo.getColumnName()).append(", ");
             sb2.append("#{").append(columnInfo.getPropertyName()).append(", jdbcType=").append(columnInfo.getJdbcType()).append("}, ");
         }
-        sb1.substring(0, sb1.lastIndexOf(","));
-        sb2.substring(0, sb2.lastIndexOf(","));
+        String columns = sb1.substring(0, sb1.lastIndexOf(","));
+        String values = sb2.substring(0, sb2.lastIndexOf(","));
         sb.append("<insert id=\"insert\" parameterType=\"").append(entityPackageName).append(".").append(className).append("\">\n");
         sb.append("    insert into ").append(tableName).append("\n (");
-        sb.append(sb1);
+        sb.append(columns);
         sb.append(")\n");
-        sb.append("    values (\n");
-        sb.append(sb2);
+        sb.append("    values\n (");
+        sb.append(values);
         sb.append(")\n");
         sb.append("</insert>");
         return sb.toString();
@@ -97,10 +97,10 @@ public class MapperGenerator extends BaseGenerator {
         }
         sb.append("<insert id=\"insertSelective\" parameterType=\"").append(entityPackageName).append(".").append(className).append("\">\n");
         sb.append("    insert into ").append(tableName).append("\n");
-        sb.append("    <trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">");
+        sb.append("    <trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\n");
         sb.append(sb1);
         sb.append("    </trim>\n");
-        sb.append("    <trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">");
+        sb.append("    <trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">\n");
         sb.append(sb2);
         sb.append("</insert>");
         return sb.toString();
@@ -136,8 +136,8 @@ public class MapperGenerator extends BaseGenerator {
                 sb.append("        ").append(columnInfo.getColumnName()).append(" = #{").append(columnInfo.getPropertyName()).append(", jdbcType=").append(columnInfo.getJdbcType()).append("},\n");
             }
         }
-        sb.substring(0, sb.lastIndexOf(","));
-        sb.append("    where ").append(primaryKeyColumn.getColumnName()).append(" = #{").append(primaryKeyColumn.getPropertyName()).append("}\n");
+        String set = sb.substring(0, sb.lastIndexOf(","));
+        sb.append(set).append("    where ").append(primaryKeyColumn.getColumnName()).append(" = #{").append(primaryKeyColumn.getPropertyName()).append("}\n");
         sb.append("</update>");
         return sb.toString();
     }
@@ -153,6 +153,7 @@ public class MapperGenerator extends BaseGenerator {
             sb.append("            and ").append(columnInfo.getColumnName()).append(" like #{").append(columnInfo.getPropertyName()).append("}\n");
             sb.append("        </if>\n");
         }
+        sb.append("    </where>\n");
         sb.append("</select>");
         return sb.toString();
     }
@@ -165,8 +166,9 @@ public class MapperGenerator extends BaseGenerator {
         sb.append("    delete from ").append(tableName).append("\n");
         sb.append("    where ").append(columnName).append(" in\n");
         sb.append("    <foreach collection=\"").append(propertyName).append("List\" index=\"index\" item=\"").append(propertyName).append("\" open=\"(\" separator=\",\" close=\")\" >\n");
-        sb.append("        #{").append(propertyName).append("}");
+        sb.append("        #{").append(propertyName).append("}\n");
         sb.append("    </foreach>");
+        sb.append("</delete>");
         return sb.toString();
     }
 }

@@ -46,17 +46,15 @@ public class FileUtil {
 
     public static void writerFile(String filePath, Object data, int type)
             throws IOException, TemplateException {
-        // 填充数据
-        StringWriter writer = new StringWriter();
         // 获取模板文件
         Template tpl = FreemarkerUtil.getTemplate(type);
-        tpl.process(data, writer);
-        writer.flush();
         // 写入文件
         FileOutputStream fos = new FileOutputStream(filePath);
         OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
         BufferedWriter bw = new BufferedWriter(osw, 1024);
+        // 填充数据
         tpl.process(data, bw);
+        bw.flush();
         fos.close();
     }
 

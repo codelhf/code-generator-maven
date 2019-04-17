@@ -54,7 +54,8 @@ public class MapperTask extends BaseTask {
         String entityPackageName = configuration.getCommonGenerator().getModelGenerator().getTargetPackage();
         ColumnInfo primaryKeyColumnInfo = getPrimaryKeyColumnInfo(tableInfo);
 
-        mapperData.put("baseResultMap", MapperGenerator.baseResultMap(entityPackageName, className, tableInfo));
+        mapperData.put("baseResultMap", "123");
+//        mapperData.put("baseResultMap", MapperGenerator.baseResultMap(entityPackageName, className, tableInfo));
         mapperData.put("baseColumnList", MapperGenerator.baseColumnList(tableInfo));
         if (!userMapper) {
             mapperData.put("selectPageList", MapperGenerator.selectPageList(entityPackageName, className, tableName, tableInfo));
@@ -79,5 +80,31 @@ public class MapperTask extends BaseTask {
         // 生成Mapper文件
         FileUtil.generateToCode(filePath, fileName, mapperData, type, true, override);
     }
+
+//    public static void main(String[] args) {
+//        String filePath = "D:\\VSCodeProjects\\generator\\generator\\code-generator-demo\\src\\main\\resources\\mappers\\";
+//        String fileName = "TestMapper.xml";
+//        int type = FreemarkerUtil.FileTypeEnum.MAPPER.getCode();
+//        Map<String, String> mapperData = new HashMap<>();
+//        mapperData.put("DaoPackageName", "test");
+//        mapperData.put("ClassName", "Test");
+//
+//        mapperData.put("baseResultMap", "<resultMap id=\"BaseResultMap\" type=\"com.example.generator.demo.po.Prize\">\n" +
+//                "        <id column=\"id\" jdbcType=\"INTEGER\" property=\"id\"/>\n" +
+//                "        <result column=\"grade\" jdbcType=\"VARCHAR\" property=\"grade\"/>\n" +
+//                "        <result column=\"prize\" jdbcType=\"VARCHAR\" property=\"prize\"/>\n" +
+//                "        <result column=\"image\" jdbcType=\"VARCHAR\" property=\"image\"/>\n" +
+//                "        <result column=\"stock\" jdbcType=\"INTEGER\" property=\"stock\"/>\n" +
+//                "        <result column=\"create_time\" jdbcType=\"TIMESTAMP\" property=\"createTime\"/>\n" +
+//                "        <result column=\"update_time\" jdbcType=\"TIMESTAMP\" property=\"updateTime\"/>\n" +
+//                "    </resultMap>");
+//        try {
+//            FileUtil.generateToCode(filePath, fileName, mapperData, type, true, true);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (TemplateException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 }

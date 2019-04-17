@@ -29,7 +29,7 @@ public abstract class BaseInvoker implements Invoker {
     protected Configuration configuration;
     protected ConnectionUtil connectionUtil = new ConnectionUtil();
     protected TaskQueue<BaseTask> taskQueue = new TaskQueue();
-    private ExecutorService executorPool = Executors.newFixedThreadPool(6);
+    private ExecutorService executorPool = Executors.newFixedThreadPool(7);
 
     private void initDataSource() throws Exception {
         if (!connectionUtil.initConnection(configuration)) {
