@@ -102,12 +102,14 @@ public class BaseGenerator {
         sb.append("@ApiOperation(value = \"").append(value).append("\")\n    ");
         if (params.size() > 0) {
             sb.append("@ApiImplicitParams({\n    ");
+            StringBuilder ApiImplicitParams = new StringBuilder();
             for (String param: params) {
-                sb.append("    @ApiImplicitParam(").append(param).append("),\n    ");
+                ApiImplicitParams.append("    @ApiImplicitParam(").append(param).append("),\n    ");
             }
-            sb.substring(0, sb.lastIndexOf(","));
-            sb.append("})");
+            String apiImplicitParams = ApiImplicitParams.substring(0, ApiImplicitParams.lastIndexOf(","));
+            sb.append(apiImplicitParams).append("\n    ");
         }
+        sb.append("})");
         return sb.toString();
     }
 }

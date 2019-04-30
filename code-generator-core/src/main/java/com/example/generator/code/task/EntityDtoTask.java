@@ -1,10 +1,9 @@
 package com.example.generator.code.task;
 
 import com.example.generator.code.generator.EntityDtoGenerator;
-import com.example.generator.code.generator.EntityGenerator;
 import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
-import com.example.generator.code.task.base.FreemarkerUtil;
+import com.example.generator.code.task.base.VelocityUtil;
 import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
 import freemarker.template.TemplateException;
@@ -71,7 +70,7 @@ public class EntityDtoTask extends BaseTask {
 
         String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(),targetProject, targetPackage);
         String fileName = className + "DTO.java";
-        int type = FreemarkerUtil.FileTypeEnum.ENTITY_DTO.getCode();
+        int type = VelocityUtil.FileTypeEnum.ENTITY_DTO.getCode();
         boolean override = configuration.getCommonGenerator().isOverwrite();
         // 生成EntityDto文件
         FileUtil.generateToCode(filePath, fileName, entityDtoData, type, true, override);

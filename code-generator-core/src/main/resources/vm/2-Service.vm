@@ -1,0 +1,46 @@
+package ${ServicePackageName};
+
+import ${BasePackageName}.common.${ResponseClass};
+import ${EntityDTOPackageName}.${ClassName}DTO;
+import com.github.pagehelper.PageInfo;
+
+import java.util.Map;
+
+${Remark}
+public interface I${ClassName}Service {
+
+#if ($listRemark)
+	${listRemark}
+#end
+#if ($list)
+	${list}
+#end
+
+#if ($insertRemark)
+	${insertRemark}
+#end
+#if ($insert)
+	${insert}
+#end
+
+#if ($selectRemark)
+	${selectRemark}
+#end
+#if ($select)
+	${select}
+#end
+
+#if ($updateRemark)
+	${updateRemark}
+#end
+#if ($update)
+	${update}
+#end
+
+#if ($deleteRemark)
+	${deleteRemark}
+#end
+#if ($delete)
+	${delete}
+#end
+}

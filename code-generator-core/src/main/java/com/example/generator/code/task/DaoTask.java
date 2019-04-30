@@ -3,15 +3,13 @@ package com.example.generator.code.task;
 import com.example.generator.code.generator.DaoGenerator;
 import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
-import com.example.generator.code.task.base.FreemarkerUtil;
+import com.example.generator.code.task.base.VelocityUtil;
 import com.example.generator.config.Configuration;
-import com.example.generator.config.DataSource;
 import com.example.generator.db.ColumnInfo;
 import com.example.generator.util.StringUtil;
 import freemarker.template.TemplateException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,11 +60,11 @@ public class DaoTask extends BaseTask {
 
             String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
             String fileName = "TableMapper.java";
-            int type = FreemarkerUtil.FileTypeEnum.DAO_TABLE_MAPPER.getCode();
+            int type = VelocityUtil.FileTypeEnum.DAO_TABLE_MAPPER.getCode();
             FileUtil.generateToCode(filePath, fileName, daoData, type, true, true);
 
             fileName = "ViewMapper.java";
-            type = FreemarkerUtil.FileTypeEnum.DAO_VIEW_MAPPER.getCode();
+            type = VelocityUtil.FileTypeEnum.DAO_VIEW_MAPPER.getCode();
             FileUtil.generateToCode(filePath, fileName, daoData, type, true, true);
         }
 
@@ -75,7 +73,7 @@ public class DaoTask extends BaseTask {
 
         String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
         String fileName = className + "Mapper.java";
-        int type = FreemarkerUtil.FileTypeEnum.DAO.getCode();
+        int type = VelocityUtil.FileTypeEnum.DAO.getCode();
         boolean override = configuration.getCommonGenerator().isOverwrite();
         // 生成dao文件
         FileUtil.generateToCode(filePath, fileName, daoData, type, true, override);

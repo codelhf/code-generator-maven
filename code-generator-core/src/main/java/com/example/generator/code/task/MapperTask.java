@@ -3,7 +3,7 @@ package com.example.generator.code.task;
 import com.example.generator.code.generator.MapperGenerator;
 import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
-import com.example.generator.code.task.base.FreemarkerUtil;
+import com.example.generator.code.task.base.VelocityUtil;
 import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
 import freemarker.template.TemplateException;
@@ -54,8 +54,7 @@ public class MapperTask extends BaseTask {
         String entityPackageName = configuration.getCommonGenerator().getModelGenerator().getTargetPackage();
         ColumnInfo primaryKeyColumnInfo = getPrimaryKeyColumnInfo(tableInfo);
 
-        mapperData.put("baseResultMap", "123");
-//        mapperData.put("baseResultMap", MapperGenerator.baseResultMap(entityPackageName, className, tableInfo));
+        mapperData.put("baseResultMap", MapperGenerator.baseResultMap(entityPackageName, className, tableInfo));
         mapperData.put("baseColumnList", MapperGenerator.baseColumnList(tableInfo));
         if (!userMapper) {
             mapperData.put("selectPageList", MapperGenerator.selectPageList(entityPackageName, className, tableName, tableInfo));
@@ -75,7 +74,7 @@ public class MapperTask extends BaseTask {
 
         String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
         String fileName = className + "Mapper.xml";
-        int type = FreemarkerUtil.FileTypeEnum.MAPPER.getCode();
+        int type = VelocityUtil.FileTypeEnum.MAPPER.getCode();
         boolean override = configuration.getCommonGenerator().isOverwrite();
         // 生成Mapper文件
         FileUtil.generateToCode(filePath, fileName, mapperData, type, true, override);
@@ -84,7 +83,7 @@ public class MapperTask extends BaseTask {
 //    public static void main(String[] args) {
 //        String filePath = "D:\\VSCodeProjects\\generator\\generator\\code-generator-demo\\src\\main\\resources\\mappers\\";
 //        String fileName = "TestMapper.xml";
-//        int type = FreemarkerUtil.FileTypeEnum.MAPPER.getCode();
+//        int type = VelocityUtil.FileTypeEnum.MAPPER.getCode();
 //        Map<String, String> mapperData = new HashMap<>();
 //        mapperData.put("DaoPackageName", "test");
 //        mapperData.put("ClassName", "Test");

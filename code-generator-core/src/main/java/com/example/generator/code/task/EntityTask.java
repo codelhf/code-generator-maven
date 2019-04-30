@@ -3,7 +3,7 @@ package com.example.generator.code.task;
 import com.example.generator.code.generator.EntityGenerator;
 import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
-import com.example.generator.code.task.base.FreemarkerUtil;
+import com.example.generator.code.task.base.VelocityUtil;
 import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
 import com.example.generator.util.StringUtil;
@@ -87,7 +87,7 @@ public class EntityTask extends BaseTask {
 
         String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
         String fileName = className + ".java";
-        int type = FreemarkerUtil.FileTypeEnum.ENTITY.getCode();
+        int type = VelocityUtil.FileTypeEnum.ENTITY.getCode();
         boolean override = configuration.getCommonGenerator().isOverwrite();
         // 生成Entity文件
         FileUtil.generateToCode(filePath, fileName, entityData, type, true, override);

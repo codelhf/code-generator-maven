@@ -7,6 +7,17 @@
     <!--导入配置文件-->
     <properties resource="datasource.properties"/>
 
+    <!--jdbc的数据库连接 -->
+    <dataSource>
+        <!--driverLocation非必须参数-->
+        <property name="driverLocation" value="src/main/resources/mysql-connector-java-5.1.6-bin.jar"/>
+        <!--driverClass非必须参数-->
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/lottery?characterEncoding=utf-8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </dataSource>
+
     <!-- optional，旨在创建class时，对注释进行控制 -->
     <commentGenerator>
         <!--代码注释配置-->
@@ -18,17 +29,6 @@
         <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
         <property name="addRemarkComments" value="true"/>
     </commentGenerator>
-
-    <!--jdbc的数据库连接 -->
-    <dataSource>
-        <!--driverLocation非必须参数-->
-        <property name="driverLocation" value="src/main/resources/mysql-connector-java-5.1.6-bin.jar"/>
-        <!--driverClass非必须参数-->
-        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/lottery?characterEncoding=utf-8"/>
-        <property name="username" value="root"/>
-        <property name="password" value="root"/>
-    </dataSource>
 
     <!--java类型适配-->
     <javaTypeResolver>
@@ -69,7 +69,7 @@
             <!--建立的dto对象是否不可改变, 即生成的dto对象不会有setter方法,只有构造方法-->
             <property name="immutable" value="false"/>
             <!--是否对dto使用lombok注解, 使用lombok注解将不会生成getter,setter和constructor方法-->
-            <property name="useLombok" value="false"/>
+            <property name="useLombok" value="true"/>
         </dtoGenerator>
         <modelGenerator>
             <property name="targetProject" value="./src/main/java"/>
@@ -110,8 +110,8 @@
 
     <!-- 数据库对应数据视图-->
     <viewsConfiguration>
-        <!--<view viewName="lottery_result" domainName="Result">-->
-        <!--</view>-->
+        <view viewName="lottery_result" domainName="Result">
+        </view>
     </viewsConfiguration>
 
     <!-- mybatis插件的搭建 -->

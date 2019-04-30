@@ -1,18 +1,24 @@
-package ${BasePackageName}${EntityPackageName};
+package ${EntityPackageName};
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
-/**
-* Author ${Author}
-* Date  ${Date}
-*/
+${Remark}
+#if ($Lombok)
+${Lombok}
+#end
 public class ${ClassName} implements Serializable {
     private static final long serialVersionUID = 1L;
+
     ${Properties}
 
-    public ${ClassName}(){
-    }
+#if($Constructor)
+    ${AllArgsConstructor}
+    ${NoArgsConstructor}
+#end
 
+#if ($Methods)
     ${Methods}
+#end
 }

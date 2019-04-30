@@ -1,0 +1,24 @@
+package ${EntityDtoPackageName};
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+${Remark}
+#if ($Lombok)
+    ${Lombok}
+#end
+public class ${ClassName}DTO implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    ${Properties}
+
+#if($Constructor)
+    ${AllArgsConstructor}
+    ${NoArgsConstructor}
+#end
+
+#if ($Methods)
+    ${Methods}
+#end
+}

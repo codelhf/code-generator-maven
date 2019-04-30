@@ -1,0 +1,55 @@
+package ${ControllerPackageName};
+
+import ${BasePackageName}.common.${ResponseClass};
+import ${EntityDTOPackageName}.${ClassName}DTO;
+import ${ServicePackageName}.I${ClassName}Service;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.*;
+
+import java.util.Map;
+
+${Remark}
+@RestController
+@RequestMapping(value = "/${className}")
+public class ${ClassName}Controller {
+
+    @Autowired
+    private I${ClassName}Service i${ClassName}Service;
+
+#if ($listRemark)
+    ${listRemark}
+#end
+#if ($list)
+    ${list}
+#end
+
+#if ($insertRemark)
+    ${insertRemark}
+#end
+#if ($insert)
+    ${insert}
+#end
+
+#if ($selectRemark)
+    ${selectRemark}
+#end
+#if ($select)
+    ${select}
+#end
+
+#if ($updateRemark)
+    ${updateRemark}
+#end
+#if ($update)
+    ${update}
+#end
+
+#if ($deleteRemark)
+    ${deleteRemark}
+#end
+#if ($delete)
+    ${delete}
+#end
+}

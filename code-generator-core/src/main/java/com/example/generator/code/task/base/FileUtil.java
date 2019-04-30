@@ -2,10 +2,12 @@ package com.example.generator.code.task.base;
 
 import com.example.generator.util.Messages;
 import com.example.generator.util.StringUtil;
-import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
 
 import java.io.*;
+import java.util.Map;
 
 /**
  * @Description: TODO
@@ -21,7 +23,7 @@ public class FileUtil {
      * @throws IOException
      * @throws TemplateException
      */
-    public static void generateToCode(String filePath, String fileName, Object data,
+    public static void generateToCode(String filePath, String fileName, Map data,
                                       int type, boolean generate, boolean override)
             throws IOException, TemplateException {
         if (generate) {
@@ -44,16 +46,17 @@ public class FileUtil {
         }
     }
 
-    public static void writerFile(String filePath, Object data, int type)
-            throws IOException, TemplateException {
+    public static void writerFile(String filePath, Map data, int type)
+            throws IOException {
         // 获取模板文件
-        Template tpl = FreemarkerUtil.getTemplate(type);
+        Template tpl = VelocityUtil.getTemplate(type);
         // 写入文件
         FileOutputStream fos = new FileOutputStream(filePath);
         OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
         BufferedWriter bw = new BufferedWriter(osw, 1024);
         // 填充数据
-        tpl.process(data, bw);
+        VelocityContext context = new VelocityContext(data);
+        tpl.merge(context, bw);
         bw.flush();
         fos.close();
     }

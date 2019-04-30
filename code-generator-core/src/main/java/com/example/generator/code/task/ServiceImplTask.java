@@ -4,7 +4,7 @@ import com.example.generator.code.generator.ServiceGenerator;
 import com.example.generator.code.generator.ServiceImplGenerator;
 import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
-import com.example.generator.code.task.base.FreemarkerUtil;
+import com.example.generator.code.task.base.VelocityUtil;
 import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
 import com.example.generator.util.StringUtil;
@@ -67,7 +67,7 @@ public class ServiceImplTask extends BaseTask {
 
         String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
         String fileName = className + "ServiceImpl.java";
-        int type = FreemarkerUtil.FileTypeEnum.SERVICE_IMPL.getCode();
+        int type = VelocityUtil.FileTypeEnum.SERVICE_IMPL.getCode();
         boolean generate = configuration.getServiceGenerator().isGenerator();
         // 生成ServiceImpl文件
         FileUtil.generateToCode(filePath, fileName, serviceImplData, type, generate, false);

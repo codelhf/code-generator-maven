@@ -1,0 +1,47 @@
+package ${DaoPackageName};
+
+#if ($baseMapper)
+import ${DaoPackageName}.base.${baseMapper};
+#end
+import ${EntityPackageName}.${ClassName};
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+${Remark}
+@Mapper
+public interface ${ClassName}Mapper #if ($baseMapper)extends ${baseMapper}<${ClassName}>#end {
+
+#if ($deleteByPrimaryKey)
+    ${deleteByPrimaryKey}
+#end
+
+#if($insert)
+    ${insert}
+#end
+
+#if ($insertSelective)
+    ${insertSelective}
+#end
+
+#if ($selectByPrimaryKey)
+    ${selectByPrimaryKey}
+#end
+
+#if ($updateByPrimaryKeySelective)
+    ${updateByPrimaryKeySelective}
+#end
+
+#if ($updateByPrimaryKey)
+    ${updateByPrimaryKey}
+#end
+
+#if ($selectPageList)
+    ${selectPageList}
+#end
+
+#if ($deleteByIdList)
+    ${deleteByIdList}
+#end
+}

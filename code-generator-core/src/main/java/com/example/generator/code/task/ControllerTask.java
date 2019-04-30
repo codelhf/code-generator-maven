@@ -3,7 +3,7 @@ package com.example.generator.code.task;
 import com.example.generator.code.generator.ControllerGenerator;
 import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
-import com.example.generator.code.task.base.FreemarkerUtil;
+import com.example.generator.code.task.base.VelocityUtil;
 import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
 import com.example.generator.util.StringUtil;
@@ -65,7 +65,7 @@ public class ControllerTask extends BaseTask {
         String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
         String fileName = className + "Controller.java";
 
-        int type = FreemarkerUtil.FileTypeEnum.CONTROLLER.getCode();
+        int type = VelocityUtil.FileTypeEnum.CONTROLLER.getCode();
         boolean generate = configuration.getServiceGenerator().isGenerator();
         // 生成Controller文件
         FileUtil.generateToCode(filePath, fileName, controllerData, type, generate, false);

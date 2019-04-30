@@ -10,25 +10,24 @@ import java.util.Locale;
 /**
  * @Description: TODO
  * @Auther: liuhf
- * @CreateTime: 2019/3/16 21:17
+ * @CreateTime: 2019/4/30 12:39
  */
 public class FreemarkerUtil {
-
     //enum本身就是单例的
     public enum FileTypeEnum{
-        EXCEPTION_RESOLVER(-4, "ExceptionResolver.ftl"),
-        RESPONSE_CODE(-3, "ResponseCode.ftl"),
-        SERVER_RESPONSE(-2, "ServerResponse.ftl"),
-        SWAGGER_2(-1, "Swagger2.ftl"),
-        ENTITY(0, "Entity.ftl"),
-        ENTITY_DTO(1, "EntityDto.ftl"),
-        MAPPER(2, "Mapper.ftl"),
-        DAO(3, "Dao.ftl"),
-        DAO_TABLE_MAPPER(4, "TableMapper.ftl"),
-        DAO_VIEW_MAPPER(5, "ViewMapper.ftl"),
-        SERVICE_IMPL(6, "ServiceImpl.ftl"),
-        SERVICE(7, "Service.ftl"),
-        CONTROLLER(8, "Controller.ftl");
+        EXCEPTION_RESOLVER(-4, "0-ExceptionResolver.ftl"),
+        RESPONSE_CODE(-3, "0-ResponseCode.ftl"),
+        SERVER_RESPONSE(-2, "0-ServerResponse.ftl"),
+        SWAGGER_2(-1, "0-Swagger2.ftl"),
+        ENTITY(0, "1-Entity.ftl"),
+        ENTITY_DTO(1, "1-EntityDto.ftl"),
+        MAPPER(2, "1-Mapper.ftl"),
+        DAO(3, "1-Dao.ftl"),
+        DAO_TABLE_MAPPER(4, "1-1-TableMapper.ftl"),
+        DAO_VIEW_MAPPER(5, "1-1-ViewMapper.ftl"),
+        SERVICE_IMPL(6, "2-ServiceImpl.ftl"),
+        SERVICE(7, "2-Service.ftl"),
+        CONTROLLER(8, "2-Controller.ftl");
 
         private int code;
         private String tpl;
@@ -46,8 +45,8 @@ public class FreemarkerUtil {
             return tpl;
         }
 
-        public static FileTypeEnum codeOf(int code) {
-            for (FileTypeEnum fileTypeEnum : FileTypeEnum.values()) {
+        public static VelocityUtil.FileTypeEnum codeOf(int code) {
+            for (VelocityUtil.FileTypeEnum fileTypeEnum : VelocityUtil.FileTypeEnum.values()) {
                 if (fileTypeEnum.getCode() == code) {
                     return fileTypeEnum;
                 }
@@ -56,7 +55,7 @@ public class FreemarkerUtil {
         }
     }
 
-    private static String path = new File(FreemarkerUtil.class.getClassLoader().getResource("tpl").getFile()).getPath();
+    private static String path = new File(VelocityUtil.class.getClassLoader().getResource("tpl").getFile()).getPath();
 
     private static Configuration configuration;
 
@@ -85,6 +84,6 @@ public class FreemarkerUtil {
      * @throws IOException
      */
     public static Template getTemplate(int type) throws IOException {
-        return getInstance().getTemplate(FileTypeEnum.codeOf(type).getTpl());
+        return getInstance().getTemplate(VelocityUtil.FileTypeEnum.codeOf(type).getTpl());
     }
 }
