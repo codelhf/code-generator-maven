@@ -6,6 +6,7 @@ import com.example.generator.code.task.*;
 import com.example.generator.config.Configuration;
 import com.example.generator.util.StringUtil;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 /**
@@ -22,14 +23,14 @@ public class One2ManyInvoker extends BaseInvoker {
     }
 
     @Override
-    protected void initTasks() {
-        taskQueue.add(new ControllerTask(className, tableInfo,false, configuration));
-        taskQueue.add(new ServiceTask(className, tableInfo,false, configuration));
-        taskQueue.add(new ServiceImplTask(className, tableInfo,false, configuration));
-        taskQueue.add(new DaoTask(className, tableInfo,false, configuration));
-        taskQueue.add(new MapperTask(tableName, className, parentTableName, parentClassName, foreignKey, tableInfo, parentTableInfo, false, configuration));
-        taskQueue.add(new EntityTask(className, parentClassName, foreignKey, tableInfo, configuration));
-        taskQueue.add(new EntityDtoTask(className, parentClassName, foreignKey, tableInfo, configuration));
+    protected void initTasks() throws IOException {
+        new ControllerTask(className, tableInfo,false, configuration).run();
+        new ServiceTask(className, tableInfo,false, configuration).run();
+        new ServiceImplTask(className, tableInfo,false, configuration).run();
+        new DaoTask(className, tableInfo,false, configuration).run();
+        new MapperTask(tableName, className, parentTableName, parentClassName, foreignKey, tableInfo, parentTableInfo, false, configuration).run();
+        new EntityTask(className, parentClassName, foreignKey, tableInfo, configuration).run();
+        new EntityDtoTask(className, parentClassName, foreignKey, tableInfo, configuration).run();
     }
 
     public static class Builder extends BaseBuilder {

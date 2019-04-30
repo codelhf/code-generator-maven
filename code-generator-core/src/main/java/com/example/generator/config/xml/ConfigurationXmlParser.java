@@ -90,13 +90,14 @@ public class ConfigurationXmlParser {
         }
 
         Element rootElement = document.getRootElement();
-        DocumentType docType = document.getDocType();
-        if (rootElement.getNodeType() == Element.ELEMENT_NODE
-                && docType.getPublicID().equals(XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) {
-            return parseConfiguration(rootElement);
-        } else {
-            throw new XMLParserException(Messages.getString("RuntimeError.5"));
-        }
+        return parseConfiguration(rootElement);
+//        DocumentType docType = document.getDocType();
+//        if (rootElement.getNodeType() == Element.ELEMENT_NODE
+//                && docType.getPublicID().equals(XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) {
+//            return parseConfiguration(rootElement);
+//        } else {
+//            throw new XMLParserException(Messages.getString("RuntimeError.5"));
+//        }
     }
 
     private Configuration parseConfiguration(Element rootElement) {

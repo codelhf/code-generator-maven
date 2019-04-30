@@ -1,13 +1,13 @@
 package com.example.generator.code.task;
 
 import com.example.generator.code.generator.EntityGenerator;
+import com.example.generator.code.generator.base.BaseGenerator;
 import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
 import com.example.generator.code.task.base.VelocityUtil;
 import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
 import com.example.generator.util.StringUtil;
-import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -43,44 +43,27 @@ public class EntityTask extends BaseTask {
     }
 
     @Override
-    public void run() throws IOException, TemplateException {
+    public void run() throws IOException {
         // 生成Entity填充数据
-        System.out.println("Generating " + className + ".java");
-        Map<String, String> entityData = new HashMap<>();
-
-        String title = className;
-        String description = className + "实体类";
+        Map<String, Object> entityData = new HashMap<>();
 
         entityData.put("EntityPackageName", configuration.getCommonGenerator().getModelGenerator().getTargetPackage());
         entityData.put("ClassName", className);
 
-        entityData.put("Remark", EntityGenerator.generateRemark(title, description, configuration));
-        boolean useLombok = configuration.getCommonGenerator().getModelGenerator().isUseLombok();
-        if (useLombok) {
-            entityData.put("Lombok", EntityGenerator.generateLombok());
-        }
+        String title = className;
+        String description = className + "实体类";
+        entityData.put("Remark", BaseGenerator.generateRemark(title, description, configuration));
+        entityData.put("Lombok", BaseGenerator.generateLombok());
+
         if (StringUtil.isNotBlank(parentForeignKey)) { // 多对多：主表实体
             entityData.put("Properties", EntityGenerator.generateProperties(parentClassName, tableInfo));
-            if (!useLombok) {
-                entityData.put("Constructor", "Constructor");
-                entityData.put("Methods", EntityGenerator.generateMethods(parentClassName, tableInfo));
-            }
-
         } else if (StringUtil.isNotBlank(foreignKey)) { // 多对一：主表实体
             entityData.put("Properties", EntityGenerator.generateProperties(parentClassName, tableInfo, foreignKey));
-            if (!useLombok) {
-                entityData.put("Constructor", "Constructor");
-                entityData.put("Methods", EntityGenerator.generateMethods(parentClassName, tableInfo, foreignKey));
-            }
         } else { // 单表关系
             entityData.put("Properties", EntityGenerator.generateProperties(tableInfo));
-            if (!useLombok) {
-                entityData.put("Constructor", "Constructor");
-                entityData.put("AllArgsConstructor", EntityGenerator.generateAllArgsConstructor(className, tableInfo));
-                entityData.put("NoArgsConstructor", EntityGenerator.generateNoArgsConstructor(className));
-                entityData.put("Methods", EntityGenerator.generateMethods(tableInfo));
-            }
         }
+
+        entityData.put("tableInfo", tableInfo);
 
         String targetProject = configuration.getCommonGenerator().getModelGenerator().getTargetProject();
         String targetPackage = configuration.getCommonGenerator().getModelGenerator().getTargetPackage();
@@ -91,5 +74,6 @@ public class EntityTask extends BaseTask {
         boolean override = configuration.getCommonGenerator().isOverwrite();
         // 生成Entity文件
         FileUtil.generateToCode(filePath, fileName, entityData, type, true, override);
+        System.out.println("[INFO] Generating " + fileName);
     }
 }

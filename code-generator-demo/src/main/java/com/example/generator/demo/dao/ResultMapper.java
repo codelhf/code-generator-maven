@@ -11,18 +11,12 @@ import java.util.List;
  * @Description: Result实体类
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-04-30 16:56:49
+ * @CreateTime: 2019-04-30 23:33:29
  */
 @Mapper
 public interface ResultMapper  {
 
-
-
-
     Result selectByPrimaryKey(String id);
-
-
-
+    
     List<Result> selectPageList(Result example);
-
 }

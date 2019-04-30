@@ -22,11 +22,9 @@ public class EntityGenerator extends BaseGenerator {
      */
     public static String generateProperties(List<ColumnInfo> tableInfo) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < tableInfo.size(); i++) {
-            if (i != 0) {
-                sb.append("    ");
-            }
-            sb.append("private ").append(tableInfo.get(i).getJavaType()).append(" ").append(tableInfo.get(i).getPropertyName()).append(";\n");
+        for (ColumnInfo columnInfo: tableInfo) {
+            sb.append("private ").append(columnInfo.getJavaType()).append(" ").append(columnInfo.getPropertyName()).append(";\n    ");
+            sb.append("\n    ");
         }
         return sb.toString();
     }

@@ -1,24 +1,14 @@
 package ${EntityPackageName};
 
+import lombok.*;
+
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 ${Remark}
-#if ($Lombok)
 ${Lombok}
-#end
 public class ${ClassName} implements Serializable {
     private static final long serialVersionUID = 1L;
 
     ${Properties}
-
-#if($Constructor)
-    ${AllArgsConstructor}
-    ${NoArgsConstructor}
-#end
-
-#if ($Methods)
-    ${Methods}
-#end
 }

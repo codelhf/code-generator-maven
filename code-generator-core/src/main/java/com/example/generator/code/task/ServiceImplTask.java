@@ -1,16 +1,16 @@
 package com.example.generator.code.task;
 
-import com.example.generator.code.generator.ServiceGenerator;
-import com.example.generator.code.generator.ServiceImplGenerator;
+import com.example.generator.code.generator.base.BaseGenerator;
 import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
 import com.example.generator.code.task.base.VelocityUtil;
 import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
+import com.example.generator.util.DateTimeUtil;
 import com.example.generator.util.StringUtil;
-import freemarker.template.TemplateException;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,17 +27,16 @@ public class ServiceImplTask extends BaseTask {
     }
 
     @Override
-    public void run() throws IOException, TemplateException {
+    public void run() throws IOException {
         // 生成ServiceImpl填充数据
-        System.out.println("Generating " + className + "ServiceImpl.java");
-        Map<String, String> serviceImplData = new HashMap<>();
+        Map<String, Object> serviceImplData = new HashMap<>();
 
         serviceImplData.put("ServiceImplPackageName", configuration.getServiceGenerator().getServiceImpl());
         serviceImplData.put("BasePackageName", configuration.getCommentGenerator().getBasePackageName());
-        serviceImplData.put("ResponseClass", ServiceGenerator.responseClass);
-        serviceImplData.put("EntityPackageName", configuration.getCommonGenerator().getModelGenerator().getTargetPackage());
-        serviceImplData.put("EntityDTOPackageName", configuration.getCommonGenerator().getDtoGenerator().getTargetPackage());
+        serviceImplData.put("ResponseClass", BaseGenerator.responseClass);
         serviceImplData.put("DaoPackageName", configuration.getCommonGenerator().getDaoGenerator().getTargetPackage());
+        serviceImplData.put("EntityDTOPackageName", configuration.getCommonGenerator().getDtoGenerator().getTargetPackage());
+        serviceImplData.put("EntityPackageName", configuration.getCommonGenerator().getModelGenerator().getTargetPackage());
         serviceImplData.put("ServicePackageName", configuration.getServiceGenerator().getService());
 
         String clazzName = StringUtil.firstToLowerCase(className);
@@ -46,21 +45,19 @@ public class ServiceImplTask extends BaseTask {
 
         String title = className + "ServiceImpl";
         String description = className + "业务层";
-        serviceImplData.put("Remark", ServiceImplGenerator.generateRemark(title, description, configuration));
+        serviceImplData.put("Remark", BaseGenerator.generateRemark(title, description, configuration));
+
+        boolean generateRemark = true;
+        serviceImplData.put("generateRemark", generateRemark);
+        serviceImplData.put("company", configuration.getCommentGenerator().getCompany());
+        serviceImplData.put("author", configuration.getCommentGenerator().getAuthor());
+        serviceImplData.put("createTime", DateTimeUtil.dateToStr(new Date()));
 
         ColumnInfo primaryKeyColumnInfo = getPrimaryKeyColumnInfo(tableInfo);
-        serviceImplData.put("listRemark", ServiceImplGenerator.listRemark(className, configuration));
-        serviceImplData.put("list", ServiceImplGenerator.list(className, clazzName));
-        serviceImplData.put("selectRemark", ServiceImplGenerator.selectRemark(className, primaryKeyColumnInfo, configuration));
-        serviceImplData.put("select", ServiceImplGenerator.select(className, clazzName, primaryKeyColumnInfo));
-        if (!isView) {
-            serviceImplData.put("insertRemark", ServiceImplGenerator.insertRemark(className, clazzName, configuration));
-            serviceImplData.put("insert", ServiceImplGenerator.insert(className, clazzName));
-            serviceImplData.put("updateRemark", ServiceImplGenerator.updateRemark(className, clazzName, primaryKeyColumnInfo, configuration));
-            serviceImplData.put("update", ServiceImplGenerator.update(className, clazzName, primaryKeyColumnInfo));
-            serviceImplData.put("deleteRemark", ServiceImplGenerator.deleteRemark(className, primaryKeyColumnInfo, configuration));
-            serviceImplData.put("delete", ServiceImplGenerator.delete(className, clazzName, primaryKeyColumnInfo));
-        }
+        serviceImplData.put("propertyName", primaryKeyColumnInfo.getPropertyName());
+        serviceImplData.put("PropertyName", StringUtil.firstToUpperCase(primaryKeyColumnInfo.getPropertyName()));
+        serviceImplData.put("javaType", primaryKeyColumnInfo.getJavaType());
+        serviceImplData.put("isView", isView);
 
         String targetProject = configuration.getServiceGenerator().getTargetProject();
         String targetPackage = configuration.getServiceGenerator().getServiceImpl();
@@ -71,5 +68,6 @@ public class ServiceImplTask extends BaseTask {
         boolean generate = configuration.getServiceGenerator().isGenerator();
         // 生成ServiceImpl文件
         FileUtil.generateToCode(filePath, fileName, serviceImplData, type, generate, false);
+        System.out.println("[INFO] Generating " + fileName);
     }
 }

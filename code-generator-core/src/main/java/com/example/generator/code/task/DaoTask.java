@@ -1,13 +1,12 @@
 package com.example.generator.code.task;
 
-import com.example.generator.code.generator.DaoGenerator;
+import com.example.generator.code.generator.base.BaseGenerator;
 import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
 import com.example.generator.code.task.base.VelocityUtil;
 import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
 import com.example.generator.util.StringUtil;
-import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,47 +25,44 @@ public class DaoTask extends BaseTask {
     }
 
     @Override
-    public void run() throws IOException, TemplateException {
+    public void run() throws IOException {
         // 生成Dao填充数据
-        System.out.println("Generating " + className + "Dao.java");
-        Map<String, String> daoData = new HashMap<>();
+        Map<String, Object> daoData = new HashMap<>();
 
         daoData.put("DaoPackageName", configuration.getCommonGenerator().getDaoGenerator().getTargetPackage());
         daoData.put("EntityPackageName",configuration.getCommonGenerator().getModelGenerator().getTargetPackage());
+
+        String clazzName = StringUtil.firstToLowerCase(className);
         daoData.put("ClassName", className);
-        daoData.put("className", StringUtil.firstToLowerCase(className));
+        daoData.put("className", clazzName);
 
         String title = className + "Mapper";
         String description = className + "实体类";
-        daoData.put("Remark", DaoGenerator.generateRemark(title, description, configuration));
+        daoData.put("Remark", BaseGenerator.generateRemark(title, description, configuration));
 
-        boolean useMapper = false;
-        ColumnInfo primaryKeyColumn = getPrimaryKeyColumnInfo(tableInfo);
-        if (!useMapper) {
-            daoData.put("selectPageList", DaoGenerator.selectPageList(className));
-            daoData.put("selectByPrimaryKey", DaoGenerator.selectByPrimaryKey(className, primaryKeyColumn));
-            if (!isView) {
-                daoData.put("deleteByPrimaryKey", DaoGenerator.deleteByPrimaryKey(primaryKeyColumn));
-                daoData.put("insert", DaoGenerator.insert(className));
-                daoData.put("insertSelective", DaoGenerator.insertSelective(className));
-                daoData.put("updateByPrimaryKeySelective", DaoGenerator.updateByPrimaryKeySelective(className));
-                daoData.put("updateByPrimaryKey", DaoGenerator.updateByPrimaryKey(className));
-                daoData.put("deleteByIdList", DaoGenerator.deleteByIdList(primaryKeyColumn));
-            }
-        } else {
-            daoData.put("baseMapper", isView ? "ViewMapper" : "TableMapper");
+        boolean CommonMapper = false;
+        daoData.put("CommonMapper", CommonMapper);
+        daoData.put("isView", isView);
+        if (CommonMapper) {
             String targetProject = configuration.getCommonGenerator().getDaoGenerator().getTargetProject();
             String targetPackage = configuration.getCommonGenerator().getDaoGenerator().getTargetPackage();
-
             String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
-            String fileName = "TableMapper.java";
-            int type = VelocityUtil.FileTypeEnum.DAO_TABLE_MAPPER.getCode();
-            FileUtil.generateToCode(filePath, fileName, daoData, type, true, true);
-
-            fileName = "ViewMapper.java";
-            type = VelocityUtil.FileTypeEnum.DAO_VIEW_MAPPER.getCode();
-            FileUtil.generateToCode(filePath, fileName, daoData, type, true, true);
+            if (!isView) {
+                daoData.put("baseMapper", "TableMapper");
+                String fileName = "TableMapper.java";
+                int type = VelocityUtil.FileTypeEnum.DAO_TABLE_MAPPER.getCode();
+                FileUtil.generateToCode(filePath, fileName, daoData, type, true, true);
+            } else {
+                daoData.put("baseMapper", "ViewMapper");
+                String fileName = "ViewMapper.java";
+                int type = VelocityUtil.FileTypeEnum.DAO_VIEW_MAPPER.getCode();
+                FileUtil.generateToCode(filePath, fileName, daoData, type, true, true);
+            }
         }
+
+        ColumnInfo primaryKeyColumn = getPrimaryKeyColumnInfo(tableInfo);
+        daoData.put("propertyName", primaryKeyColumn.getPropertyName());
+        daoData.put("javaType", primaryKeyColumn.getJavaType());
 
         String targetProject = configuration.getCommonGenerator().getDaoGenerator().getTargetProject();
         String targetPackage = configuration.getCommonGenerator().getDaoGenerator().getTargetPackage();
@@ -77,5 +73,6 @@ public class DaoTask extends BaseTask {
         boolean override = configuration.getCommonGenerator().isOverwrite();
         // 生成dao文件
         FileUtil.generateToCode(filePath, fileName, daoData, type, true, override);
+        System.out.println("[INFO] Generating " + fileName);
     }
 }

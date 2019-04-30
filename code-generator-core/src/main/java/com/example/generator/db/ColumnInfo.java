@@ -1,7 +1,6 @@
 package com.example.generator.db;
 
 import com.example.generator.util.StringUtil;
-import com.example.generator.util.StringUtil;
 
 import java.io.Serializable;
 

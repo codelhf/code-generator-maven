@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE generatorConfiguration
-        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
-        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!--<!DOCTYPE generatorConfiguration-->
+        <!--PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"-->
+        <!--"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">-->
 <!--标签为对象, property为对象的属性-->
 <generatorConfiguration>
     <!--导入配置文件-->
@@ -81,7 +81,7 @@
             <!--建立的Model对象是否不可改变, 即生成的Model对象不会有setter方法,只有构造方法-->
             <property name="immutable" value="false"/>
             <!--是否对model使用lombok注解, 使用lombok注解将不会生成getter,setter和constructor方法-->
-            <property name="useLombok" value="false"/>
+            <property name="useLombok" value="true"/>
         </modelGenerator>
         <!--
             客户端代码，生成易于使用的针对Model对象和XML配置文件的代码

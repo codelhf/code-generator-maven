@@ -11,24 +11,24 @@ import java.util.List;
  * @Description: Prize实体类
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-04-30 16:56:49
+ * @CreateTime: 2019-04-30 23:33:29
  */
 @Mapper
 public interface PrizeMapper  {
 
+    Prize selectByPrimaryKey(int id);
+    
     int deleteByPrimaryKey(int id);
 
     int insert(Prize record);
 
     int insertSelective(Prize record);
 
-    Prize selectByPrimaryKey(int id);
-
     int updateByPrimaryKeySelective(Prize record);
 
     int updateByPrimaryKey(Prize record);
 
-    List<Prize> selectPageList(Prize example);
-
     int deleteByIdList(@Param("idList") List<String> idList);
+    
+    List<Prize> selectPageList(Prize example);
 }

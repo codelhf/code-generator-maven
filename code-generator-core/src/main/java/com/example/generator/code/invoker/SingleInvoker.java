@@ -9,7 +9,9 @@ import com.example.generator.config.GeneratedKey;
 import com.example.generator.db.ColumnInfo;
 import com.example.generator.db.TypeUtil;
 import com.example.generator.util.StringUtil;
+import freemarker.template.TemplateException;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -62,14 +64,14 @@ public class SingleInvoker extends BaseInvoker {
     }
 
     @Override
-    protected void initTasks() {
-        taskQueue.add(new ControllerTask(className, tableInfo, isView, configuration));
-        taskQueue.add(new ServiceTask(className, tableInfo, isView, configuration));
-        taskQueue.add(new ServiceImplTask(className, tableInfo, isView, configuration));
-        taskQueue.add(new DaoTask(className, tableInfo, isView, configuration));
-        taskQueue.add(new MapperTask(className, tableName, tableInfo, isView, configuration));
-        taskQueue.add(new EntityTask(className, tableInfo, configuration));
-        taskQueue.add(new EntityDtoTask(className, tableInfo, configuration));
+    protected void initTasks() throws IOException, TemplateException {
+        new ControllerTask(className, tableInfo, isView, configuration).run();
+        new ServiceTask(className, tableInfo, isView, configuration).run();
+        new ServiceImplTask(className, tableInfo, isView, configuration).run();
+        new DaoTask(className, tableInfo, isView, configuration).run();
+        new MapperTask(className, tableName, tableInfo, isView, configuration).run();
+        new EntityTask(className, tableInfo, configuration).run();
+        new EntityDtoTask(className, tableInfo, configuration).run();
     }
 
     public static class Builder extends BaseBuilder {

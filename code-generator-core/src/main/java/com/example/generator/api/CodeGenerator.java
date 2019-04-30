@@ -7,7 +7,6 @@ import com.example.generator.code.invoker.base.Invoker;
 import com.example.generator.code.task.CommonTask;
 import com.example.generator.config.*;
 import com.example.generator.util.Messages;
-import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,24 +20,6 @@ public class CodeGenerator {
 
     /** The configuration. */
     private Configuration configuration;
-
-//    /** The shell callback. */
-//    private ShellCallback shellCallback;
-//
-//    /** The warnings. */
-//    private List<String> warnings;
-//
-//    /** The projects. */
-//    private Set<String> projects;
-//
-//    /** The generated files. */
-//    private List<String> generatedFiles;
-//
-//    /** The generated java files. */
-//    private List<GeneratedJavaFile> generatedJavaFiles;
-//
-//    /** The generated xml files. */
-//    private List<GeneratedXmlFile> generatedXmlFiles;
 
     public CodeGenerator(Configuration configuration) {
         if (configuration == null) {
@@ -57,7 +38,7 @@ public class CodeGenerator {
             //generate common
             CommonTask commonTask = new CommonTask(configuration);
             commonTask.run();
-        } catch (IOException | TemplateException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

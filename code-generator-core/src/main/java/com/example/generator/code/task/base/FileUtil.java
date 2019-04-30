@@ -21,11 +21,10 @@ public class FileUtil {
      * @param data     填充数据
      * @param filePath 输出文件
      * @throws IOException
-     * @throws TemplateException
      */
     public static void generateToCode(String filePath, String fileName, Map data,
                                       int type, boolean generate, boolean override)
-            throws IOException, TemplateException {
+            throws IOException {
         if (generate) {
             File directory = new File(filePath);
             if (!directory.exists()) {

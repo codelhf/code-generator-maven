@@ -112,6 +112,13 @@
             update_time = #{updateTime, jdbcType=TIMESTAMP}
         where id = #{id}
     </update>
+    <delete id="deleteByIdList" parameterType="map">
+        delete from lottery_prize
+        where id in
+        <foreach collection="idList" index="index" item="id" open="(" separator="," close=")" >
+            #{id}
+        </foreach>
+    </delete>
     <select id="selectPageList" parameterType="com.example.generator.demo.po.Prize" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
         from lottery_prize
@@ -139,11 +146,4 @@
             </if>
         </where>
     </select>
-    <delete id="deleteByIdList" parameterType="map">
-        delete from lottery_prize
-        where id in
-        <foreach collection="idList" index="index" item="id" open="(" separator="," close=")" >
-            #{id}
-        </foreach>
-    </delete>
 </mapper>

@@ -24,7 +24,7 @@ public class CommonTask {
         this.configuration = configuration;
     }
 
-    public void run() throws IOException, TemplateException {
+    public void run() throws IOException {
         // 生成Common填充数据
         Map<String, String> commonData = new HashMap<>();
 
@@ -42,21 +42,21 @@ public class CommonTask {
         String fileName = "ExceptionResolver.java";
         int type = VelocityUtil.FileTypeEnum.EXCEPTION_RESOLVER.getCode();
         FileUtil.generateToCode(filePath, fileName, commonData, type, true, true);
-        System.out.println("Generating common-" + fileName);
+        System.out.println("[INFO] Generating common-" + fileName);
 
         fileName = "ResponseCode.java";
         type = VelocityUtil.FileTypeEnum.RESPONSE_CODE.getCode();
         FileUtil.generateToCode(filePath, fileName, commonData, type, true, true);
-        System.out.println("Generating common-" + fileName);
+        System.out.println("[INFO] Generating common-" + fileName);
 
         fileName = "ServerResponse.java";
         type = VelocityUtil.FileTypeEnum.SERVER_RESPONSE.getCode();
         FileUtil.generateToCode(filePath, fileName, commonData, type, true, true);
-        System.out.println("Generating common-" + fileName);
+        System.out.println("[INFO] Generating common-" + fileName);
 
         fileName = "Swagger2.java";
         type = VelocityUtil.FileTypeEnum.SWAGGER_2.getCode();
         FileUtil.generateToCode(filePath, fileName, commonData, type, true, true);
-        System.out.println("Generating common-" + fileName);
+        System.out.println("[INFO] Generating common-" + fileName);
     }
 }

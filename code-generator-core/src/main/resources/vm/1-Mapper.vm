@@ -25,10 +25,10 @@
 #if ($updateByPrimaryKey)
     ${updateByPrimaryKey}
 #end
-#if ($selectPageList)
-    ${selectPageList}
-#end
 #if ($deleteByIdList)
     ${deleteByIdList}
+#end
+#if ($selectPageList)
+    ${selectPageList}
 #end
 </mapper>

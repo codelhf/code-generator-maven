@@ -6,7 +6,6 @@ import com.example.generator.code.task.base.FileUtil;
 import com.example.generator.code.task.base.VelocityUtil;
 import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
-import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -42,9 +41,8 @@ public class MapperTask extends BaseTask {
     }
 
     @Override
-    public void run() throws IOException, TemplateException {
+    public void run() throws IOException {
         // 生成Mapper填充数据
-        System.out.println("Generating " + className + "Mapper.xml");
         Map<String, String> mapperData = new HashMap<>();
 
         mapperData.put("DaoPackageName", configuration.getCommonGenerator().getDaoGenerator().getTargetPackage());
@@ -78,32 +76,6 @@ public class MapperTask extends BaseTask {
         boolean override = configuration.getCommonGenerator().isOverwrite();
         // 生成Mapper文件
         FileUtil.generateToCode(filePath, fileName, mapperData, type, true, override);
+        System.out.println("[INFO] Generating " + fileName);
     }
-
-//    public static void main(String[] args) {
-//        String filePath = "D:\\VSCodeProjects\\generator\\generator\\code-generator-demo\\src\\main\\resources\\mappers\\";
-//        String fileName = "TestMapper.xml";
-//        int type = VelocityUtil.FileTypeEnum.MAPPER.getCode();
-//        Map<String, String> mapperData = new HashMap<>();
-//        mapperData.put("DaoPackageName", "test");
-//        mapperData.put("ClassName", "Test");
-//
-//        mapperData.put("baseResultMap", "<resultMap id=\"BaseResultMap\" type=\"com.example.generator.demo.po.Prize\">\n" +
-//                "        <id column=\"id\" jdbcType=\"INTEGER\" property=\"id\"/>\n" +
-//                "        <result column=\"grade\" jdbcType=\"VARCHAR\" property=\"grade\"/>\n" +
-//                "        <result column=\"prize\" jdbcType=\"VARCHAR\" property=\"prize\"/>\n" +
-//                "        <result column=\"image\" jdbcType=\"VARCHAR\" property=\"image\"/>\n" +
-//                "        <result column=\"stock\" jdbcType=\"INTEGER\" property=\"stock\"/>\n" +
-//                "        <result column=\"create_time\" jdbcType=\"TIMESTAMP\" property=\"createTime\"/>\n" +
-//                "        <result column=\"update_time\" jdbcType=\"TIMESTAMP\" property=\"updateTime\"/>\n" +
-//                "    </resultMap>");
-//        try {
-//            FileUtil.generateToCode(filePath, fileName, mapperData, type, true, true);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (TemplateException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
 }

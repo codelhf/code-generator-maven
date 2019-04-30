@@ -1,13 +1,12 @@
 package com.example.generator.code.task;
 
-import com.example.generator.code.generator.ControllerGenerator;
+import com.example.generator.code.generator.base.BaseGenerator;
 import com.example.generator.code.task.base.BaseTask;
 import com.example.generator.code.task.base.FileUtil;
 import com.example.generator.code.task.base.VelocityUtil;
 import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
 import com.example.generator.util.StringUtil;
-import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,14 +25,13 @@ public class ControllerTask extends BaseTask {
     }
 
     @Override
-    public void run() throws IOException, TemplateException {
+    public void run() throws IOException {
         // 生成Controller填充数据
-        System.out.println("Generating " + className + "Controller.java");
-        Map<String, String> controllerData = new HashMap<>();
+        Map<String, Object> controllerData = new HashMap<>();
 
         controllerData.put("ControllerPackageName", configuration.getServiceGenerator().getController());
         controllerData.put("BasePackageName", configuration.getCommentGenerator().getBasePackageName());
-        controllerData.put("ResponseClass", ControllerGenerator.responseClass);
+        controllerData.put("ResponseClass", BaseGenerator.responseClass);
         controllerData.put("EntityDTOPackageName", configuration.getCommonGenerator().getDtoGenerator().getTargetPackage());
         controllerData.put("ServicePackageName", configuration.getServiceGenerator().getService());
 
@@ -43,21 +41,15 @@ public class ControllerTask extends BaseTask {
 
         String title = className + "Controller";
         String description = className + "控制层";
-        controllerData.put("Remark", ControllerGenerator.generateRemark(title, description, configuration));
+        controllerData.put("Remark", BaseGenerator.generateRemark(title, description, configuration));
 
+        boolean generateSwagger = true;
+        controllerData.put("generateSwagger", generateSwagger);
         ColumnInfo primaryKeyColumn = getPrimaryKeyColumnInfo(tableInfo);
-        controllerData.put("listRemark", ControllerGenerator.listRemark(className));
-        controllerData.put("list", ControllerGenerator.list(className));
-        controllerData.put("selectRemark", ControllerGenerator.selectRemark(className, primaryKeyColumn));
-        controllerData.put("select", ControllerGenerator.select(className, primaryKeyColumn));
-        if (!isView) {
-            controllerData.put("insertRemark", ControllerGenerator.insertRemark(className, clazzName));
-            controllerData.put("insert", ControllerGenerator.insert(className, clazzName));
-            controllerData.put("updateRemark", ControllerGenerator.updateRemark(className, clazzName, primaryKeyColumn));
-            controllerData.put("update", ControllerGenerator.update(className, clazzName, primaryKeyColumn));
-            controllerData.put("deleteRemark", ControllerGenerator.deleteRemark(className, primaryKeyColumn));
-            controllerData.put("delete", ControllerGenerator.delete(className, primaryKeyColumn));
-        }
+        controllerData.put("propertyName", primaryKeyColumn.getPropertyName());
+        controllerData.put("javaType", primaryKeyColumn.getJavaType());
+
+        controllerData.put("isView", isView);
 
         String targetProject = configuration.getServiceGenerator().getTargetProject();
         String targetPackage = configuration.getServiceGenerator().getController();
@@ -69,5 +61,6 @@ public class ControllerTask extends BaseTask {
         boolean generate = configuration.getServiceGenerator().isGenerator();
         // 生成Controller文件
         FileUtil.generateToCode(filePath, fileName, controllerData, type, generate, false);
+        System.out.println("[INFO] Generating " + fileName);
     }
 }

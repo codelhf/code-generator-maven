@@ -1,15 +1,13 @@
 package com.example.generator.code.invoker.base;
 
-import com.example.generator.code.task.base.BaseTask;
-import com.example.generator.code.task.base.TaskQueue;
 import com.example.generator.config.Configuration;
 import com.example.generator.db.ColumnInfo;
 import com.example.generator.db.ConnectionUtil;
+import freemarker.template.TemplateException;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @Description: TODO
@@ -28,8 +26,6 @@ public abstract class BaseInvoker implements Invoker {
     protected List<ColumnInfo> parentTableInfo;
     protected Configuration configuration;
     protected ConnectionUtil connectionUtil = new ConnectionUtil();
-    protected TaskQueue<BaseTask> taskQueue = new TaskQueue();
-    private ExecutorService executorPool = Executors.newFixedThreadPool(7);
 
     private void initDataSource() throws Exception {
         if (!connectionUtil.initConnection(configuration)) {
@@ -41,24 +37,13 @@ public abstract class BaseInvoker implements Invoker {
 
     protected abstract void getTableInfo() throws SQLException;
 
-    protected abstract void initTasks();
+    protected abstract void initTasks() throws IOException, TemplateException;
 
     @Override
     public void execute() {
         try {
             initDataSource();
             initTasks();
-            while (!taskQueue.isEmpty()) {
-                BaseTask task = taskQueue.poll();
-                executorPool.execute(() -> {
-                    try {
-                        task.run();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
-            executorPool.shutdown();
         } catch (Exception e) {
             e.printStackTrace();
         }

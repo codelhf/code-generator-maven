@@ -85,31 +85,7 @@ public class BaseGenerator {
         sb.append("@Setter\n");
         sb.append("@NoArgsConstructor\n");
         sb.append("@AllArgsConstructor\n");
-        sb.append("@Builder\n");
-        return sb.toString();
-    }
-
-    /**
-     * @ApiOperation(value = "")
-     * @ApiImplicitParams({
-     *      @ApiImplicitParam(name = "", value = "", dataType = "", required = true),
-     *      @ApiImplicitParam(name = "", value = "", dataType = "", required = true)
-     * })
-     */
-
-    public static String generatedSwagger2(String value, List<String> params) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("@ApiOperation(value = \"").append(value).append("\")\n    ");
-        if (params.size() > 0) {
-            sb.append("@ApiImplicitParams({\n    ");
-            StringBuilder ApiImplicitParams = new StringBuilder();
-            for (String param: params) {
-                ApiImplicitParams.append("    @ApiImplicitParam(").append(param).append("),\n    ");
-            }
-            String apiImplicitParams = ApiImplicitParams.substring(0, ApiImplicitParams.lastIndexOf(","));
-            sb.append(apiImplicitParams).append("\n    ");
-        }
-        sb.append("})");
+        sb.append("@Builder");
         return sb.toString();
     }
 }

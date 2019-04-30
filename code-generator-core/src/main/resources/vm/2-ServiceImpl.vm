@@ -27,38 +27,134 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     @Autowired
     private ${ClassName}Mapper ${className}Mapper;
 
-#if ($listRemark)
-    ${listRemark}
+#if ($generateRemark == true)
+    /**
+     * @Title: list
+     * @Description: 查询${ClassName}列表
+     * @Company: ${company}
+     * @Author: ${author}
+     * @CreateTime: ${createTime}
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param params
+     * @return ${ResponseClass}<PageInfo>
+     */
 #end
-#if ($list)
-    ${list}
+    @Override
+    public ${ResponseClass}<PageInfo> list(Integer pageNum, Integer pageSize, Map<String, String> params) {
+        if (pageNum != null && pageSize != null) {
+            PageHelper.startPage(pageNum, pageSize);
+        }
+        ${ClassName} ${className} = null;
+        if (CollectionUtils.isNotEmpty(params.values())) {
+            ${className} = JSON.parseObject(JSON.toJSONString(params), ${ClassName}.class);
+        }
+        List<${ClassName}> ${className}List = ${className}Mapper.selectPageList(${className});
+        List<${ClassName}DTO> ${className}DTOList = new ArrayList<>();
+        BeanUtils.copyProperties(${className}List, ${className}DTOList, List.class);
+        PageInfo pageInfo = new PageInfo(${className}List);
+        pageInfo.setList(${className}DTOList);
+        return ${ResponseClass}.createBySuccess(pageInfo);
+    }
+#if ($generateRemark == true)
+    /**
+     * @Title: select
+     * @Description: 查询${ClassName}对象
+     * @Company: ${company}
+     * @Author: ${author}
+     * @CreateTime: ${createTime}
+     *
+     * @param ${propertyName}
+     * @return ${ResponseClass}<${ClassName}DTO>
+     */
 #end
-
-#if ($insertRemark)
-    ${insertRemark}
+    @Override
+    public ${ResponseClass}<${ClassName}DTO> select(${javaType} ${propertyName}) {
+        if (StringUtils.isBlank(String.valueOf(${propertyName}))) {
+            return ${ResponseClass}.createByErrorMessage("${propertyName}不能为空");
+        }
+        ${ClassName} ${className} = ${className}Mapper.selectByPrimaryKey(${propertyName});
+        if (${className} == null) {
+            return ${ResponseClass}.createByErrorMessage("${ClassName}不存在");
+        }
+        ${ClassName}DTO ${className}DTO = new ${ClassName}DTO();
+        BeanUtils.copyProperties(${className}, ${className}DTO);
+        return ${ResponseClass}.createBySuccess(${className}DTO);
+    }
+#if($isView == false)
+#if ($generateRemark == true)
+    /**
+     * @Title: insert
+     * @Description: 保存${ClassName}对象
+     * @Company: ${company}
+     * @Author: ${author}
+     * @CreateTime: ${createTime}
+     *
+     * @param ${className}DTO
+     * @return ${ResponseClass}<String>
+     */
 #end
-#if ($insert)
-    ${insert}
+    @Override
+    public ${ResponseClass}<String> insert(${ClassName}DTO ${className}DTO) {
+        ${ClassName} ${className} = new ${ClassName}();
+        BeanUtils.copyProperties(${className}DTO, ${className});
+        int rowCount = ${className}Mapper.insertSelective(${className});
+        if (rowCount == 0) {
+            return ${ResponseClass}.createByErrorMessage("新增${ClassName}失败");
+        }
+        return ${ResponseClass}.createBySuccessMessage("新增${ClassName}成功");
+    }
+#if ($generateRemark == true)
+    /**
+     * @Title: update
+     * @Description: 更新${ClassName}对象
+     * @Company: ${company}
+     * @Author: ${author}
+     * @CreateTime: ${createTime}
+     *
+     * @param ${propertyName}
+     * @param ${className}DTO
+     * @return ${ResponseClass}<String>
+     */
 #end
-
-#if ($selectRemark)
-    ${selectRemark}
+    @Override
+    public ${ResponseClass}<String> update(${javaType} ${propertyName}, ${ClassName}DTO ${className}DTO) {
+        if (StringUtils.isBlank(String.valueOf(${propertyName}))) {
+            return ${ResponseClass}.createByErrorMessage("${propertyName}不能为空");
+        }
+        ${className}DTO.set${PropertyName}(${propertyName});
+        ${ClassName} ${className} = new ${ClassName}();
+        BeanUtils.copyProperties(${className}DTO, ${className});
+        int rowCount = ${className}Mapper.updateByPrimaryKeySelective(${className});
+        if (rowCount == 0) {
+            return ${ResponseClass}.createByErrorMessage("更新${ClassName}失败");
+        }
+        return ${ResponseClass}.createBySuccessMessage("更新${ClassName}成功");
+    }
+#if ($generateRemark == true)
+    /**
+     * @Title: delete
+     * @Description: 批量删除${ClassName}对象
+     * @Company: ${company}
+     * @Author: ${author}
+     * @CreateTime: ${createTime}
+     *
+     * @param ${propertyName}s
+     * @return ${ResponseClass}<String>
+     */
 #end
-#if ($select)
-    ${select}
-#end
-
-#if ($updateRemark)
-    ${updateRemark}
-#end
-#if ($update)
-    ${update}
-#end
-
-#if ($deleteRemark)
-    ${deleteRemark}
-#end
-#if ($delete)
-    ${delete}
+    @Override
+    public ${ResponseClass}<String> delete(String ${propertyName}s) {
+        List<String> ${propertyName}List = Splitter.on(",").splitToList(${propertyName}s);
+        if (CollectionUtils.isEmpty(${propertyName}List)) {
+            return ${ResponseClass}.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "${propertyName}不能为空");
+        }
+        int rowCount = ${className}Mapper.deleteByIdList(${propertyName}List);
+        if (rowCount == 0 || rowCount < ${propertyName}List.size()) {
+            return ${ResponseClass}.createByErrorMessage("批量删除${ClassName}失败");
+        }
+        return ${ResponseClass}.createBySuccessMessage("批量删除${ClassName}成功");
+    }
 #end
 }

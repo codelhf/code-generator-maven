@@ -13,35 +13,23 @@ ${Remark}
 @Mapper
 public interface ${ClassName}Mapper #if ($baseMapper)extends ${baseMapper}<${ClassName}>#end {
 
-#if ($deleteByPrimaryKey)
-    ${deleteByPrimaryKey}
-#end
+#if($CommonMapper == false)
+    ${ClassName} selectByPrimaryKey(${javaType} ${propertyName});
+    #if($isView == false)
 
-#if($insert)
-    ${insert}
-#end
+    int deleteByPrimaryKey(${javaType} ${propertyName});
 
-#if ($insertSelective)
-    ${insertSelective}
-#end
+    int insert(${ClassName} record);
 
-#if ($selectByPrimaryKey)
-    ${selectByPrimaryKey}
-#end
+    int insertSelective(${ClassName} record);
 
-#if ($updateByPrimaryKeySelective)
-    ${updateByPrimaryKeySelective}
-#end
+    int updateByPrimaryKeySelective(${ClassName} record);
 
-#if ($updateByPrimaryKey)
-    ${updateByPrimaryKey}
-#end
+    int updateByPrimaryKey(${ClassName} record);
 
-#if ($selectPageList)
-    ${selectPageList}
-#end
+    int deleteByIdList(@Param("${propertyName}List") List<String> ${propertyName}List);
+    #end
 
-#if ($deleteByIdList)
-    ${deleteByIdList}
+    List<${ClassName}> selectPageList(${ClassName} example);
 #end
 }
