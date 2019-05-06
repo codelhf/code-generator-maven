@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${DaoPackageName}.${ClassName}Mapper">
+#if ($baseResultMap)
+    ${baseResultMap}
+#end
+#if ($baseColumnList)
+    ${baseColumnList}
+#end
+#if ($selectByPrimaryKey)
+    ${selectByPrimaryKey}
+#end
+#if ($deleteByPrimaryKey)
+    ${deleteByPrimaryKey}
+#end
+#if ($insert)
+    ${insert}
+#end
+#if ($insertSelective)
+    ${insertSelective}
+#end
+#if ($updateByPrimaryKeySelective)
+    ${updateByPrimaryKeySelective}
+#end
+#if ($updateByPrimaryKey)
+    ${updateByPrimaryKey}
+#end
+#if ($deleteByIdList)
+    ${deleteByIdList}
+#end
+#if ($selectPageList)
+    ${selectPageList}
+#end
+</mapper>

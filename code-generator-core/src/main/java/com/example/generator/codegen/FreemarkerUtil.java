@@ -1,4 +1,4 @@
-package com.example.generator.code.task.base;
+package com.example.generator.codegen;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;

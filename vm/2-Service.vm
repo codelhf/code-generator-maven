@@ -1,0 +1,86 @@
+package ${ServicePackageName};
+
+import ${BasePackageName}.common.${ResponseClass};
+import ${EntityDTOPackageName}.${ClassName}DTO;
+import com.github.pagehelper.PageInfo;
+
+import java.util.Map;
+
+${Remark}
+public interface I${ClassName}Service {
+
+#if ($generateRemark == true)
+	/**
+	 * @Title: list
+	 * @Description: 查询${ClassName}列表
+	 * @Company: ${company}
+	 * @Author: ${author}
+	 * @CreateTime: ${createTime}
+	 *
+	 * @param pageNum
+	 * @param pageSize
+	 * @param params
+	 * @return ${ResponseClass}<PageInfo>
+	 */
+#end
+	${ResponseClass}<PageInfo> list(Integer pageNum, Integer pageSize, Map<String, String> params);
+
+#if ($generateRemark == true)
+    /**
+     * @Title: select
+     * @Description: 查询${ClassName}对象
+     * @Company: ${company}
+     * @Author: ${author}
+     * @CreateTime: ${createTime}
+     *
+     * @param ${propertyName}
+     * @return ${ResponseClass}<${ClassName}DTO>
+     */
+#end
+	${ResponseClass}<${ClassName}DTO> select(${javaType} ${propertyName});
+
+#if($isView == false)
+#if ($generateRemark == true)
+    /**
+     * @Title: insert
+     * @Description: 保存${ClassName}对象
+     * @Company: ${company}
+     * @Author: ${author}
+     * @CreateTime: ${createTime}
+     *
+     * @param ${className}DTO
+     * @return ${ResponseClass}<String>
+     */
+#end
+	${ResponseClass}<String> insert(${ClassName}DTO ${className}DTO);
+
+#if ($generateRemark == true)
+    /**
+     * @Title: update
+     * @Description: 更新${ClassName}对象
+     * @Company: ${company}
+     * @Author: ${author}
+     * @CreateTime: ${createTime}
+     *
+     * @param ${propertyName}
+     * @param ${className}DTO
+     * @return ${ResponseClass}<String>
+     */
+#end
+	${ResponseClass}<String> update(${javaType} ${propertyName}, ${ClassName}DTO ${className}DTO);
+
+#if ($generateRemark == true)
+    /**
+     * @Title: delete
+     * @Description: 批量删除${ClassName}对象
+     * @Company: ${company}
+     * @Author: ${author}
+     * @CreateTime: ${createTime}
+     *
+     * @param ${propertyName}s
+     * @return ${ResponseClass}<String>
+     */
+#end
+	${ResponseClass}<String> delete(String ${propertyName}s);
+#end
+}

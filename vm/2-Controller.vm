@@ -1,0 +1,83 @@
+package ${ControllerPackageName};
+
+import ${BasePackageName}.common.${ResponseClass};
+import ${EntityDTOPackageName}.${ClassName}DTO;
+import ${ServicePackageName}.I${ClassName}Service;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.*;
+
+import java.util.Map;
+
+${Remark}
+@RestController
+@RequestMapping(value = "/${className}")
+public class ${ClassName}Controller {
+
+    @Autowired
+    private I${ClassName}Service i${ClassName}Service;
+
+#if ($generateSwagger == true)
+    @ApiOperation(value = "查询${ClassName}列表")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "pageNum", value = "分页当前页码", dataType = "Integer", required = false),
+        @ApiImplicitParam(name = "pageSize", value = "分页一页大小", dataType = "Integer", required = false),
+        @ApiImplicitParam(name = "params", value = "其他查询参数", dataType = "Map", required = false)
+    })
+#end
+    @GetMapping("")
+    public ${ResponseClass}<PageInfo> list(@RequestParam("pageNum") Integer pageNum,
+                                           @RequestParam("pageSize") Integer pageSize,
+                                           @RequestParam("params") Map<String, String> params) {
+        return i${ClassName}Service.list(pageNum, pageSize, params);
+    }
+
+#if ($generateSwagger == true)
+    @ApiOperation(value = "查询${ClassName}对象}")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "${propertyName}", value = "${ClassName}主键", dataType = "${javaType}", required = true)
+    })
+#end
+    @GetMapping("/{${propertyName}}")
+    public ${ResponseClass}<${ClassName}DTO> select(@PathVariable("${propertyName}") ${javaType} ${propertyName}) {
+        return i${ClassName}Service.select(${propertyName});
+    }
+
+#if($isView == false)
+#if ($generateSwagger == true)
+    @ApiOperation(value = "保存${ClassName}对象")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "${className}DTO", value = "${ClassName}DTO对象", dataType = "${ClassName}DTO", required = true)
+    })
+#end
+    @PostMapping("")
+    public ${ResponseClass}<String> insert(@RequestBody ${ClassName}DTO ${className}DTO) {
+        return i${ClassName}Service.insert(${className}DTO);
+    }
+
+#if ($generateSwagger == true)
+    @ApiOperation(value = "更新${ClassName}对象")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "${propertyName}", value = "${ClassName}主键", dataType = "${javaType}", required = true),
+        @ApiImplicitParam(name = "${className}DTO", value = "${ClassName}DTO对象", dataType = "${ClassName}DTO", required = true)
+    })
+#end
+    @PutMapping("/{${propertyName}}")
+    public ${ResponseClass}<String> update(@PathVariable("${propertyName}") ${javaType} ${propertyName},
+                                           @RequestBody ${ClassName}DTO ${className}DTO) {
+        return i${ClassName}Service.update(${propertyName}, ${className}DTO);
+    }
+
+#if ($generateSwagger == true)
+    @ApiOperation(value = "批量删除${ClassName}对象}")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "${propertyName}s", value = "${ClassName}主键字符串,用 , 分隔", dataType = "String", required = true)
+    })
+#end
+    @DeleteMapping("/{${propertyName}s}")
+    public ${ResponseClass}<String> delete(@PathVariable("${propertyName}s") String ${propertyName}s) {
+        return i${ClassName}Service.delete(${propertyName}s);
+    }
+#end
+}
