@@ -1,7 +1,5 @@
 package com.example.generator.config;
 
-import com.example.generator.config.xml.XmlPropertyHolder;
-import com.example.generator.util.StringUtil;
 import com.example.generator.util.StringUtil;
 
 import java.util.List;
@@ -11,7 +9,7 @@ import java.util.List;
  * @Auther: liuhf
  * @CreateTime: 2019/2/27 16:49
  */
-public class JavaTypeResolver extends XmlPropertyHolder {
+public class JavaTypeResolver {
     /**
      * 当表名或者字段名为SQL关键字的时候，可
      * 以设置该属性为true，MBG会自动给表名或字段名添加分隔符

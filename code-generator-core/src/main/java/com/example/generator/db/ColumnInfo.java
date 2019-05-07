@@ -16,16 +16,18 @@ public class ColumnInfo implements Serializable {
     private String jdbcType; //jdbcType
     private String javaType; //javaType;
     private boolean isPrimaryKey; // 是否主键
+    private String comment; //列备注
 
     public ColumnInfo() { }
 
-    public ColumnInfo(String columnName, int type, boolean isPrimaryKey) {
+    public ColumnInfo(String columnName, int type, boolean isPrimaryKey, String comment) {
         this.columnName = columnName;
         this.propertyName = StringUtil.columnName2PropertyName(columnName);
         this.type = type;
         this.jdbcType = TypeUtil.sqlTypeToJdbcType(type);
         this.javaType = TypeUtil.sqlTypeToJavaType(type);
         this.isPrimaryKey = isPrimaryKey;
+        this.comment = comment;
     }
 
     public String getColumnName() {
@@ -74,5 +76,13 @@ public class ColumnInfo implements Serializable {
 
     public void setPrimaryKey(boolean primaryKey) {
         isPrimaryKey = primaryKey;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

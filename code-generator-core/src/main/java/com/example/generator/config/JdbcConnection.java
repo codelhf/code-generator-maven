@@ -1,9 +1,6 @@
 package com.example.generator.config;
 
-import com.example.generator.config.xml.XmlPropertyHolder;
 import com.example.generator.db.DriverFactory;
-import com.example.generator.config.xml.XmlPropertyHolder;
-import com.example.generator.util.StringUtil;
 import com.example.generator.util.StringUtil;
 
 import java.util.List;
@@ -13,7 +10,7 @@ import java.util.List;
  * @Auther: liuhf
  * @CreateTime: 2019/2/27 16:48
  */
-public class JdbcConnection extends XmlPropertyHolder {
+public class JdbcConnection {
     /**
      * 数据库驱动jar路径，非必须参数
      */
@@ -37,16 +34,16 @@ public class JdbcConnection extends XmlPropertyHolder {
 
     public void validate(List<String> errors) {
         if (StringUtil.isBlank(url)) {
-            errors.add("dataSource url cant not be blank");
+            errors.add("JdbcConnection url cant not be blank");
         }
         if (StringUtil.isBlank(driverClass)) {
             this.driverClass = DriverFactory.getDriver(url);
         }
         if (StringUtil.isBlank(username)) {
-            errors.add("dataSource username can not be blank");
+            errors.add("JdbcConnection username can not be blank");
         }
         if (StringUtil.isBlank(password)) {
-            errors.add("dataSource password can not be blank");
+            errors.add("JdbcConnection password can not be blank");
         }
     }
 

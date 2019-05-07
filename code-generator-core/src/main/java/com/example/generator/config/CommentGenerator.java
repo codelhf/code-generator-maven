@@ -1,7 +1,6 @@
 package com.example.generator.config;
 
 import com.example.generator.util.StringUtil;
-import com.example.generator.util.StringUtil;
 
 import java.util.List;
 
@@ -19,6 +18,10 @@ public class CommentGenerator {
      * 公司
      */
     private String company;
+    /**
+     * 响应类名
+     */
+    private String responseClass = "ServerResponse";
     /**
      * 生成所有内容
      */
@@ -38,13 +41,16 @@ public class CommentGenerator {
 
     public void validate(List<String> errors) {
         if(StringUtil.isBlank(author)) {
-            errors.add("author can not be blank");
+            errors.add("CommentGenerator author can not be blank");
         }
         if (StringUtil.isBlank(company)) {
-            errors.add("company can not be blank");
+            errors.add("CommentGenerator company can not be blank");
+        }
+        if (StringUtil.isBlank(responseClass)) {
+            errors.add("CommentGenerator responseClass can not be blank");
         }
         if (StringUtil.isBlank(dateFormat)) {
-            errors.add("dateFormat can not be blank");
+            errors.add("CommentGenerator dateFormat can not be blank");
         }
     }
 
@@ -62,6 +68,14 @@ public class CommentGenerator {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getResponseClass() {
+        return responseClass;
+    }
+
+    public void setResponseClass(String responseClass) {
+        this.responseClass = responseClass;
     }
 
     public boolean isSuppressDate() {

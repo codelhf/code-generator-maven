@@ -181,6 +181,11 @@ public class ConfigurationXmlParser {
         String company = map.get("company");
         commentGenerator.setCompany(company);
 
+        String responseClass = map.get("responseClass");
+        if (StringUtil.isNotBlank(responseClass)) {
+            commentGenerator.setResponseClass(responseClass);
+        }
+
         String suppressAllComments = map.get("suppressAllComments");
         commentGenerator.setSuppressAllComments(StringUtil.isTrue(suppressAllComments));
 

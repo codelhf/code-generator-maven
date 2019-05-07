@@ -71,7 +71,9 @@ public class SingleInvoker {
         data.put("className", StringUtil.firstToLowerCase(className));
         data.put("pkColumn", getPrimaryKeyColumnInfo(tableInfo));
         data.put("isView", isView);
-        data.put("ResponseClassName", BaseGenerator.responseClass);
+        data.put("ResponseClassName", configuration.getCommentGenerator().getResponseClass());
+
+
 
         String configFilePath = configuration.getConfigFilePath();
         List<TemplateConfiguration> templateList = configuration.getTemplateList();
@@ -93,7 +95,7 @@ public class SingleInvoker {
             }
         }
         //设置默认主键, 并非表中真实存在的
-        return new ColumnInfo("id", 1, true);
+        return new ColumnInfo("id", 1, true, "");
     }
 
     //执行前检验

@@ -1,7 +1,6 @@
 package com.example.generator.config;
 
 import com.example.generator.util.StringUtil;
-import com.example.generator.util.StringUtil;
 
 import java.util.List;
 
