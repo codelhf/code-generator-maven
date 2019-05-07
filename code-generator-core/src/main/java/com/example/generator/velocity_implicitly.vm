@@ -1,0 +1,24 @@
+#* @implicitly included *#
+#* @vtlvariable name="encode" type="java.lang.String" *#
+#* @vtlvariable name="company" type="java.lang.String" *#
+#* @vtlvariable name="author" type="java.lang.String" *#
+#* @vtlvariable name="createTime" type="java.lang.String" *#
+
+#* @vtlvariable name="modulePath" type="java.lang.String" *#
+#* @vtlvariable name="importList" type="java.util.List<java.lang.String>" *#
+#* @vtlvariable name="Template" type="com.example.generator.config.TemplateConfiguration" *#
+#* @vtlvariable name="suffix" type="java.lang.String" *#
+
+
+#* @vtlvariable name="ResponseClass" type="java.lang.String" *#
+#* @vtlvariable name="ClassName" type="java.lang.String" *#
+#* @vtlvariable name="className" type="java.lang.String" *#
+#* @vtlvariable name="isView" type="java.lang.Boolean" *#
+#* @vtlvariable name="generateSwagger" type="java.lang.String" *#
+#* @vtlvariable name="generateRemark" type="java.lang.String" *#
+
+#* @vtlvariable name="StringUtil" type="com.example.generator.util.StringUtil" *#
+#* @vtlvariable name="tableName" type="java.lang.String" *#
+#* @vtlvariable name="columnList" type="java.util.List<com.example.generator.db.ColumnInfo>" *#
+#* @vtlvariable name="pkColumn" type="com.example.generator.db.ColumnInfo" *#
+#* @vtlvariable name="columnItem" type="com.example.generator.db.ColumnInfo" *#

@@ -1,4 +1,5 @@
-package ${ServicePackageName};
+$!macro
+package ${Template.getPackageName()};
 
 import ${BasePackageName}.common.${ResponseClass};
 import ${EntityDTOPackageName}.${ClassName}DTO;
@@ -6,10 +7,11 @@ import com.github.pagehelper.PageInfo;
 
 import java.util.Map;
 
-${Remark}
+##(宏定义)
+$fileHeader("${ClassName}${suffix}", "${ClassName}控制层")
 public interface I${ClassName}Service {
 
-#if ($generateRemark == true)
+#if (${generateRemark} == true)
 	/**
 	 * @Title: list
 	 * @Description: 查询${ClassName}列表
@@ -25,7 +27,7 @@ public interface I${ClassName}Service {
 #end
 	${ResponseClass}<PageInfo> list(Integer pageNum, Integer pageSize, Map<String, String> params);
 
-#if ($generateRemark == true)
+#if (${generateRemark} == true)
     /**
      * @Title: select
      * @Description: 查询${ClassName}对象
@@ -33,14 +35,14 @@ public interface I${ClassName}Service {
      * @Author: ${author}
      * @CreateTime: ${createTime}
      *
-     * @param ${propertyName}
+     * @param ${pkColumn.propertyName}
      * @return ${ResponseClass}<${ClassName}DTO>
      */
 #end
-	${ResponseClass}<${ClassName}DTO> select(${javaType} ${propertyName});
+	${ResponseClass}<${ClassName}DTO> select(${pkColumn.javaType} ${pkColumn.propertyName});
 
-#if($isView == false)
-#if ($generateRemark == true)
+#if(${isView} == false)
+#if (${generateRemark} == true)
     /**
      * @Title: insert
      * @Description: 保存${ClassName}对象
@@ -54,7 +56,7 @@ public interface I${ClassName}Service {
 #end
 	${ResponseClass}<String> insert(${ClassName}DTO ${className}DTO);
 
-#if ($generateRemark == true)
+#if (${generateRemark} == true)
     /**
      * @Title: update
      * @Description: 更新${ClassName}对象
@@ -62,14 +64,14 @@ public interface I${ClassName}Service {
      * @Author: ${author}
      * @CreateTime: ${createTime}
      *
-     * @param ${propertyName}
+     * @param ${pkColumn.propertyName}
      * @param ${className}DTO
      * @return ${ResponseClass}<String>
      */
 #end
-	${ResponseClass}<String> update(${javaType} ${propertyName}, ${ClassName}DTO ${className}DTO);
+	${ResponseClass}<String> update(${pkColumn.javaType} ${pkColumn.propertyName}, ${ClassName}DTO ${className}DTO);
 
-#if ($generateRemark == true)
+#if (${generateRemark} == true)
     /**
      * @Title: delete
      * @Description: 批量删除${ClassName}对象
@@ -77,10 +79,10 @@ public interface I${ClassName}Service {
      * @Author: ${author}
      * @CreateTime: ${createTime}
      *
-     * @param ${propertyName}s
+     * @param ${pkColumn.propertyName}s
      * @return ${ResponseClass}<String>
      */
 #end
-	${ResponseClass}<String> delete(String ${propertyName}s);
+	${ResponseClass}<String> delete(String ${pkColumn.propertyName}s);
 #end
 }

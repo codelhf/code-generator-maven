@@ -1,4 +1,5 @@
-package ${ServiceImplPackageName};
+$!macro
+package ${Template.getPackageName()};
 
 import com.alibaba.fastjson.JSON;
 import ${BasePackageName}.common.ResponseCode;
@@ -20,14 +21,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-${Remark}
+##(宏定义)
+$fileHeader("${ClassName}${suffix}", "${ClassName}业务层")
 @Service
 public class ${ClassName}ServiceImpl implements I${ClassName}Service {
 
     @Autowired
     private ${ClassName}Mapper ${className}Mapper;
 
-#if ($generateRemark == true)
+#if (${generateRemark} == true)
     /**
      * @Title: list
      * @Description: 查询${ClassName}列表
@@ -57,7 +59,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
         pageInfo.setList(${className}DTOList);
         return ${ResponseClass}.createBySuccess(pageInfo);
     }
-#if ($generateRemark == true)
+#if (${generateRemark} == true)
     /**
      * @Title: select
      * @Description: 查询${ClassName}对象
@@ -65,16 +67,16 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
      * @Author: ${author}
      * @CreateTime: ${createTime}
      *
-     * @param ${propertyName}
+     * @param ${pkColumn.propertyName}
      * @return ${ResponseClass}<${ClassName}DTO>
      */
 #end
     @Override
-    public ${ResponseClass}<${ClassName}DTO> select(${javaType} ${propertyName}) {
-        if (StringUtils.isBlank(String.valueOf(${propertyName}))) {
-            return ${ResponseClass}.createByErrorMessage("${propertyName}不能为空");
+    public ${ResponseClass}<${ClassName}DTO> select(${pkColumn.javaType} ${pkColumn.propertyName}) {
+        if (StringUtils.isBlank(String.valueOf(${pkColumn.propertyName}))) {
+            return ${ResponseClass}.createByErrorMessage("${pkColumn.propertyName}不能为空");
         }
-        ${ClassName} ${className} = ${className}Mapper.selectByPrimaryKey(${propertyName});
+        ${ClassName} ${className} = ${className}Mapper.selectByPrimaryKey(${pkColumn.propertyName});
         if (${className} == null) {
             return ${ResponseClass}.createByErrorMessage("${ClassName}不存在");
         }
@@ -83,7 +85,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
         return ${ResponseClass}.createBySuccess(${className}DTO);
     }
 #if($isView == false)
-#if ($generateRemark == true)
+#if (${generateRemark} == true)
     /**
      * @Title: insert
      * @Description: 保存${ClassName}对象
@@ -105,7 +107,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
         }
         return ${ResponseClass}.createBySuccessMessage("新增${ClassName}成功");
     }
-#if ($generateRemark == true)
+#if (${generateRemark} == true)
     /**
      * @Title: update
      * @Description: 更新${ClassName}对象
@@ -113,17 +115,17 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
      * @Author: ${author}
      * @CreateTime: ${createTime}
      *
-     * @param ${propertyName}
+     * @param ${pkColumn.propertyName}
      * @param ${className}DTO
      * @return ${ResponseClass}<String>
      */
 #end
     @Override
-    public ${ResponseClass}<String> update(${javaType} ${propertyName}, ${ClassName}DTO ${className}DTO) {
-        if (StringUtils.isBlank(String.valueOf(${propertyName}))) {
-            return ${ResponseClass}.createByErrorMessage("${propertyName}不能为空");
+    public ${ResponseClass}<String> update(${pkColumn.javaType} ${pkColumn.propertyName}, ${ClassName}DTO ${className}DTO) {
+        if (StringUtils.isBlank(String.valueOf(${pkColumn.propertyName}))) {
+            return ${ResponseClass}.createByErrorMessage("${pkColumn.propertyName}不能为空");
         }
-        ${className}DTO.set${PropertyName}(${propertyName});
+        ${className}DTO.set${pkColumn.PropertyName}(${pkColumn.propertyName});
         ${ClassName} ${className} = new ${ClassName}();
         BeanUtils.copyProperties(${className}DTO, ${className});
         int rowCount = ${className}Mapper.updateByPrimaryKeySelective(${className});
@@ -132,7 +134,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
         }
         return ${ResponseClass}.createBySuccessMessage("更新${ClassName}成功");
     }
-#if ($generateRemark == true)
+#if (${generateRemark} == true)
     /**
      * @Title: delete
      * @Description: 批量删除${ClassName}对象
@@ -140,18 +142,18 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
      * @Author: ${author}
      * @CreateTime: ${createTime}
      *
-     * @param ${propertyName}s
+     * @param ${pkColumn.propertyName}s
      * @return ${ResponseClass}<String>
      */
 #end
     @Override
-    public ${ResponseClass}<String> delete(String ${propertyName}s) {
-        List<String> ${propertyName}List = Splitter.on(",").splitToList(${propertyName}s);
-        if (CollectionUtils.isEmpty(${propertyName}List)) {
+    public ${ResponseClass}<String> delete(String ${pkColumn.propertyName}s) {
+        List<String> ${pkColumn.propertyName}List = Splitter.on(",").splitToList(${pkColumn.propertyName}s);
+        if (CollectionUtils.isEmpty(${pkColumn.propertyName}List)) {
             return ${ResponseClass}.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "${propertyName}不能为空");
         }
-        int rowCount = ${className}Mapper.deleteByIdList(${propertyName}List);
-        if (rowCount == 0 || rowCount < ${propertyName}List.size()) {
+        int rowCount = ${className}Mapper.deleteByIdList(${pkColumn.propertyName}List);
+        if (rowCount == 0 || rowCount < ${pkColumn.propertyName}List.size()) {
             return ${ResponseClass}.createByErrorMessage("批量删除${ClassName}失败");
         }
         return ${ResponseClass}.createBySuccessMessage("批量删除${ClassName}成功");

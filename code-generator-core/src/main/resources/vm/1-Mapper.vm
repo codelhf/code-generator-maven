@@ -1,34 +1,81 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${DaoPackageName}.${ClassName}Mapper">
-#if ($baseResultMap)
-    ${baseResultMap}
+    <resultMap id="BaseResultMap" type="${entityPackageName}.${ClassName}">
+#foreach($column in ${columnList})
+        <result column="${column.columnName}" jdbcType="${column.jdbcType}" property="${column.propertyName}"/>
 #end
-#if ($baseColumnList)
-    ${baseColumnList}
-#end
-#if ($selectByPrimaryKey)
-    ${selectByPrimaryKey}
-#end
-#if ($deleteByPrimaryKey)
-    ${deleteByPrimaryKey}
-#end
-#if ($insert)
-    ${insert}
-#end
-#if ($insertSelective)
-    ${insertSelective}
-#end
-#if ($updateByPrimaryKeySelective)
-    ${updateByPrimaryKeySelective}
-#end
-#if ($updateByPrimaryKey)
-    ${updateByPrimaryKey}
-#end
-#if ($deleteByIdList)
-    ${deleteByIdList}
-#end
-#if ($selectPageList)
-    ${selectPageList}
-#end
+    </resultMap>
+    <sql id="Base_Column_List">
+        #foreach($column in ${columnList})${column.columnName}, #end
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="${pkColumn.javaType}" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from ${tableName}
+        where ${pkColumn.columnName} = #{${pkColumn.propertyName}}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="${pkColumn.javaType}">
+        delete from ${tableName}
+        where ${pkColumn.columnName} = #{${pkColumn.propertyName}}
+    </delete>
+    <insert id="insert" parameterType="${entityPackageName}.${ClassName}">
+        insert into ${tableName}
+        (#foreach($column in ${columnList})${column.columnName}, #end)
+        values
+        (#foreach($column in ${columnList})#{${column.propertyName}, jdbcType=${column.jdbcType}}, #end)
+    </insert>
+    <insert id="insertSelective" parameterType="${entityPackageName}.${ClassName}">
+        insert into ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        #foreach($column in ${columnList})
+            <if test="${column.propertyName} != null">
+                ${column.columnName},
+            </if>
+        #end
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        #foreach($column in ${columnList})
+            <if test="${column.propertyName} != null">
+                #{${column.propertyName}, jdbcType=${column.jdbcType}},
+            </if>
+        #end
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="${entityPackageName}.${ClassName}">
+        update ${tableName}
+        <set>
+        #foreach($column in ${columnList})
+            <if test="${column.propertyName} != null">
+                ${column.columnName} = #{${column.propertyName}, jdbcType=${column.jdbcType}},
+            </if>
+        #end
+        </set>
+        where ${pkColumn.columnName} = #{${pkColumn.propertyName}}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="${entityPackageName}.${ClassName}">
+        update ${tableName}
+        set
+        #foreach($column in ${columnList})
+            ${column.columnName} = #{${column.propertyName}, jdbcType=${column.jdbcType}},
+        #end
+        where ${pkColumn.columnName} = #{${pkColumn.propertyName}}
+    </update>
+    <delete id="deleteByIdList" parameterType="map">
+        delete from ${tableName}
+        where ${pkColumn.columnName} in
+        <foreach collection="${pkColumn.propertyName}List" index="index" item="${pkColumn.propertyName}" open="(" separator="," close=")" >
+            #{${pkColumn.propertyName}}
+        </foreach>
+    </delete>
+    <select id="selectPageList" parameterType="${entityPackageName}.${ClassName}" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from ${tableName}
+        <where>
+        #foreach($column in ${columnList})
+            <if test="${column.propertyName} != null">
+                and ${column.columnName} like #{${column.propertyName}}
+            </if>
+        #end
+        </where>
+    </select>
 </mapper>

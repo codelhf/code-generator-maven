@@ -68,7 +68,11 @@ public class FileUtil {
         if (!directory.endsWith("/")) {
             directory = directory + "/";
         }
-        sb.append(getProjectPath(configFilePath)).append(directory).append(package2Path(packageName));
+        //判断是否为相对路径
+        if (directory.startsWith("./")){
+            sb.append(getProjectPath(configFilePath));
+        }
+        sb.append(directory).append(package2Path(packageName));
         return sb.toString();
     }
 

@@ -1,4 +1,5 @@
-package ${BasePackageName}.common;
+$!macro
+package ${Template.getPackageName()};
 
 import io.swagger.models.Contact;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,16 +15,11 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-/**
- * @Title: Swagger2
- * @Description: Swagger2接口文档配置类
- * @Company: ${Company}
- * @Author: ${Author}
- * @CreateTime: ${CreateTime}
- */
+##(宏定义)
+$fileHeader("Swagger2", "Swagger2接口文档配置类")
 @Configuration
-//@EnableWebMvc //springMVC环境使用
 @EnableSwagger2 //启用Swagger2
+//@EnableWebMvc //springMVC环境使用
 public class Swagger2 extends WebMvcConfigurationSupport {
 
     @Value(#set ($a = '${swagger.ui.title}')"$a")

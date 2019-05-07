@@ -220,14 +220,20 @@ public class ConfigurationXmlParser {
         configuration.setTemplateList(templateList);
     }
 
-    private TemplateConfiguration parseTemplate(Element template) {
+    private TemplateConfiguration parseTemplate(Element templateNode) {
         TemplateConfiguration templateConfiguration = new TemplateConfiguration();
-        Properties properties = XmlPropertyHolder.parseAttributes(template);
+        Properties properties = XmlPropertyHolder.parseAttributes(templateNode);
         String name = properties.getProperty("name");
         templateConfiguration.setName(name);
 
+        String template = properties.getProperty("template");
+        templateConfiguration.setTemplate(template);
+
         String suffix = properties.getProperty("suffix");
         templateConfiguration.setSuffix(suffix);
+
+        String fileType = properties.getProperty("fileType");
+        templateConfiguration.setFileType(fileType);
 
         String override = properties.getProperty("override");
         templateConfiguration.setOverride(StringUtil.isTrue(override));

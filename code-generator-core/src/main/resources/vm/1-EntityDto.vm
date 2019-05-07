@@ -1,14 +1,25 @@
-package ${EntityDtoPackageName};
+$!macro
+package ${Template.getPackageName()};
 
 import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
 
-${Remark}
-${Lombok}
+##(宏定义)
+$fileHeader("${ClassName}${suffix}", "${ClassName}DTO对象")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ${ClassName}DTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    ${Properties}
+#foreach($column in ${columnList})
+    #if($!{column.comment})
+    //$!{column.comment}
+    #end
+    private $!{column.javaType} $!{column.propertyName};
+#end
 }

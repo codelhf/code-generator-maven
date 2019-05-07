@@ -1,6 +1,7 @@
-package ${DaoPackageName};
+$!macro
+package ${Template.getPackageName()};
 
-#if ($baseMapper)
+#if (${baseMapper})
 import ${DaoPackageName}.base.${baseMapper};
 #end
 import ${EntityPackageName}.${ClassName};
@@ -9,15 +10,16 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-${Remark}
+##(宏定义)
+$fileHeader("${ClassName}${suffix}", "${ClassName}持久层")
 @Mapper
-public interface ${ClassName}Mapper #if ($baseMapper)extends ${baseMapper}<${ClassName}>#end {
+public interface ${ClassName}Mapper #if (${baseMapper})extends ${baseMapper}<${ClassName}>#end {
 
-#if($CommonMapper == false)
-    ${ClassName} selectByPrimaryKey(${javaType} ${propertyName});
+#if(${CommonMapper} == false)
+    ${ClassName} selectByPrimaryKey(${pkColumn.javaType} ${pkColumn.propertyName});
     #if($isView == false)
 
-    int deleteByPrimaryKey(${javaType} ${propertyName});
+    int deleteByPrimaryKey(${pkColumn.javaType} ${pkColumn.propertyName});
 
     int insert(${ClassName} record);
 
@@ -27,7 +29,7 @@ public interface ${ClassName}Mapper #if ($baseMapper)extends ${baseMapper}<${Cla
 
     int updateByPrimaryKey(${ClassName} record);
 
-    int deleteByIdList(@Param("${propertyName}List") List<String> ${propertyName}List);
+    int deleteByIdList(@Param("${pkColumn.propertyName}List") List<String> ${pkColumn.propertyName}List);
     #end
 
     List<${ClassName}> selectPageList(${ClassName} example);

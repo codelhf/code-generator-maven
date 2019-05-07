@@ -11,14 +11,24 @@ import java.util.List;
  */
 public class TemplateConfiguration {
     /**
-     * 模板文件路径
+     * 模板模块名
      */
     private String name;
+
+    /**
+     * 模板文件路径
+     */
+    private String template;
 
     /**
      * 生成代码文件名后缀
      */
     private String suffix;
+
+    /**
+     * 生成代码文件类型
+     */
+    private String fileType;
 
     /**
      * 生成代码路径
@@ -39,8 +49,14 @@ public class TemplateConfiguration {
         if (StringUtil.isBlank(name)) {
             errors.add("Missing template name at index {" + listPosition + "}");
         }
+        if (StringUtil.isBlank(template)) {
+            errors.add("Missing template filePath at index {" + listPosition + "}");
+        }
         if (StringUtil.isBlank(suffix)) {
             errors.add("template suffix can not be empty");
+        }
+        if (StringUtil.isBlank(fileType)) {
+            errors.add("template fileType can not be empty");
         }
         if (StringUtil.isBlank(directory)) {
             errors.add("template directory can not be empty");
@@ -58,12 +74,28 @@ public class TemplateConfiguration {
         this.name = name;
     }
 
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
+    }
+
     public String getSuffix() {
         return suffix;
     }
 
     public void setSuffix(String suffix) {
         this.suffix = suffix;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
     }
 
     public boolean isOverride() {

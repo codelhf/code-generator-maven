@@ -6,12 +6,14 @@ import com.example.generator.config.GeneratedKey;
 import com.example.generator.config.TemplateConfiguration;
 import com.example.generator.db.ColumnInfo;
 import com.example.generator.db.ConnectionUtil;
+import com.example.generator.util.DateTimeUtil;
 import com.example.generator.util.StringUtil;
 import org.apache.velocity.Template;
 import org.apache.velocity.app.VelocityEngine;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,25 +69,41 @@ public class SingleInvoker {
         //初始化表数据
         initTableInfo();
         Map<String, Object> data = new HashMap<>();
+        //必须提前获取所有的template的配置以template名字作为key
+        // TODO: 2019/5/8 放在上面防止下面key被覆盖
+        List<TemplateConfiguration> templateList = configuration.getTemplateList();
+        for (TemplateConfiguration template: templateList) {
+            data.put(template.getName(), template);
+        }
+
+        data.put("company", configuration.getCommentGenerator().getCompany());
+        data.put("author", configuration.getCommentGenerator().getAuthor());
+        data.put("createTime", DateTimeUtil.dateToStr(new Date()));
+
+        data.put("ResponseClassName", configuration.getCommentGenerator().getResponseClass());
         data.put("ClassName", className);
         data.put("className", StringUtil.firstToLowerCase(className));
-        data.put("pkColumn", getPrimaryKeyColumnInfo(tableInfo));
         data.put("isView", isView);
-        data.put("ResponseClassName", configuration.getCommentGenerator().getResponseClass());
+        data.put("generateSwagger", true);
+        data.put("generateRemark", true);
 
-
+        data.put("StringUtil", StringUtil.class);
+        data.put("tableName", tableName);
+        data.put("columnList", tableInfo);
+        data.put("pkColumn", getPrimaryKeyColumnInfo(tableInfo));
 
         String configFilePath = configuration.getConfigFilePath();
-        List<TemplateConfiguration> templateList = configuration.getTemplateList();
         VelocityEngine velocityEngine = VelocityUtil.getInstance();
-
         for (TemplateConfiguration template: templateList) {
-            Template tpl = velocityEngine.getTemplate(template.getName());
+            Template tpl = velocityEngine.getTemplate(template.getTemplate());
+            //文件生成路径支持相对路径和绝对路径
             String filePath = FileUtil.getGeneratePath(configFilePath, template.getDirectory(), template.getPackageName());
-            //文件名后缀必须并且制定文件格式
-            String fileName = className + template.getSuffix();
+            //文件名后缀加文件格式
+            String fileName = className + template.getSuffix() + "." + template.getFileType();
             FileUtil.generateToCode(filePath, fileName, tpl, data, template.isOverride());
         }
+        //清空数据
+        data.clear();
     }
 
     private static ColumnInfo getPrimaryKeyColumnInfo(List<ColumnInfo> list) {
