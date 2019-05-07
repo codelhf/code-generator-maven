@@ -13,7 +13,7 @@ import java.util.List;
  * @Auther: liuhf
  * @CreateTime: 2019/2/27 16:48
  */
-public class DataSource extends XmlPropertyHolder {
+public class JdbcConnection extends XmlPropertyHolder {
     /**
      * 数据库驱动jar路径，非必须参数
      */

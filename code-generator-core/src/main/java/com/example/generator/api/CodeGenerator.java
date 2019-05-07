@@ -1,14 +1,10 @@
 package com.example.generator.api;
 
-import com.example.generator.code.invoker.Many2ManyInvoker;
-import com.example.generator.code.invoker.One2ManyInvoker;
-import com.example.generator.code.invoker.SingleInvoker;
-import com.example.generator.code.invoker.base.Invoker;
-import com.example.generator.code.task.CommonTask;
+import com.example.generator.codegen.SingleInvoker;
 import com.example.generator.config.*;
-import com.example.generator.util.Messages;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -23,7 +19,7 @@ public class CodeGenerator {
 
     public CodeGenerator(Configuration configuration) {
         if (configuration == null) {
-            throw new IllegalArgumentException(Messages.getString("RuntimeError.2")); //$NON-NLS-1$
+            throw new IllegalArgumentException("Configuration is required");
         } else {
             this.configuration = configuration;
         }
@@ -34,15 +30,7 @@ public class CodeGenerator {
             callback = new NullProgressCallback();
         }
 
-        try {
-            //generate common
-            CommonTask commonTask = new CommonTask(configuration);
-            commonTask.run();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        List<TableConfiguration> tableConfigurationList = configuration.getTablesConfiguration();
+        List<TableConfiguration> tableConfigurationList = configuration.getTableList();
         if (tableConfigurationList != null) {
             for (TableConfiguration tableConfiguration: tableConfigurationList) {
                 String tableName = tableConfiguration.getTableName();
@@ -53,7 +41,7 @@ public class CodeGenerator {
             }
         }
 
-        List<ViewConfiguration> viewConfigurationList = configuration.getViewsConfiguration();
+        List<ViewConfiguration> viewConfigurationList = configuration.getViewList();
         if (viewConfigurationList != null) {
             for (ViewConfiguration viewConfiguration: viewConfigurationList) {
                 String viewName = viewConfiguration.getViewName();
@@ -65,81 +53,23 @@ public class CodeGenerator {
         callback.done();
     }
 
-    public static void single(String tableName, String className,
-                              List<ColumnOverride> columnOverrideList, GeneratedKey generatedKey,
-                              boolean isView, Configuration configuration) {
-        Invoker invoker = new SingleInvoker.Builder()
-                .configuration(configuration)
-                .tableName(tableName)
-                .className(className)
-                .columnOverrideList(columnOverrideList)
-                .generatedKey(generatedKey)
-                .isView(isView)
-                .build();
-        invoker.execute();
+    private static void single(String tableName, String className,
+                               List<ColumnOverride> columnOverrideList, GeneratedKey generatedKey,
+                               boolean isView, Configuration configuration) {
+        SingleInvoker invoker = new SingleInvoker();
+        invoker.setTableName(tableName);
+        invoker.setClassName(className);
+        invoker.setColumnOverrideList(columnOverrideList);
+        invoker.setGeneratedKey(generatedKey);
+        invoker.setView(isView);
+        invoker.setConfiguration(configuration);
+        invoker.checkBeforeExecute();
+        try {
+            invoker.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-
-    public static void one2many(String tableName, String className,
-                                String parentTableName, String parentClassName,
-                                String foreignKey, Configuration configuration) {
-        Invoker invoker = new One2ManyInvoker.Builder()
-                .setConfiguration(configuration)
-                .setTableName(tableName)
-                .setClassName(className)
-                .setParentTableName(parentTableName)
-                .setParentClassName(parentClassName)
-                .setForeignKey(foreignKey)
-                .build();
-        invoker.execute();
-    }
-
-    public static void many2many(String tableName, String className,
-                                 String parentTableName, String parentClassName,
-                                 String relationTableName, String foreignKey,
-                                 String parentForeignKey, Configuration configuration) {
-        Invoker invoker = new Many2ManyInvoker.Builder()
-                .setConfiguration(configuration)
-                .setTableName(tableName)
-                .setClassName(className)
-                .setParentTableName(parentTableName)
-                .setParentClassName(parentClassName)
-                .setRelationTableName(relationTableName)
-                .setForeignKey(foreignKey)
-                .setParentForeignKey(parentForeignKey)
-                .build();
-        invoker.execute();
-    }
-
-
-
-//    private void writeGeneratedFile(GeneratedJavaFile gjf, ProgressCallback callback, boolean overWrite, boolean merge)
-//            throws InterruptedException, IOException {
-//        File targetFile;
-//        String source;
-//        try {
-//            File directory = shellCallback.getDirectory(gjf.getTargetProject(), gjf.getTargetPackage());
-//            targetFile = new File(directory, gjf.getFileName());
-//            if (targetFile.exists()) {
-//                if (overWrite) {
-//                    source = gjf.getFormattedContent();
-//                    warnings.add(getString("Warning.11", targetFile.getAbsolutePath()));
-//                } else if (merge) {
-//                    source = shellCallback.mergeJavaFile(gjf.getFormattedContent(), targetFile,
-//                            MergeConstants.OLD_ELEMENT_TAGS, gjf.getFileEncoding());
-//                } else {
-//                    source = gjf.getFormattedContent();
-//                    targetFile = getUniqueFileName(directory, gjf.getFileName());
-//                    warnings.add(getString("Warning.2", targetFile.getAbsolutePath()));
-//                }
-//            } else {
-//                source = gjf.getFormattedContent();
-//            }
-//
-//            callback.checkCancel();
-//            callback.startTask(Messages.getString("Progress.15", targetFile.getName()));
-//            writeFile(targetFile, source, gjf.getFileEncoding());
-//        } catch (ShellException e) {
-//            warnings.add(e.getMessage());
-//        }
-//    }
 }

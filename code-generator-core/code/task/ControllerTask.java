@@ -29,11 +29,11 @@ public class ControllerTask extends BaseTask {
         // 生成Controller填充数据
         Map<String, Object> controllerData = new HashMap<>();
 
-        controllerData.put("ControllerPackageName", configuration.getServiceGenerator().getController());
+        controllerData.put("ControllerPackageName", configuration.getTemplateConfig().getController());
         controllerData.put("BasePackageName", configuration.getCommentGenerator().getBasePackageName());
         controllerData.put("ResponseClass", BaseGenerator.responseClass);
         controllerData.put("EntityDTOPackageName", configuration.getCommonGenerator().getDtoGenerator().getTargetPackage());
-        controllerData.put("ServicePackageName", configuration.getServiceGenerator().getService());
+        controllerData.put("ServicePackageName", configuration.getTemplateConfig().getService());
 
         String clazzName = StringUtil.firstToLowerCase(className);
         controllerData.put("ClassName", className);
@@ -51,14 +51,14 @@ public class ControllerTask extends BaseTask {
 
         controllerData.put("isView", isView);
 
-        String targetProject = configuration.getServiceGenerator().getTargetProject();
-        String targetPackage = configuration.getServiceGenerator().getController();
+        String targetProject = configuration.getTemplateConfig().getTargetProject();
+        String targetPackage = configuration.getTemplateConfig().getController();
 
         String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
         String fileName = className + "Controller.java";
 
         int type = VelocityUtil.FileTypeEnum.CONTROLLER.getCode();
-        boolean generate = configuration.getServiceGenerator().isGenerator();
+        boolean generate = configuration.getTemplateConfig().isGenerator();
         // 生成Controller文件
         FileUtil.generateToCode(filePath, fileName, controllerData, type, generate, false);
         System.out.println("[INFO] Generating " + fileName);

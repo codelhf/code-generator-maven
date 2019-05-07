@@ -84,6 +84,6 @@ public class FreemarkerUtil {
      * @throws IOException
      */
     public static Template getTemplate(int type) throws IOException {
-        return getInstance().getTemplate(VelocityUtil.FileTypeEnum.codeOf(type).getTpl());
+        return getInstance().getTemplate(FreemarkerUtil.FileTypeEnum.codeOf(type).getTpl());
     }
 }

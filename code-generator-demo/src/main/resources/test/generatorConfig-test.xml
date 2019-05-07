@@ -20,7 +20,7 @@
     </commentGenerator>
 
     <!--jdbc的数据库连接 -->
-    <dataSource>
+    <jdbcConnection>
         <!--driverLocation非必须参数-->
         <property name="driverLocation" value="src/main/tools/mysql-connector-java-5.1.6-bin.jar"/>
         <!--driverClass非必须参数-->
@@ -28,7 +28,7 @@
         <property name="url" value="jdbc:mysql://127.0.0.1:3306/test?characterEncoding=utf-8"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
-    </dataSource>
+    </jdbcConnection>
 
     <!--java类型适配-->
     <javaTypeResolver>
@@ -43,7 +43,7 @@
         <property name="forceBigDecimals" value="false"/>
     </javaTypeResolver>
     <!--service层开始要和dao能够分开,不提供重写文件功能-->
-    <serviceGenerator>
+    <templateConfig>
         <!--是否生成代码-->
         <property name="generator" value="true"/>
         <!--是否允许子包，即targetPackage.schemaName.tableName-->
@@ -52,7 +52,7 @@
         <property name="controller" value="com.example.generator.controller"/>
         <property name="service" value="com.example.generator.service"/>
         <property name="serviceImpl" value="com.example.generator.service.impl"/>
-    </serviceGenerator>
+    </templateConfig>
     <!--dao层开始要和service能够分开,提供是否重写文件功能-->
     <commonGenerator>
         <!--是否重写文件-->
@@ -100,7 +100,7 @@
     </commonGenerator>
 
     <!-- 数据库对应数据表-->
-    <tablesConfiguration>
+    <tableList>
         <table tableName="user" domainObjectName="User" mapperName="UserMapper">
         </table>
         <table tableName="info_case" domainObjectName="Case" mapperName="CaseMapper">
@@ -109,10 +109,10 @@
         </table>
         <table tableName="info_case_gp" domainObjectName="CaseGp" mapperName="CaseGpMapper">
         </table>
-    </tablesConfiguration>
+    </tableList>
 
     <!-- 数据库对应数据视图-->
-    <viewsConfiguration>
+    <viewList>
         <view viewName="v_user" domainObjectName="VUser">
         </view>
         <view viewName="v_case" domainObjectName="VCase">
@@ -121,7 +121,7 @@
         </view>
         <view viewName="v_case_gp" domainObjectName="VCaseGp">
         </view>
-    </viewsConfiguration>
+    </viewList>
 
     <!-- mybatis插件的搭建 -->
 </generatorConfiguration>

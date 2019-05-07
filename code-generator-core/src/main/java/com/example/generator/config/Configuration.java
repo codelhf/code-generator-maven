@@ -19,33 +19,29 @@ public class Configuration implements Serializable {
      */
     private String configFilePath;
     /**
-     * 注释控制器
-     */
-    private CommentGenerator commentGenerator;
-    /**
      * 数据源
      */
-    private DataSource dataSource;
+    private JdbcConnection jdbcConnection;
     /**
      * java类型适配器
      */
     private JavaTypeResolver javaTypeResolver;
     /**
-     * service层生成器
+     * 注释控制器
      */
-    private ServiceGenerator serviceGenerator;
+    private CommentGenerator commentGenerator;
     /**
-     * dao层生成器
+     * 模板
      */
-    private CommonGenerator commonGenerator;
+    private List<TemplateConfiguration> templateList = new ArrayList<>();
     /**
      * 表格
      */
-    private List<TableConfiguration> tablesConfiguration = new ArrayList<>();
+    private List<TableConfiguration> tableList = new ArrayList<>();
     /**
      * 视图
      */
-    private List<ViewConfiguration> viewsConfiguration = new ArrayList<>();
+    private List<ViewConfiguration> viewList = new ArrayList<>();
     /**
      * jdk8
      */
@@ -61,38 +57,35 @@ public class Configuration implements Serializable {
         } else {
             commentGenerator.validate(errors);
         }
-        if (dataSource == null) {
-            errors.add("dataSource can not be empty");
+        if (jdbcConnection == null) {
+            errors.add("jdbcConnection can not be empty");
         } else {
-            dataSource.validate(errors);
+            jdbcConnection.validate(errors);
         }
         if (javaTypeResolver == null) {
             errors.add("javaTypeResolver can not be empty");
         } else {
             javaTypeResolver.validate(errors);
         }
-        if (serviceGenerator == null) {
-            errors.add("serviceGenerator can not be empty");
+        if (templateList == null) {
+            errors.add("templateList can not be empty and has no template");
         } else {
-            serviceGenerator.validate(errors);
-        }
-        if (commonGenerator == null) {
-            errors.add("commonGenerator can not be empty");
-        } else {
-            commonGenerator.validate(errors);
+            for (int i = 0, iLength = templateList.size(); i < iLength; i++) {
+                templateList.get(i).validate(errors, i);
+            }
         }
 
-        if (tablesConfiguration == null && viewsConfiguration == null) {
-            errors.add("tablesConfiguration or viewsConfiguration can not be empty and has no table");
+        if (tableList == null && viewList == null) {
+            errors.add("tableList or viewList can not be empty and has no table");
         } else {
-            if (tablesConfiguration != null && tablesConfiguration.size() > 0) {
-                for (int i = 0, iLength = tablesConfiguration.size(); i < iLength; i++) {
-                    tablesConfiguration.get(i).validate(errors, i);
+            if (tableList != null && tableList.size() > 0) {
+                for (int i = 0, iLength = tableList.size(); i < iLength; i++) {
+                    tableList.get(i).validate(errors, i);
                 }
             }
-            if (viewsConfiguration != null && viewsConfiguration.size() > 0) {
-                for (int i = 0, iLength = viewsConfiguration.size(); i < iLength; i++) {
-                    viewsConfiguration.get(i).validate(errors, i);
+            if (viewList != null && viewList.size() > 0) {
+                for (int i = 0, iLength = viewList.size(); i < iLength; i++) {
+                    viewList.get(i).validate(errors, i);
                 }
             }
         }
@@ -118,20 +111,12 @@ public class Configuration implements Serializable {
         this.configFilePath = configFilePath;
     }
 
-    public CommentGenerator getCommentGenerator() {
-        return commentGenerator;
+    public JdbcConnection getJdbcConnection() {
+        return jdbcConnection;
     }
 
-    public void setCommentGenerator(CommentGenerator commentGenerator) {
-        this.commentGenerator = commentGenerator;
-    }
-
-    public DataSource getDataSource() {
-        return dataSource;
-    }
-
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public void setJdbcConnection(JdbcConnection jdbcConnection) {
+        this.jdbcConnection = jdbcConnection;
     }
 
     public JavaTypeResolver getJavaTypeResolver() {
@@ -142,36 +127,36 @@ public class Configuration implements Serializable {
         this.javaTypeResolver = javaTypeResolver;
     }
 
-    public ServiceGenerator getServiceGenerator() {
-        return serviceGenerator;
+    public CommentGenerator getCommentGenerator() {
+        return commentGenerator;
     }
 
-    public void setServiceGenerator(ServiceGenerator serviceGenerator) {
-        this.serviceGenerator = serviceGenerator;
+    public void setCommentGenerator(CommentGenerator commentGenerator) {
+        this.commentGenerator = commentGenerator;
     }
 
-    public CommonGenerator getCommonGenerator() {
-        return commonGenerator;
+    public List<TemplateConfiguration> getTemplateList() {
+        return templateList;
     }
 
-    public void setCommonGenerator(CommonGenerator commonGenerator) {
-        this.commonGenerator = commonGenerator;
+    public void setTemplateList(List<TemplateConfiguration> templateList) {
+        this.templateList = templateList;
     }
 
-    public List<TableConfiguration> getTablesConfiguration() {
-        return tablesConfiguration;
+    public List<TableConfiguration> getTableList() {
+        return tableList;
     }
 
-    public void setTablesConfiguration(List<TableConfiguration> tablesConfiguration) {
-        this.tablesConfiguration = tablesConfiguration;
+    public void setTableList(List<TableConfiguration> tableList) {
+        this.tableList = tableList;
     }
 
-    public List<ViewConfiguration> getViewsConfiguration() {
-        return viewsConfiguration;
+    public List<ViewConfiguration> getViewList() {
+        return viewList;
     }
 
-    public void setViewsConfiguration(List<ViewConfiguration> viewsConfiguration) {
-        this.viewsConfiguration = viewsConfiguration;
+    public void setViewList(List<ViewConfiguration> viewList) {
+        this.viewList = viewList;
     }
 
     public boolean isJava8Targeted() {

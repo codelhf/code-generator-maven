@@ -1,8 +1,6 @@
 package com.example.generator.db;
 
-import com.example.generator.config.Configuration;
-import com.example.generator.config.util.ConfigUtil;
-import com.example.generator.config.util.ConfigUtil;
+import com.example.generator.config.JdbcConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,12 +20,12 @@ public class ConnectionUtil {
     /**
      * 初始化数据库连接
      */
-    public boolean initConnection(Configuration configuration) {
+    public boolean initConnection(JdbcConnection dataSource) {
         try {
-            Class.forName(DriverFactory.getDriver(configuration.getDataSource().getUrl()));
-            String url = configuration.getDataSource().getUrl();
-            String username = configuration.getDataSource().getUsername();
-            String password = configuration.getDataSource().getPassword();
+            Class.forName(DriverFactory.getDriver(dataSource.getUrl()));
+            String url = dataSource.getUrl();
+            String username = dataSource.getUsername();
+            String password = dataSource.getPassword();
             connection = DriverManager.getConnection(url, username, password);
             return true;
         } catch (ClassNotFoundException | SQLException e) {

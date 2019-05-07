@@ -1,6 +1,5 @@
 package com.example.generator.codegen;
 
-import com.example.generator.util.Messages;
 import com.example.generator.util.StringUtil;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -64,12 +63,12 @@ public class FileUtil {
     /**
      * 获取生成文件路径
      */
-    public static String getGeneratePath(String configFilePath, String targetProject, String targetPackage) {
+    public static String getGeneratePath(String configFilePath, String directory, String packageName) {
         StringBuilder sb = new StringBuilder();
-        if (!targetProject.endsWith("/")) {
-            targetProject = targetProject + "/";
+        if (!directory.endsWith("/")) {
+            directory = directory + "/";
         }
-        sb.append(getProjectPath(configFilePath)).append(targetProject).append(package2Path(targetPackage));
+        sb.append(getProjectPath(configFilePath)).append(directory).append(package2Path(packageName));
         return sb.toString();
     }
 
@@ -142,7 +141,7 @@ public class FileUtil {
         }
 
         if (answer == null) {
-            throw new RuntimeException(Messages.getString("RuntimeError.3", directory.getAbsolutePath()));
+            throw new RuntimeException("Cannot generate unique file name in directory {" + directory.getAbsolutePath() + "}");
         }
         return answer;
     }

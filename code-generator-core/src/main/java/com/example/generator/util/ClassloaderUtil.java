@@ -23,22 +23,20 @@ public class ClassloaderUtil {
             for (String classPathEntry : entries) {
                 file = new File(classPathEntry);
                 if (!file.exists()) {
-                    throw new RuntimeException(Messages.getString("RuntimeError.9", classPathEntry));
+                    throw new RuntimeException("Cannot resolve classpath entry: {" + classPathEntry + "}");
                 }
 
                 try {
                     urls.add(file.toURI().toURL());
                 } catch (MalformedURLException e) {
                     // this shouldn't happen, but just in case...
-                    throw new RuntimeException(Messages.getString("RuntimeError.9", classPathEntry));
+                    throw new RuntimeException("Cannot resolve classpath entry: {" + classPathEntry + "}");
                 }
             }
         }
 
         ClassLoader parent = Thread.currentThread().getContextClassLoader();
 
-        URLClassLoader ucl = new URLClassLoader(urls.toArray(new URL[urls.size()]), parent);
-
-        return ucl;
+        return new URLClassLoader(urls.toArray(new URL[urls.size()]), parent);
     }
 }

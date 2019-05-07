@@ -20,10 +20,6 @@ public class CommentGenerator {
      */
     private String company;
     /**
-     * 基础包名
-     */
-    private String basePackageName;
-    /**
      * 生成所有内容
      */
     private boolean suppressAllComments = true;
@@ -47,9 +43,6 @@ public class CommentGenerator {
         if (StringUtil.isBlank(company)) {
             errors.add("company can not be blank");
         }
-        if (StringUtil.isBlank(basePackageName)) {
-            errors.add("basePackageName can not be blank");
-        }
         if (StringUtil.isBlank(dateFormat)) {
             errors.add("dateFormat can not be blank");
         }
@@ -69,14 +62,6 @@ public class CommentGenerator {
 
     public void setCompany(String company) {
         this.company = company;
-    }
-
-    public String getBasePackageName() {
-        return basePackageName;
-    }
-
-    public void setBasePackageName(String basePackageName) {
-        this.basePackageName = basePackageName;
     }
 
     public boolean isSuppressDate() {

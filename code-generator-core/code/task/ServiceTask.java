@@ -31,7 +31,7 @@ public class ServiceTask extends BaseTask {
         // 生成Service填充数据
         Map<String, Object> serviceData = new HashMap<>();
 
-        serviceData.put("ServicePackageName", configuration.getServiceGenerator().getService());
+        serviceData.put("ServicePackageName", configuration.getTemplateConfig().getService());
         serviceData.put("BasePackageName", configuration.getCommentGenerator().getBasePackageName());
         serviceData.put("ResponseClass", BaseGenerator.responseClass);
         serviceData.put("EntityDTOPackageName", configuration.getCommonGenerator().getDtoGenerator().getTargetPackage());
@@ -54,13 +54,13 @@ public class ServiceTask extends BaseTask {
         serviceData.put("javaType", primaryKeyColumnInfo.getJavaType());
         serviceData.put("isView", isView);
 
-        String targetProject = configuration.getServiceGenerator().getTargetProject();
-        String targetPackage = configuration.getServiceGenerator().getService();
+        String targetProject = configuration.getTemplateConfig().getTargetProject();
+        String targetPackage = configuration.getTemplateConfig().getService();
 
         String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
         String fileName = "I" + className + "Service.java";
         int type = VelocityUtil.FileTypeEnum.SERVICE.getCode();
-        boolean generate = configuration.getServiceGenerator().isGenerator();
+        boolean generate = configuration.getTemplateConfig().isGenerator();
         // 生成Service文件
         FileUtil.generateToCode(filePath, fileName, serviceData, type, generate, false);
         System.out.println("[INFO] Generating " + fileName);

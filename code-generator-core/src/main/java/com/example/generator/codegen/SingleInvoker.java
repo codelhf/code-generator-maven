@@ -3,14 +3,15 @@ package com.example.generator.codegen;
 import com.example.generator.config.ColumnOverride;
 import com.example.generator.config.Configuration;
 import com.example.generator.config.GeneratedKey;
+import com.example.generator.config.TemplateConfiguration;
 import com.example.generator.db.ColumnInfo;
 import com.example.generator.db.ConnectionUtil;
 import com.example.generator.util.StringUtil;
 import org.apache.velocity.Template;
+import org.apache.velocity.app.VelocityEngine;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,9 +38,9 @@ public class SingleInvoker {
     private Configuration configuration;
     private ConnectionUtil connectionUtil = new ConnectionUtil();
 
-    private void getTableInfo() throws SQLException {
-        if (!connectionUtil.initConnection(configuration)) {
-            throw new RuntimeException("Failed to connect to database at url:" + configuration.getDataSource().getUrl());
+    private void initTableInfo() throws SQLException {
+        if (!connectionUtil.initConnection(configuration.getJdbcConnection())) {
+            throw new RuntimeException("Failed to connect to database at url:" + configuration.getJdbcConnection().getUrl());
         }
         List<ColumnInfo> columnInfoList = connectionUtil.getMetaData(tableName);
         //修改用户自定义配置
@@ -63,18 +64,25 @@ public class SingleInvoker {
     }
 
     public void execute() throws IOException, SQLException {
-        this.getTableInfo();
+        //初始化表数据
+        initTableInfo();
         Map<String, Object> data = new HashMap<>();
         data.put("ClassName", className);
         data.put("className", StringUtil.firstToLowerCase(className));
         data.put("pkColumn", getPrimaryKeyColumnInfo(tableInfo));
-        data.put("basePackageName", configuration.getCommentGenerator().getBasePackageName());
+        data.put("isView", isView);
         data.put("ResponseClassName", BaseGenerator.responseClass);
 
-        List<Template> templateList = new ArrayList<>();
+        String configFilePath = configuration.getConfigFilePath();
+        List<TemplateConfiguration> templateList = configuration.getTemplateList();
+        VelocityEngine velocityEngine = VelocityUtil.getInstance();
 
-        for (Template template: templateList) {
-            FileUtil.generateToCode("", "", template, data, false);
+        for (TemplateConfiguration template: templateList) {
+            Template tpl = velocityEngine.getTemplate(template.getName());
+            String filePath = FileUtil.getGeneratePath(configFilePath, template.getDirectory(), template.getPackageName());
+            //文件名后缀必须并且制定文件格式
+            String fileName = className + template.getSuffix();
+            FileUtil.generateToCode(filePath, fileName, tpl, data, template.isOverride());
         }
     }
 
@@ -88,58 +96,16 @@ public class SingleInvoker {
         return new ColumnInfo("id", 1, true);
     }
 
-    public static class Builder {
-        SingleInvoker invoker = new SingleInvoker();
-        public Builder configuration(Configuration configuration) {
-            invoker.setConfiguration(configuration);
-            return this;
+    //执行前检验
+    public void checkBeforeExecute() {
+        if (configuration == null) {
+            throw new RuntimeException("configuration can not be null");
         }
-
-        public Builder tableName(String tableName) {
-            invoker.setTableName(tableName);
-            return this;
+        if (StringUtil.isBlank(tableName)) {
+            throw new RuntimeException("Expect table's name, but get a blank String.");
         }
-
-        public Builder className(String className) {
-            invoker.setClassName(className);
-            return this;
-        }
-
-        public Builder isView(boolean isView) {
-            invoker.setView(isView);
-            return this;
-        }
-
-        public Builder generatedKey(GeneratedKey generatedKey) {
-            invoker.setGeneratedKey(generatedKey);
-            return this;
-        }
-
-        public Builder columnOverrideList(List<ColumnOverride> columnOverrideList) {
-            invoker.setColumnOverrideList(columnOverrideList);
-            return this;
-        }
-
-        public SingleInvoker build() {
-            try {
-                checkBeforeBuild();
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-            return invoker;
-        }
-
-        void checkBeforeBuild() {
-            if (invoker.getConfiguration() == null) {
-                throw new RuntimeException("configuration can not be null");
-            }
-            if (StringUtil.isBlank(invoker.getTableName())) {
-                throw new RuntimeException("Expect table's name, but get a blank String.");
-            }
-            if (StringUtil.isBlank(invoker.getClassName())) {
-                invoker.setClassName(StringUtil.tableName2ClassName(invoker.getTableName()));
-            }
+        if (StringUtil.isBlank(className)) {
+            className = StringUtil.tableName2ClassName(tableName);
         }
     }
 

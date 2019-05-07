@@ -1,6 +1,5 @@
 package com.example.generator.code.task.base;
 
-import com.example.generator.util.Messages;
 import com.example.generator.util.StringUtil;
 import freemarker.template.TemplateException;
 import org.apache.velocity.Template;
@@ -138,7 +137,7 @@ public class FileUtil {
         }
 
         if (answer == null) {
-            throw new RuntimeException(Messages.getString("RuntimeError.3", directory.getAbsolutePath()));
+            throw new RuntimeException("Cannot generate unique file name in directory {" + directory.getAbsolutePath() + "}");
         }
         return answer;
     }

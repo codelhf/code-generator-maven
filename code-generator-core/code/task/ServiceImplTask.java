@@ -31,13 +31,13 @@ public class ServiceImplTask extends BaseTask {
         // 生成ServiceImpl填充数据
         Map<String, Object> serviceImplData = new HashMap<>();
 
-        serviceImplData.put("ServiceImplPackageName", configuration.getServiceGenerator().getServiceImpl());
+        serviceImplData.put("ServiceImplPackageName", configuration.getTemplateConfig().getServiceImpl());
         serviceImplData.put("BasePackageName", configuration.getCommentGenerator().getBasePackageName());
         serviceImplData.put("ResponseClass", BaseGenerator.responseClass);
         serviceImplData.put("DaoPackageName", configuration.getCommonGenerator().getDaoGenerator().getTargetPackage());
         serviceImplData.put("EntityDTOPackageName", configuration.getCommonGenerator().getDtoGenerator().getTargetPackage());
         serviceImplData.put("EntityPackageName", configuration.getCommonGenerator().getModelGenerator().getTargetPackage());
-        serviceImplData.put("ServicePackageName", configuration.getServiceGenerator().getService());
+        serviceImplData.put("ServicePackageName", configuration.getTemplateConfig().getService());
 
         String clazzName = StringUtil.firstToLowerCase(className);
         serviceImplData.put("ClassName", className);
@@ -59,13 +59,13 @@ public class ServiceImplTask extends BaseTask {
         serviceImplData.put("javaType", primaryKeyColumnInfo.getJavaType());
         serviceImplData.put("isView", isView);
 
-        String targetProject = configuration.getServiceGenerator().getTargetProject();
-        String targetPackage = configuration.getServiceGenerator().getServiceImpl();
+        String targetProject = configuration.getTemplateConfig().getTargetProject();
+        String targetPackage = configuration.getTemplateConfig().getServiceImpl();
 
         String filePath = FileUtil.getGeneratePath(configuration.getConfigFilePath(), targetProject, targetPackage);
         String fileName = className + "ServiceImpl.java";
         int type = VelocityUtil.FileTypeEnum.SERVICE_IMPL.getCode();
-        boolean generate = configuration.getServiceGenerator().isGenerator();
+        boolean generate = configuration.getTemplateConfig().isGenerator();
         // 生成ServiceImpl文件
         FileUtil.generateToCode(filePath, fileName, serviceImplData, type, generate, false);
         System.out.println("[INFO] Generating " + fileName);
