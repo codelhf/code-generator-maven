@@ -19,6 +19,10 @@ public class CommentGenerator {
      */
     private String company;
     /**
+     * http接口前缀
+     */
+    private String httpPrefix;
+    /**
      * 响应类名
      */
     private String responseClass = "ServerResponse";
@@ -68,6 +72,14 @@ public class CommentGenerator {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getHttpPrefix() {
+        return httpPrefix;
+    }
+
+    public void setHttpPrefix(String httpPrefix) {
+        this.httpPrefix = httpPrefix;
     }
 
     public String getResponseClass() {

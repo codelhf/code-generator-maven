@@ -36,6 +36,7 @@
         <!--代码注释配置-->
         <property name="author" value="liuhf"/>
         <property name="company" value="example"/>
+        <property name="httpPrefix" value="mm"/>
         <property name="responseClass" value="ServerResponse"/>
         <property name="suppressAllComments" value="true"/>
         <property name="suppressDate" value="true"/>

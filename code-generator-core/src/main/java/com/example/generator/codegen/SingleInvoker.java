@@ -84,6 +84,7 @@ public class SingleInvoker {
         data.put("createTime", DateTimeUtil.dateToStr(new Date()));
 
         data.put("ResponseClass", configuration.getCommentGenerator().getResponseClass());
+        data.put("httpPrefix", configuration.getCommentGenerator().getHttpPrefix());
         data.put("ClassName", className);
         data.put("className", StringUtil.firstToLowerCase(className));
         data.put("isView", isView);
@@ -106,7 +107,7 @@ public class SingleInvoker {
             String filePath = FileUtil.getGeneratePath(configFilePath, template.getDirectory(), template.getPackageName());
             String fileName;
             if (template.isCommon()) {
-                //文件名加文件格式
+                //后缀加文件格式
                 fileName = template.getSuffix() + "." + template.getFileType();
             } else {
                 //表名加后缀加文件格式

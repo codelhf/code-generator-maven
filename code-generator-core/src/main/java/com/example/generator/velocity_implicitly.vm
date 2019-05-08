@@ -8,6 +8,7 @@
 #* @vtlvariable name="importList" type="java.util.List<java.lang.String>" *#
 #* @vtlvariable name="Template" type="com.example.generator.config.TemplateConfiguration" *#
 
+#* @vtlvariable name="httpPrefix" type="java.lang.String" *#
 #* @vtlvariable name="ResponseClass" type="java.lang.String" *#
 #* @vtlvariable name="ClassName" type="java.lang.String" *#
 #* @vtlvariable name="className" type="java.lang.String" *#

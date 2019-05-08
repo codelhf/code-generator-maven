@@ -26,8 +26,13 @@ import java.util.Map;
  * @Author: $!{author}
  * @CreateTime: $!{createTime}
  */
+#if (${httpPrefix})
+    #set($RequestMapping = "$!{httpPrefix}/$!{className}")
+#else
+    #set($RequestMapping = "$!{className}")
+#end
 @RestController
-@RequestMapping(value = "/$!{className}")
+@RequestMapping(value = "/$!{RequestMapping}")
 public class $!{ClassName}$!{suffix} {
 
     @Autowired

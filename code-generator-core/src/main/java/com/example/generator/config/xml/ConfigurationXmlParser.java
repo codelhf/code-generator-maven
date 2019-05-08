@@ -181,6 +181,11 @@ public class ConfigurationXmlParser {
         String company = map.get("company");
         commentGenerator.setCompany(company);
 
+        String httpPrefix = map.get("httpPrefix");
+        if (StringUtil.isNotBlank(httpPrefix)) {
+            commentGenerator.setHttpPrefix(httpPrefix);
+        }
+
         String responseClass = map.get("responseClass");
         if (StringUtil.isNotBlank(responseClass)) {
             commentGenerator.setResponseClass(responseClass);
