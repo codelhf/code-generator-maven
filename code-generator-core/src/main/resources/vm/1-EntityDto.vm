@@ -1,5 +1,6 @@
 $!macro
-package ${Template.getPackageName()};
+#set($suffix = $!{Template.getSuffix()})
+package $!{Template.getPackageName()};
 
 import lombok.*;
 
@@ -7,19 +8,20 @@ import java.io.Serializable;
 import java.util.Date;
 
 ##(宏定义)
-$fileHeader("${ClassName}${suffix}", "${ClassName}DTO对象")
+$fileHeader("$!{ClassName}$!{suffix}", "$!{ClassName}$!{suffix}对象}")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ${ClassName}DTO implements Serializable {
+public class $!{ClassName}$!{suffix} implements Serializable {
     private static final long serialVersionUID = 1L;
 
-#foreach($column in ${columnList})
+#foreach($column in $!{columnList})
     #if($!{column.comment})
     //$!{column.comment}
     #end
     private $!{column.javaType} $!{column.propertyName};
+
 #end
 }

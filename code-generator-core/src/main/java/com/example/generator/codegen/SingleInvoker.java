@@ -66,10 +66,13 @@ public class SingleInvoker {
     }
 
     public void execute() throws IOException, SQLException {
+        //检验参数
+        checkBeforeExecute();
         //初始化表数据
         initTableInfo();
+        //所有模板数据
         Map<String, Object> data = new HashMap<>();
-        //必须提前获取所有的template的配置以template名字作为key
+        // TODO: 2019/5/8 模板之间的依赖需要提前获取所有的template的配置以template名字作为key
         // TODO: 2019/5/8 放在上面防止下面key被覆盖
         List<TemplateConfiguration> templateList = configuration.getTemplateList();
         for (TemplateConfiguration template: templateList) {
@@ -96,6 +99,8 @@ public class SingleInvoker {
         VelocityEngine velocityEngine = VelocityUtil.getInstance();
         for (TemplateConfiguration template: templateList) {
             Template tpl = velocityEngine.getTemplate(template.getTemplate());
+            //设置包名,覆盖Template获取当前模板配置
+            data.put("Template", template);
             //文件生成路径支持相对路径和绝对路径
             String filePath = FileUtil.getGeneratePath(configFilePath, template.getDirectory(), template.getPackageName());
             //文件名后缀加文件格式

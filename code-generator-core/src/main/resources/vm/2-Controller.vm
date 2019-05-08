@@ -1,9 +1,20 @@
 $!macro
-package ${Template.getPackageName()};
+#set($suffix = $!{Template.getSuffix()})
 
-import ${BasePackageName}.common.${ResponseClass};
-import ${EntityDTOPackageName}.${ClassName}DTO;
-import ${ServicePackageName}.I${ClassName}Service;
+#set($serverResponsePackageName = $!{serverResponse.getPackageName()})
+#set($entityDTOPackageName = $!{entityDTO.getPackageName()})
+#set($entityDTOSuffix = $!{entityDTO.getSuffix()})
+#set($entitySuffix = $!{entity.getSuffix()})
+#set($servicePackageName = $!{service.getPackageName()})
+#set($serviceSuffix = $!{service.getSuffix()})
+
+#set($pkJavaType = $!{pkColumn.javaType})
+#set($pkPropertyName = $!{pkColumn.propertyName})
+package $!{Template.getPackageName()};
+
+import $!{serverResponsePackageName}.$!{ResponseClass};
+import $!{entityDTOPackageName}.$!{ClassName}$!{entityDTOSuffix};
+import $!{servicePackageName}.$!{ClassName}$!{serviceSuffix};
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,16 +23,16 @@ import io.swagger.annotations.*;
 import java.util.Map;
 
 ##(宏定义)
-$fileHeader("${ClassName}${suffix}", "${ClassName}控制层")
+$fileHeader("$!{ClassName}${Template.getSuffix()}", "$!{ClassName}$!{entitySuffix}控制层")
 @RestController
-@RequestMapping(value = "/${className}")
-public class ${ClassName}Controller {
+@RequestMapping(value = "/$!{className}")
+public class $!{ClassName}$!{Template.getSuffix()} {
 
     @Autowired
-    private I${ClassName}Service i${ClassName}Service;
+    private $!{ClassName}$!{serviceSuffix} $!{className}$!{serviceSuffix};
 
-#if (${generateSwagger} == true)
-    @ApiOperation(value = "查询${ClassName}列表")
+#if ($!{generateSwagger} == true)
+    @ApiOperation(value = "查询$!{ClassName}$!{entitySuffix}列表")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "pageNum", value = "分页当前页码", dataType = "Integer", required = false),
         @ApiImplicitParam(name = "pageSize", value = "分页一页大小", dataType = "Integer", required = false),
@@ -29,57 +40,57 @@ public class ${ClassName}Controller {
     })
 #end
     @GetMapping("")
-    public ${ResponseClass}<PageInfo> list(@RequestParam("pageNum") Integer pageNum,
+    public $!{ResponseClass}<PageInfo> list(@RequestParam("pageNum") Integer pageNum,
                                            @RequestParam("pageSize") Integer pageSize,
                                            @RequestParam("params") Map<String, String> params) {
-        return i${ClassName}Service.list(pageNum, pageSize, params);
+        return $!{className}$!{serviceSuffix}.list(pageNum, pageSize, params);
     }
 
-#if (${generateSwagger} == true)
-    @ApiOperation(value = "查询${ClassName}对象}")
+#if ($!{generateSwagger} == true)
+    @ApiOperation(value = "查询$!{ClassName}$!{entitySuffix}对象}")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${pkColumn.propertyName}", value = "${ClassName}主键", dataType = "${pkColumn.javaType}", required = true)
+        @ApiImplicitParam(name = "$!{pkPropertyName}", value = "$!{ClassName}$!{entitySuffix}主键", dataType = "$!{pkJavaType}", required = true)
     })
 #end
-    @GetMapping("/{${pkColumn.propertyName}}")
-    public ${ResponseClass}<${ClassName}DTO> select(@PathVariable("${pkColumn.propertyName}") ${pkColumn.javaType} ${pkColumn.propertyName}) {
-        return i${ClassName}Service.select(${pkColumn.propertyName});
+    @GetMapping("/{$!{pkColumn.propertyName}}")
+    public $!{ResponseClass}<$!{ClassName}$!{entityDTOSuffix}> select(@PathVariable("$!{pkPropertyName}") $!{pkJavaType} $!{pkPropertyName}) {
+        return $!{ClassName}$!{serviceSuffix}.select($!{pkPropertyName});
     }
 
-#if(${isView} == false)
-#if (${generateSwagger} == true)
-    @ApiOperation(value = "保存${ClassName}对象")
+#if($!{isView} == false)
+#if ($!{generateSwagger} == true)
+    @ApiOperation(value = "保存$!{ClassName}$!{entitySuffix}对象")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${className}DTO", value = "${ClassName}DTO对象", dataType = "${ClassName}DTO", required = true)
+        @ApiImplicitParam(name = "$!{className}$!{entityDTOSuffix}", value = "$!{ClassName}$!{entityDTOSuffix}对象", dataType = "$!{ClassName}$!{entityDTOSuffix}", required = true)
     })
 #end
     @PostMapping("")
-    public ${ResponseClass}<String> insert(@RequestBody ${ClassName}DTO ${className}DTO) {
-        return i${ClassName}Service.insert(${className}DTO);
+    public $!{ResponseClass}<String> insert(@RequestBody $!{ClassName}$!{entityDTOSuffix} $!{className}$!{entityDTOSuffix}) {
+        return $!{ClassName}$!{serviceSuffix}.insert($!{className}$!{entityDTOSuffix});
     }
 
-#if (${generateSwagger} == true)
-    @ApiOperation(value = "更新${ClassName}对象")
+#if ($!{generateSwagger} == true)
+    @ApiOperation(value = "更新$!{ClassName}$!{entitySuffix}对象")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${pkColumn.propertyName}", value = "${ClassName}主键", dataType = "${pkColumn.javaType}", required = true),
-        @ApiImplicitParam(name = "${className}DTO", value = "${ClassName}DTO对象", dataType = "${ClassName}DTO", required = true)
+        @ApiImplicitParam(name = "$!{pkPropertyName}", value = "$!{ClassName}$!{entitySuffix}主键", dataType = "$!{pkJavaType}", required = true),
+        @ApiImplicitParam(name = "$!{className}$!{entityDTOSuffix}", value = "$!{ClassName}$!{entityDTOSuffix}对象", dataType = "$!{ClassName}$!{entityDTOSuffix}", required = true)
     })
 #end
-    @PutMapping("/{${pkColumn.propertyName}}")
-    public ${ResponseClass}<String> update(@PathVariable("${pkColumn.propertyName}") ${pkColumn.javaType} ${pkColumn.propertyName},
-                                           @RequestBody ${ClassName}DTO ${className}DTO) {
-        return i${ClassName}Service.update(${pkColumn.propertyName}, ${className}DTO);
+    @PutMapping("/{$!{pkColumn.propertyName}}")
+    public $!{ResponseClass}<String> update(@PathVariable("$!{pkPropertyName}") $!{pkJavaType} $!{pkPropertyName},
+                                           @RequestBody $!{ClassName}$!{entityDTOSuffix} $!{className}$!{entityDTOSuffix}) {
+        return $!{ClassName}$!{serviceSuffix}.update($!{pkPropertyName}, $!{className}$!{entityDTOSuffix});
     }
 
-#if (${generateSwagger} == true)
-    @ApiOperation(value = "批量删除${ClassName}对象}")
+#if ($!{generateSwagger} == true)
+    @ApiOperation(value = "批量删除$!{ClassName}$!{entitySuffix}对象}")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${pkColumn.propertyName}s", value = "${ClassName}主键字符串,用 , 分隔", dataType = "String", required = true)
+        @ApiImplicitParam(name = "$!{pkPropertyName}s", value = "$!{ClassName}$!{entitySuffix}主键字符串,用 , 分隔", dataType = "String", required = true)
     })
 #end
-    @DeleteMapping("/{${pkColumn.propertyName}s}")
-    public ${ResponseClass}<String> delete(@PathVariable("${pkColumn.propertyName}s") String ${pkColumn.propertyName}s) {
-        return i${ClassName}Service.delete(${pkColumn.propertyName}s);
+    @DeleteMapping("/{$!{pkPropertyName}s}")
+    public $!{ResponseClass}<String> delete(@PathVariable("$!{pkPropertyName}s") String $!{pkPropertyName}s) {
+        return $!{ClassName}$!{serviceSuffix}.delete($!{pkPropertyName}s);
     }
 #end
 }

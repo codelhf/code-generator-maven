@@ -1,13 +1,28 @@
 $!macro
-package ${Template.getPackageName()};
+#set($suffix = $!{Template.getSuffix()})
+
+#set($responseCodePackageName = $!{responseCode.getPackageName()})
+#set($serverResponsePackageName = $!{serverResponse.getPackageName()})
+#set($daoPackageName = $!{dao.getPackageName()})
+#set($daoSuffix = $!{dao.getSuffix()})
+#set($entityDTOPackageName = $!{entityDTO.getPackageName()})
+#set($entityDTOSuffix = $!{entityDTO.getSuffix()})
+#set($entityPackageName = $!{entity.getPackageName()})
+#set($entitySuffix = $!{entity.getSuffix()})
+#set($servicePackageName = $!{service.getPackageName()})
+#set($serviceSuffix = $!{service.getSuffix()})
+
+#set($pkJavaType = $!{pkColumn.javaType})
+#set($pkPropertyName = $!{pkColumn.propertyName})
+package $!{Template.getPackageName()};
 
 import com.alibaba.fastjson.JSON;
-import ${BasePackageName}.common.ResponseCode;
-import ${BasePackageName}.common.${ResponseClass};
-import ${DaoPackageName}.${ClassName}Mapper;
-import ${EntityDTOPackageName}.${ClassName}DTO;
-import ${EntityPackageName}.${ClassName};
-import ${ServicePackageName}.I${ClassName}Service;
+import $!{responseCodePackageName}.ResponseCode;
+import $!{serverResponsePackageName}.$!{ResponseClass};
+import $!{daoPackageName}.$!{ClassName}$!{daoSuffix};
+import $!{entityDTOPackageName}.$!{ClassName}$!{entityDTOSuffix};
+import $!{entityPackageName}.$!{ClassName}$!{entitySuffix};
+import $!{servicePackageName}.$!{ClassName}$!{serviceSuffix}
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Splitter;
@@ -22,141 +37,141 @@ import java.util.List;
 import java.util.Map;
 
 ##(宏定义)
-$fileHeader("${ClassName}${suffix}", "${ClassName}业务层")
+$fileHeader("$!{ClassName}$!{suffix}", "$!{ClassName}$!{entitySuffix}业务层")
 @Service
-public class ${ClassName}ServiceImpl implements I${ClassName}Service {
+public class $!{ClassName}$!{suffix} implements $!{ClassName}$!{serviceSuffix} {
 
     @Autowired
-    private ${ClassName}Mapper ${className}Mapper;
+    private $!{ClassName}$!{daoSuffix} $!{className}$!{daoSuffix};
 
-#if (${generateRemark} == true)
+#if ($!{generateRemark} == true)
     /**
      * @Title: list
-     * @Description: 查询${ClassName}列表
-     * @Company: ${company}
-     * @Author: ${author}
-     * @CreateTime: ${createTime}
+     * @Description: 查询$!{ClassName}$!{entitySuffix}列表
+     * @Company: $!{company}
+     * @Author: $!{author}
+     * @CreateTime: $!{createTime}
      *
      * @param pageNum
      * @param pageSize
      * @param params
-     * @return ${ResponseClass}<PageInfo>
+     * @return $!{ResponseClass}<PageInfo>
      */
 #end
     @Override
-    public ${ResponseClass}<PageInfo> list(Integer pageNum, Integer pageSize, Map<String, String> params) {
+    public $!{ResponseClass}<PageInfo> list(Integer pageNum, Integer pageSize, Map<String, String> params) {
         if (pageNum != null && pageSize != null) {
             PageHelper.startPage(pageNum, pageSize);
         }
-        ${ClassName} ${className} = null;
+        $!{ClassName}$!{entitySuffix} $!{className}$!{entitySuffix} = null;
         if (CollectionUtils.isNotEmpty(params.values())) {
-            ${className} = JSON.parseObject(JSON.toJSONString(params), ${ClassName}.class);
+            $!{className}$!{entitySuffix} = JSON.parseObject(JSON.toJSONString(params), $!{ClassName}$!{entitySuffix}.class);
         }
-        List<${ClassName}> ${className}List = ${className}Mapper.selectPageList(${className});
-        List<${ClassName}DTO> ${className}DTOList = new ArrayList<>();
-        BeanUtils.copyProperties(${className}List, ${className}DTOList, List.class);
-        PageInfo pageInfo = new PageInfo(${className}List);
-        pageInfo.setList(${className}DTOList);
-        return ${ResponseClass}.createBySuccess(pageInfo);
+        List<$!{ClassName}$!{entitySuffix}> $!{className}$!{entitySuffix}List = $!{className}$!{daoSuffix}.selectPageList($!{className}$!{entitySuffix});
+        List<$!{ClassName}$!{entityDTOSuffix}> $!{className}$!{entityDTOSuffix}List = new ArrayList<>();
+        BeanUtils.copyProperties($!{className}$!{entitySuffix}List, $!{className}$!{entityDTOSuffix}List, List.class);
+        PageInfo pageInfo = new PageInfo($!{className}$!{entitySuffix}List);
+        pageInfo.setList($!{className}$!{entityDTOSuffix}List);
+        return $!{ResponseClass}.createBySuccess(pageInfo);
     }
-#if (${generateRemark} == true)
+#if ($!{generateRemark} == true)
     /**
      * @Title: select
-     * @Description: 查询${ClassName}对象
-     * @Company: ${company}
-     * @Author: ${author}
-     * @CreateTime: ${createTime}
+     * @Description: 查询$!{ClassName}$!{entitySuffix}对象
+     * @Company: $!{company}
+     * @Author: $!{author}
+     * @CreateTime: $!{createTime}
      *
-     * @param ${pkColumn.propertyName}
-     * @return ${ResponseClass}<${ClassName}DTO>
+     * @param $!{pkPropertyName}
+     * @return $!{ResponseClass}<$!{ClassName}$!{entityDTOSuffix}>
      */
 #end
     @Override
-    public ${ResponseClass}<${ClassName}DTO> select(${pkColumn.javaType} ${pkColumn.propertyName}) {
-        if (StringUtils.isBlank(String.valueOf(${pkColumn.propertyName}))) {
-            return ${ResponseClass}.createByErrorMessage("${pkColumn.propertyName}不能为空");
+    public $!{ResponseClass}<$!{ClassName}$!{entityDTOSuffix}> select($!{pkJavaType} $!{pkPropertyName}) {
+        if (StringUtils.isBlank(String.valueOf($!{pkPropertyName}))) {
+            return $!{ResponseClass}.createByErrorMessage("$!{pkPropertyName}不能为空");
         }
-        ${ClassName} ${className} = ${className}Mapper.selectByPrimaryKey(${pkColumn.propertyName});
-        if (${className} == null) {
-            return ${ResponseClass}.createByErrorMessage("${ClassName}不存在");
+        $!{ClassName}$!{entitySuffix} $!{className}$!{entitySuffix} = $!{className}$!{daoSuffix}.selectByPrimaryKey($!{pkPropertyName});
+        if ($!{className}$!{entitySuffix} == null) {
+            return $!{ResponseClass}.createByErrorMessage("$!{ClassName}$!{entitySuffix}不存在");
         }
-        ${ClassName}DTO ${className}DTO = new ${ClassName}DTO();
-        BeanUtils.copyProperties(${className}, ${className}DTO);
-        return ${ResponseClass}.createBySuccess(${className}DTO);
+        $!{ClassName}$!{entityDTOSuffix} $!{className}$!{entityDTOSuffix} = new $!{ClassName}$!{entityDTOSuffix}();
+        BeanUtils.copyProperties($!{className}$!{entitySuffix}, $!{className}$!{entityDTOSuffix});
+        return $!{ResponseClass}.createBySuccess($!{className}$!{entityDTOSuffix});
     }
 #if($isView == false)
-#if (${generateRemark} == true)
+#if ($!{generateRemark} == true)
     /**
      * @Title: insert
-     * @Description: 保存${ClassName}对象
-     * @Company: ${company}
-     * @Author: ${author}
-     * @CreateTime: ${createTime}
+     * @Description: 保存$!{ClassName}$!{entitySuffix}对象
+     * @Company: $!{company}
+     * @Author: $!{author}
+     * @CreateTime: $!{createTime}
      *
-     * @param ${className}DTO
-     * @return ${ResponseClass}<String>
+     * @param $!{className}$!{entityDTOSuffix}
+     * @return $!{ResponseClass}<String>
      */
 #end
     @Override
-    public ${ResponseClass}<String> insert(${ClassName}DTO ${className}DTO) {
-        ${ClassName} ${className} = new ${ClassName}();
-        BeanUtils.copyProperties(${className}DTO, ${className});
-        int rowCount = ${className}Mapper.insertSelective(${className});
+    public $!{ResponseClass}<String> insert($!{ClassName}$!{entityDTOSuffix} $!{className}$!{entityDTOSuffix}) {
+        $!{ClassName}$!{entitySuffix} $!{className}$!{entitySuffix} = new $!{ClassName}$!{entitySuffix}();
+        BeanUtils.copyProperties($!{className}$!{entityDTOSuffix}, $!{className}$!{entitySuffix});
+        int rowCount = $!{className}$!{daoSuffix}.insertSelective($!{className}$!{entitySuffix});
         if (rowCount == 0) {
-            return ${ResponseClass}.createByErrorMessage("新增${ClassName}失败");
+            return $!{ResponseClass}.createByErrorMessage("新增$!{ClassName}$!{entitySuffix}失败");
         }
-        return ${ResponseClass}.createBySuccessMessage("新增${ClassName}成功");
+        return $!{ResponseClass}.createBySuccessMessage("新增$!{ClassName}$!{entitySuffix}成功");
     }
-#if (${generateRemark} == true)
+#if ($!{generateRemark} == true)
     /**
      * @Title: update
-     * @Description: 更新${ClassName}对象
-     * @Company: ${company}
-     * @Author: ${author}
-     * @CreateTime: ${createTime}
+     * @Description: 更新$!{ClassName}$!{entitySuffix}对象
+     * @Company: $!{company}
+     * @Author: $!{author}
+     * @CreateTime: $!{createTime}
      *
-     * @param ${pkColumn.propertyName}
-     * @param ${className}DTO
-     * @return ${ResponseClass}<String>
+     * @param $!{pkPropertyName}
+     * @param $!{className}$!{entityDTOSuffix}
+     * @return $!{ResponseClass}<String>
      */
 #end
     @Override
-    public ${ResponseClass}<String> update(${pkColumn.javaType} ${pkColumn.propertyName}, ${ClassName}DTO ${className}DTO) {
-        if (StringUtils.isBlank(String.valueOf(${pkColumn.propertyName}))) {
-            return ${ResponseClass}.createByErrorMessage("${pkColumn.propertyName}不能为空");
+    public $!{ResponseClass}<String> update($!{pkJavaType} $!{pkPropertyName}, $!{ClassName}$!{entityDTOSuffix} $!{className}$!{entityDTOSuffix}) {
+        if (StringUtils.isBlank(String.valueOf($!{pkPropertyName}))) {
+            return $!{ResponseClass}.createByErrorMessage("$!{pkPropertyName}不能为空");
         }
-        ${className}DTO.set${pkColumn.PropertyName}(${pkColumn.propertyName});
-        ${ClassName} ${className} = new ${ClassName}();
-        BeanUtils.copyProperties(${className}DTO, ${className});
-        int rowCount = ${className}Mapper.updateByPrimaryKeySelective(${className});
+        $!{className}$!{entityDTOSuffix}.set$!{StringUtil.firstToUpperCase($!{pkPropertyName})}($!{pkPropertyName});
+        $!{ClassName}$!{entitySuffix} $!{className}$!{entitySuffix} = new $!{ClassName}$!{entitySuffix}();
+        BeanUtils.copyProperties($!{className}$!{entityDTOSuffix}, $!{className}$!{entitySuffix});
+        int rowCount = $!{className}$!{daoSuffix}.updateByPrimaryKeySelective($!{className}$!{entitySuffix});
         if (rowCount == 0) {
-            return ${ResponseClass}.createByErrorMessage("更新${ClassName}失败");
+            return $!{ResponseClass}.createByErrorMessage("更新$!{ClassName}$!{entitySuffix}失败");
         }
-        return ${ResponseClass}.createBySuccessMessage("更新${ClassName}成功");
+        return $!{ResponseClass}.createBySuccessMessage("更新$!{ClassName}$!{entitySuffix}成功");
     }
-#if (${generateRemark} == true)
+#if ($!{generateRemark} == true)
     /**
      * @Title: delete
-     * @Description: 批量删除${ClassName}对象
-     * @Company: ${company}
-     * @Author: ${author}
-     * @CreateTime: ${createTime}
+     * @Description: 批量删除$!{ClassName}$!{entitySuffix}对象
+     * @Company: $!{company}
+     * @Author: $!{author}
+     * @CreateTime: $!{createTime}
      *
-     * @param ${pkColumn.propertyName}s
-     * @return ${ResponseClass}<String>
+     * @param $!{pkPropertyName}s
+     * @return $!{ResponseClass}<String>
      */
 #end
     @Override
-    public ${ResponseClass}<String> delete(String ${pkColumn.propertyName}s) {
-        List<String> ${pkColumn.propertyName}List = Splitter.on(",").splitToList(${pkColumn.propertyName}s);
-        if (CollectionUtils.isEmpty(${pkColumn.propertyName}List)) {
-            return ${ResponseClass}.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "${propertyName}不能为空");
+    public $!{ResponseClass}<String> delete(String $!{pkPropertyName}s) {
+        List<String> $!{pkPropertyName}List = Splitter.on(",").splitToList($!{pkPropertyName}s);
+        if (CollectionUtils.isEmpty($!{pkPropertyName}List)) {
+            return $!{ResponseClass}.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "$!{pkPropertyName}不能为空");
         }
-        int rowCount = ${className}Mapper.deleteByIdList(${pkColumn.propertyName}List);
-        if (rowCount == 0 || rowCount < ${pkColumn.propertyName}List.size()) {
-            return ${ResponseClass}.createByErrorMessage("批量删除${ClassName}失败");
+        int rowCount = $!{className}$!{daoSuffix}.deleteByIdList($!{pkPropertyName}List);
+        if (rowCount == 0 || rowCount < $!{pkPropertyName}List.size()) {
+            return $!{ResponseClass}.createByErrorMessage("批量删除$!{ClassName}$!{entitySuffix}失败");
         }
-        return ${ResponseClass}.createBySuccessMessage("批量删除${ClassName}成功");
+        return $!{ResponseClass}.createBySuccessMessage("批量删除$!{ClassName}$!{entitySuffix}成功");
     }
 #end
 }

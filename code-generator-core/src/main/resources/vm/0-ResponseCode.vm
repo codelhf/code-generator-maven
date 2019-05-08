@@ -1,5 +1,5 @@
 $!macro
-package ${Template.getPackageName()};
+package $!{Template.getPackageName()};
 
 ##(宏定义)
 $fileHeader("ResponseCode", "服务端响应状态码")

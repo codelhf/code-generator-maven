@@ -63,7 +63,6 @@ public class CodeGenerator {
         invoker.setGeneratedKey(generatedKey);
         invoker.setView(isView);
         invoker.setConfiguration(configuration);
-        invoker.checkBeforeExecute();
         try {
             invoker.execute();
         } catch (IOException e) {

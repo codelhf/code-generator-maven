@@ -7,8 +7,6 @@
 #* @vtlvariable name="modulePath" type="java.lang.String" *#
 #* @vtlvariable name="importList" type="java.util.List<java.lang.String>" *#
 #* @vtlvariable name="Template" type="com.example.generator.config.TemplateConfiguration" *#
-#* @vtlvariable name="suffix" type="java.lang.String" *#
-
 
 #* @vtlvariable name="ResponseClass" type="java.lang.String" *#
 #* @vtlvariable name="ClassName" type="java.lang.String" *#

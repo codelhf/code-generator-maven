@@ -1,37 +1,44 @@
 $!macro
-package ${Template.getPackageName()};
+#set($suffix = $!{Template.getSuffix()})
+#set($CommonMapper = false)
+#set($entityPackageName = $!{entity.getPackageName()})
+#set($entitySuffix = $!{entity.getSuffix()})
 
-#if (${baseMapper})
-import ${DaoPackageName}.base.${baseMapper};
+#set($pkJavaType = $!{pkColumn.javaType})
+#set($pkPropertyName = $!{pkColumn.propertyName})
+package $!{Template.getPackageName()};
+
+#if ($!{baseMapper})
+import $!{Template.getPackageName()}.base.$!{baseMapper};
 #end
-import ${EntityPackageName}.${ClassName};
+import $!{entityPackageName}.$!{ClassName}$!{entitySuffix};
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 ##(宏定义)
-$fileHeader("${ClassName}${suffix}", "${ClassName}持久层")
+$fileHeader("$!{ClassName}$!{suffix}", "$!{ClassName}$!{entitySuffix}持久层")
 @Mapper
-public interface ${ClassName}Mapper #if (${baseMapper})extends ${baseMapper}<${ClassName}>#end {
+public interface $!{ClassName}$!{suffix} #if ($!{baseMapper})extends $!{baseMapper}<$!{ClassName}$!{suffix}>#end {
 
-#if(${CommonMapper} == false)
-    ${ClassName} selectByPrimaryKey(${pkColumn.javaType} ${pkColumn.propertyName});
+#if($!{CommonMapper} == false)
+    $!{ClassName}$!{entitySuffix} selectByPrimaryKey($!{pkJavaType} $!{pkPropertyName});
     #if($isView == false)
 
-    int deleteByPrimaryKey(${pkColumn.javaType} ${pkColumn.propertyName});
+    int deleteByPrimaryKey($!{pkJavaType} $!{pkPropertyName});
 
-    int insert(${ClassName} record);
+    int insert($!{ClassName}$!{entitySuffix} record);
 
-    int insertSelective(${ClassName} record);
+    int insertSelective($!{ClassName}$!{entitySuffix} record);
 
-    int updateByPrimaryKeySelective(${ClassName} record);
+    int updateByPrimaryKeySelective($!{ClassName}$!{entitySuffix} record);
 
-    int updateByPrimaryKey(${ClassName} record);
+    int updateByPrimaryKey($!{ClassName}$!{entitySuffix} record);
 
-    int deleteByIdList(@Param("${pkColumn.propertyName}List") List<String> ${pkColumn.propertyName}List);
+    int deleteByIdList(@Param("$!{pkPropertyName}List") List<String> $!{pkPropertyName}List);
     #end
 
-    List<${ClassName}> selectPageList(${ClassName} example);
+    List<$!{ClassName}$!{entitySuffix}> selectPageList($!{ClassName}$!{entitySuffix} example);
 #end
 }

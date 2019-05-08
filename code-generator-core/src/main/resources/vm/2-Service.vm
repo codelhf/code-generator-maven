@@ -1,88 +1,97 @@
 $!macro
-package ${Template.getPackageName()};
+#set($suffix = $!{Template.getSuffix()})
 
-import ${BasePackageName}.common.${ResponseClass};
-import ${EntityDTOPackageName}.${ClassName}DTO;
+#set($serverResponsePackageName = $!{serverResponse.getPackageName()})
+#set($entityDTOPackageName = $!{entityDTO.getPackageName()})
+#set($entityDTOSuffix = $!{entityDTO.getSuffix()})
+#set($entitySuffix = $!{entity.getSuffix()})
+
+#set($pkJavaType = $!{pkColumn.javaType})
+#set($pkPropertyName = $!{pkColumn.propertyName})
+package $!{Template.getPackageName()};
+
+import $!{serverResponsePackageName}.$!{ResponseClass};
+import $!{entityDTOPackageName}.$!{ClassName}$!{entityDTOSuffix};
 import com.github.pagehelper.PageInfo;
 
 import java.util.Map;
 
 ##(宏定义)
-$fileHeader("${ClassName}${suffix}", "${ClassName}控制层")
-public interface I${ClassName}Service {
+$fileHeader("$!{ClassName}$!{suffix}", "$!{ClassName}$!{entitySuffix}接口层")
+public interface $!{ClassName}$!{suffix} {
 
-#if (${generateRemark} == true)
+#if ($!{generateRemark} == true)
 	/**
 	 * @Title: list
-	 * @Description: 查询${ClassName}列表
-	 * @Company: ${company}
-	 * @Author: ${author}
-	 * @CreateTime: ${createTime}
+	 * @Description: 查询$!{ClassName}$!{entitySuffix}列表
+	 * @Company: $!{company}
+	 * @Author: $!{author}
+	 * @CreateTime: $!{createTime}
 	 *
 	 * @param pageNum
 	 * @param pageSize
 	 * @param params
-	 * @return ${ResponseClass}<PageInfo>
+	 * @return $!{ResponseClass}<PageInfo>
 	 */
 #end
-	${ResponseClass}<PageInfo> list(Integer pageNum, Integer pageSize, Map<String, String> params);
+	$!{ResponseClass}<PageInfo> list(Integer pageNum, Integer pageSize, Map<String, String> params);
 
-#if (${generateRemark} == true)
+#if ($!{generateRemark} == true)
     /**
      * @Title: select
-     * @Description: 查询${ClassName}对象
-     * @Company: ${company}
-     * @Author: ${author}
-     * @CreateTime: ${createTime}
+     * @Description: 查询$!{ClassName}$!{entitySuffix}对象
+     * @Company: $!{company}
+     * @Author: $!{author}
+     * @CreateTime: $!{createTime}
      *
-     * @param ${pkColumn.propertyName}
-     * @return ${ResponseClass}<${ClassName}DTO>
+     * @param $!{pkColumn.propertyName}
+     * @return $!{ResponseClass}<$!{ClassName}$!{entityDTOSuffix}>
      */
 #end
-	${ResponseClass}<${ClassName}DTO> select(${pkColumn.javaType} ${pkColumn.propertyName});
+	$!{ResponseClass}<$!{ClassName}$!{entityDTOSuffix}> select($!{pkJavaType} $!{pkPropertyName});
 
-#if(${isView} == false)
-#if (${generateRemark} == true)
+#if($!{isView} == false)
+#if ($!{generateRemark} == true)
     /**
      * @Title: insert
-     * @Description: 保存${ClassName}对象
-     * @Company: ${company}
-     * @Author: ${author}
-     * @CreateTime: ${createTime}
+     * @Description: 保存$!{ClassName}$!{entitySuffix}对象
+     * @Company: $!{company}
+     * @Author: $!{author}
+     * @CreateTime: $!{createTime}
      *
-     * @param ${className}DTO
-     * @return ${ResponseClass}<String>
+     * @param $!{className}$!{entityDTOSuffix}
+     * @return $!{ResponseClass}<String>
      */
 #end
-	${ResponseClass}<String> insert(${ClassName}DTO ${className}DTO);
+	$!{ResponseClass}<String> insert($!{ClassName}$!{entityDTOSuffix} $!{className}$!{entityDTOSuffix});
 
-#if (${generateRemark} == true)
+#if ($!{generateRemark} == true)
     /**
      * @Title: update
-     * @Description: 更新${ClassName}对象
-     * @Company: ${company}
-     * @Author: ${author}
-     * @CreateTime: ${createTime}
+     * @Description: 更新$!{ClassName}$!{entitySuffix}对象
+     * @Company: $!{company}
+     * @Author: $!{author}
+     * @CreateTime: $!{createTime}
      *
-     * @param ${pkColumn.propertyName}
-     * @param ${className}DTO
-     * @return ${ResponseClass}<String>
+     * @param $!{pkColumn.propertyName}
+     * @param $!{className}$!{entityDTOSuffix}
+     * @return $!{ResponseClass}<String>
      */
 #end
-	${ResponseClass}<String> update(${pkColumn.javaType} ${pkColumn.propertyName}, ${ClassName}DTO ${className}DTO);
+	$!{ResponseClass}<String> update($!{pkJavaType} $!{pkPropertyName}, $!{ClassName}$!{entityDTOSuffix} $!{className}$!{entityDTOSuffix});
 
-#if (${generateRemark} == true)
+#if ($!{generateRemark} == true)
     /**
      * @Title: delete
-     * @Description: 批量删除${ClassName}对象
-     * @Company: ${company}
-     * @Author: ${author}
-     * @CreateTime: ${createTime}
+     * @Description: 批量删除$!{ClassName}$!{entitySuffix}对象
+     * @Company: $!{company}
+     * @Author: $!{author}
+     * @CreateTime: $!{createTime}
      *
-     * @param ${pkColumn.propertyName}s
-     * @return ${ResponseClass}<String>
+     * @param $!{pkPropertyName}s
+     * @return $!{ResponseClass}<String>
      */
 #end
-	${ResponseClass}<String> delete(String ${pkColumn.propertyName}s);
+	$!{ResponseClass}<String> delete(String $!{pkPropertyName}s);
 #end
 }

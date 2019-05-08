@@ -1,79 +1,88 @@
+#set($daoPackageName = $!{dao.getPackageName()})
+#set($daoSuffix = $!{dao.getSuffix()})
+#set($entityPackageName = $!{entity.getPackageName()})
+#set($entitySuffix = $!{entity.getSuffix()})
+
+#set($pkColumnName = $!{pkColumn.columnName})
+#set($pkPropertyName = $!{pkColumn.propertyName})
+#set($pkJavaType = $!{pkColumn.javaType})
+#set($pkJdbcType = $!{pkColumn.jdbcType})
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${DaoPackageName}.${ClassName}Mapper">
-    <resultMap id="BaseResultMap" type="${entityPackageName}.${ClassName}">
-#foreach($column in ${columnList})
-        <result column="${column.columnName}" jdbcType="${column.jdbcType}" property="${column.propertyName}"/>
+<mapper namespace="$!{daoPackageName}.$!{ClassName}$!{daoSuffix}">
+    <resultMap id="BaseResultMap" type="$!{entityPackageName}.$!{ClassName}$!{entitySuffix}">
+#foreach($column in $!{columnList})
+        <result column="$!{column.columnName}" jdbcType="$!{column.jdbcType}" property="$!{column.propertyName}"/>
 #end
     </resultMap>
     <sql id="Base_Column_List">
-        #foreach($column in ${columnList})${column.columnName}, #end
+        #foreach($column in $!{columnList})$!{column.columnName}, #end
     </sql>
-    <select id="selectByPrimaryKey" parameterType="${pkColumn.javaType}" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="$!{pkJavaType}" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
-        from ${tableName}
-        where ${pkColumn.columnName} = #{${pkColumn.propertyName}}
+        from $!{tableName}
+        where $!{pkColumnName} = #{$!{pkPropertyName}, jdbcType=$!{pkJdbcType}}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="${pkColumn.javaType}">
-        delete from ${tableName}
-        where ${pkColumn.columnName} = #{${pkColumn.propertyName}}
+    <delete id="deleteByPrimaryKey" parameterType="$!{pkJavaType}">
+        delete from $!{tableName}
+        where $!{pkColumnName} = #{$!{pkPropertyName}, jdbcType=$!{pkJdbcType}}
     </delete>
-    <insert id="insert" parameterType="${entityPackageName}.${ClassName}">
-        insert into ${tableName}
-        (#foreach($column in ${columnList})${column.columnName}, #end)
+    <insert id="insert" parameterType="$!{entityPackageName}.$!{ClassName}$!{entitySuffix}">
+        insert into $!{tableName}
+        (#foreach($column in $!{columnList})$!{column.columnName}, #end)
         values
-        (#foreach($column in ${columnList})#{${column.propertyName}, jdbcType=${column.jdbcType}}, #end)
+        (#foreach($column in $!{columnList})#{$!{column.propertyName}, jdbcType=$!{column.jdbcType}}, #end)
     </insert>
-    <insert id="insertSelective" parameterType="${entityPackageName}.${ClassName}">
-        insert into ${tableName}
+    <insert id="insertSelective" parameterType="$!{entityPackageName}.$!{ClassName}$!{entitySuffix}">
+        insert into $!{tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
-        #foreach($column in ${columnList})
-            <if test="${column.propertyName} != null">
-                ${column.columnName},
+        #foreach($column in $!{columnList})
+            <if test="$!{column.propertyName} != null">
+                $!{column.columnName},
             </if>
         #end
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-        #foreach($column in ${columnList})
-            <if test="${column.propertyName} != null">
-                #{${column.propertyName}, jdbcType=${column.jdbcType}},
+        #foreach($column in $!{columnList})
+            <if test="$!{column.propertyName} != null">
+                #{$!{column.propertyName}, jdbcType=$!{column.jdbcType}},
             </if>
         #end
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="${entityPackageName}.${ClassName}">
-        update ${tableName}
+    <update id="updateByPrimaryKeySelective" parameterType="$!{entityPackageName}.$!{ClassName}$!{entitySuffix}">
+        update $!{tableName}
         <set>
-        #foreach($column in ${columnList})
-            <if test="${column.propertyName} != null">
-                ${column.columnName} = #{${column.propertyName}, jdbcType=${column.jdbcType}},
+        #foreach($column in $!{columnList})
+            <if test="$!{column.propertyName} != null">
+                $!{column.columnName} = #{$!{column.propertyName}, jdbcType=$!{column.jdbcType}},
             </if>
         #end
         </set>
-        where ${pkColumn.columnName} = #{${pkColumn.propertyName}}
+        where $!{pkColumnName} = #{$!{pkPropertyName}, jdbcType=$!{pkJdbcType}}
     </update>
-    <update id="updateByPrimaryKey" parameterType="${entityPackageName}.${ClassName}">
-        update ${tableName}
+    <update id="updateByPrimaryKey" parameterType="$!{entityPackageName}.$!{ClassName}${entitySuffix}">
+        update $!{tableName}
         set
-        #foreach($column in ${columnList})
-            ${column.columnName} = #{${column.propertyName}, jdbcType=${column.jdbcType}},
+        #foreach($column in $!{columnList})
+            $!{column.columnName} = #{$!{column.propertyName}, jdbcType=$!{column.jdbcType}},
         #end
-        where ${pkColumn.columnName} = #{${pkColumn.propertyName}}
+        where $!{pkColumnName} = #{$!{pkPropertyName}, jdbcType=$!{pkJdbcType}}
     </update>
     <delete id="deleteByIdList" parameterType="map">
-        delete from ${tableName}
-        where ${pkColumn.columnName} in
-        <foreach collection="${pkColumn.propertyName}List" index="index" item="${pkColumn.propertyName}" open="(" separator="," close=")" >
-            #{${pkColumn.propertyName}}
+        delete from $!{tableName}
+        where $!{pkColumnName} in
+        <foreach collection="$!{pkPropertyName}List" index="index" item="$!{pkPropertyName}" open="(" separator="," close=")" >
+            #{$!{pkPropertyName}}
         </foreach>
     </delete>
-    <select id="selectPageList" parameterType="${entityPackageName}.${ClassName}" resultMap="BaseResultMap">
+    <select id="selectPageList" parameterType="$!{entityPackageName}.$!{ClassName}$!{entitySuffix}" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
-        from ${tableName}
+        from $!{tableName}
         <where>
-        #foreach($column in ${columnList})
-            <if test="${column.propertyName} != null">
-                and ${column.columnName} like #{${column.propertyName}}
+        #foreach($column in $!{columnList})
+            <if test="$!{column.propertyName} != null">
+                and $!{column.columnName} like #{$!{column.propertyName}}
             </if>
         #end
         </where>

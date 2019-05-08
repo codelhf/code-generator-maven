@@ -1,5 +1,5 @@
 $!macro
-package ${Template.getPackageName()};
+package $!{Template.getPackageName()};
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

@@ -4,7 +4,7 @@
         <!--"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">-->
 <!--标签为对象, property为对象的属性-->
 <generatorConfiguration>
-    <!--导入配置文件-->
+    <!--导入配置文件,非必须参数-->
     <properties resource="datasource.properties"/>
 
     <!--jdbc的数据库连接 -->
@@ -45,16 +45,13 @@
 
     <!--对应模板的配置-->
     <templates>
-        <!--名称不能和api中的字段重复,否则被覆盖无效-->
-        <template name="controller" template="vm/2-Controller.vm"
-                  suffix="Controller" fileType="java" override="false"
-                  directory="src/main/java" packageName="com.example.generator.demo.controller"/>
-        <template name="service" template="vm/2-Service.vm"
-                  suffix="Controller" fileType="java" override="false"
-                  directory="src/main/java" packageName="com.example.generator.demo.service"/>
-        <template name="mapper" template="vm/1-Mapper.vm"
-                  suffix="Controller" fileType="xml" override="false"
-                  directory="src/main/java" packageName="com.example.generator.demo.service"/>
+        <!--名称不能和api中的字段重复,否则被覆盖无效,并且被依赖模块不能注释-->
+        <template name="controller" template="vm/2-Controller.vm" suffix="Controller" fileType="java" override="false"
+                  directory="./src/main/java" packageName="com.example.generator.demo.controller"/>
+        <template name="service" template="vm/2-Service.vm" suffix="Service" fileType="java" override="false"
+                  directory="./src/main/java" packageName="com.example.generator.demo.service"/>
+        <template name="mapper" template="vm/1-Mapper.vm" suffix="Mapper" fileType="xml" override="false"
+                  directory="./src/main/resources" packageName="mappers"/>
     </templates>
 
     <!-- 数据库对应数据表-->
