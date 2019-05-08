@@ -76,17 +76,18 @@ public class SingleInvoker {
         // TODO: 2019/5/8 放在上面防止下面key被覆盖
         List<TemplateConfiguration> templateList = configuration.getTemplateList();
         for (TemplateConfiguration template: templateList) {
-            data.put(template.getName(), template);
+            data.put(template.getFileName(), template);
         }
 
         data.put("company", configuration.getCommentGenerator().getCompany());
         data.put("author", configuration.getCommentGenerator().getAuthor());
         data.put("createTime", DateTimeUtil.dateToStr(new Date()));
 
-        data.put("ResponseClassName", configuration.getCommentGenerator().getResponseClass());
+        data.put("ResponseClass", configuration.getCommentGenerator().getResponseClass());
         data.put("ClassName", className);
         data.put("className", StringUtil.firstToLowerCase(className));
         data.put("isView", isView);
+        data.put("CommonMapper", false);
         data.put("generateSwagger", true);
         data.put("generateRemark", true);
 
@@ -103,9 +104,17 @@ public class SingleInvoker {
             data.put("Template", template);
             //文件生成路径支持相对路径和绝对路径
             String filePath = FileUtil.getGeneratePath(configFilePath, template.getDirectory(), template.getPackageName());
-            //文件名后缀加文件格式
-            String fileName = className + template.getSuffix() + "." + template.getFileType();
-            FileUtil.generateToCode(filePath, fileName, tpl, data, template.isOverride());
+            String fileName;
+            if (template.isCommon()) {
+                //文件名加文件格式
+                fileName = template.getSuffix() + "." + template.getFileType();
+            } else {
+                //表名加后缀加文件格式
+                fileName = className + template.getSuffix() + "." + template.getFileType();
+            }
+            if (template.isGenerate()) {
+                FileUtil.generateToCode(filePath, fileName, tpl, data, template.isOverride());
+            }
         }
         //清空数据
         data.clear();
@@ -122,7 +131,7 @@ public class SingleInvoker {
     }
 
     //执行前检验
-    public void checkBeforeExecute() {
+    private void checkBeforeExecute() {
         if (configuration == null) {
             throw new RuntimeException("configuration can not be null");
         }

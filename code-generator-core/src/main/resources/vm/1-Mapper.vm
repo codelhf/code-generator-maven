@@ -2,7 +2,6 @@
 #set($daoSuffix = $!{dao.getSuffix()})
 #set($entityPackageName = $!{entity.getPackageName()})
 #set($entitySuffix = $!{entity.getSuffix()})
-
 #set($pkColumnName = $!{pkColumn.columnName})
 #set($pkPropertyName = $!{pkColumn.propertyName})
 #set($pkJavaType = $!{pkColumn.javaType})
@@ -16,13 +15,15 @@
 #end
     </resultMap>
     <sql id="Base_Column_List">
-        #foreach($column in $!{columnList})$!{column.columnName}, #end
+        #foreach($column in $!{columnList})$!{column.columnName},#end
+
     </sql>
     <select id="selectByPrimaryKey" parameterType="$!{pkJavaType}" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
         from $!{tableName}
         where $!{pkColumnName} = #{$!{pkPropertyName}, jdbcType=$!{pkJdbcType}}
     </select>
+#if ($isView == false)
     <delete id="deleteByPrimaryKey" parameterType="$!{pkJavaType}">
         delete from $!{tableName}
         where $!{pkColumnName} = #{$!{pkPropertyName}, jdbcType=$!{pkJdbcType}}
@@ -36,37 +37,37 @@
     <insert id="insertSelective" parameterType="$!{entityPackageName}.$!{ClassName}$!{entitySuffix}">
         insert into $!{tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
-        #foreach($column in $!{columnList})
+#foreach($column in $!{columnList})
             <if test="$!{column.propertyName} != null">
                 $!{column.columnName},
             </if>
-        #end
+#end
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-        #foreach($column in $!{columnList})
+#foreach($column in $!{columnList})
             <if test="$!{column.propertyName} != null">
                 #{$!{column.propertyName}, jdbcType=$!{column.jdbcType}},
             </if>
-        #end
+#end
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="$!{entityPackageName}.$!{ClassName}$!{entitySuffix}">
         update $!{tableName}
         <set>
-        #foreach($column in $!{columnList})
+#foreach($column in $!{columnList})
             <if test="$!{column.propertyName} != null">
                 $!{column.columnName} = #{$!{column.propertyName}, jdbcType=$!{column.jdbcType}},
             </if>
-        #end
+#end
         </set>
         where $!{pkColumnName} = #{$!{pkPropertyName}, jdbcType=$!{pkJdbcType}}
     </update>
     <update id="updateByPrimaryKey" parameterType="$!{entityPackageName}.$!{ClassName}${entitySuffix}">
         update $!{tableName}
         set
-        #foreach($column in $!{columnList})
+#foreach($column in $!{columnList})
             $!{column.columnName} = #{$!{column.propertyName}, jdbcType=$!{column.jdbcType}},
-        #end
+#end
         where $!{pkColumnName} = #{$!{pkPropertyName}, jdbcType=$!{pkJdbcType}}
     </update>
     <delete id="deleteByIdList" parameterType="map">
@@ -76,15 +77,16 @@
             #{$!{pkPropertyName}}
         </foreach>
     </delete>
+#end
     <select id="selectPageList" parameterType="$!{entityPackageName}.$!{ClassName}$!{entitySuffix}" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
         from $!{tableName}
         <where>
-        #foreach($column in $!{columnList})
+#foreach($column in $!{columnList})
             <if test="$!{column.propertyName} != null">
                 and $!{column.columnName} like #{$!{column.propertyName}}
             </if>
-        #end
+#end
         </where>
     </select>
 </mapper>

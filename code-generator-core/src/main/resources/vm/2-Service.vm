@@ -1,11 +1,8 @@
-$!macro
 #set($suffix = $!{Template.getSuffix()})
-
 #set($serverResponsePackageName = $!{serverResponse.getPackageName()})
 #set($entityDTOPackageName = $!{entityDTO.getPackageName()})
 #set($entityDTOSuffix = $!{entityDTO.getSuffix()})
 #set($entitySuffix = $!{entity.getSuffix()})
-
 #set($pkJavaType = $!{pkColumn.javaType})
 #set($pkPropertyName = $!{pkColumn.propertyName})
 package $!{Template.getPackageName()};
@@ -16,8 +13,13 @@ import com.github.pagehelper.PageInfo;
 
 import java.util.Map;
 
-##(宏定义)
-$fileHeader("$!{ClassName}$!{suffix}", "$!{ClassName}$!{entitySuffix}接口层")
+/**
+ * @Title: $!{ClassName}${suffix}
+ * @Description: $!{ClassName}$!{entitySuffix}接口层
+ * @Company: $!{company}
+ * @Author: $!{author}
+ * @CreateTime: $!{createTime}
+ */
 public interface $!{ClassName}$!{suffix} {
 
 #if ($!{generateRemark} == true)

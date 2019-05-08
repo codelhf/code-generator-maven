@@ -1,4 +1,3 @@
-$!macro
 package $!{Template.getPackageName()};
 
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +9,13 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-##(宏定义)
-$fileHeader("ExceptionResolver", "异常捕获处理类")
+/**
+ * @Title: ExceptionResolver
+ * @Description: 异常捕获处理类
+ * @Company: $!{company}
+ * @Author: $!{author}
+ * @CreateTime: $!{createTime}
+ */
 @Slf4j
 @Component
 public class ExceptionResolver implements HandlerExceptionResolver {

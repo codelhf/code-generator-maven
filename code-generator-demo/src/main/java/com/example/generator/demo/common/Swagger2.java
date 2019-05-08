@@ -19,11 +19,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @Description: Swagger2接口文档配置类
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-04-30 23:33:28
+ * @CreateTime: 2019-05-09 00:02:24
  */
 @Configuration
-//@EnableWebMvc //springMVC环境使用
 @EnableSwagger2 //启用Swagger2
+//@EnableWebMvc //springMVC环境使用
 public class Swagger2 extends WebMvcConfigurationSupport {
 
     @Value("${swagger.ui.title}")

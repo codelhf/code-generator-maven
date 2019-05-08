@@ -70,6 +70,8 @@ public class FileUtil {
         }
         //判断是否为相对路径
         if (directory.startsWith("./")){
+            //截取"./"
+            directory = directory.substring(1);
             sb.append(getProjectPath(configFilePath));
         }
         sb.append(directory).append(package2Path(packageName));
@@ -77,7 +79,7 @@ public class FileUtil {
     }
 
     /**
-     * 获取项目路径
+     * 获取项目路径,最后带"/"或"\\"
      */
     public static String getProjectPath(String configFilePath) {
 //        String path = new File(FileUtil.class.getClassLoader().getResource("").getFile()).getPath() + File.separator;

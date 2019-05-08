@@ -3,10 +3,10 @@ package com.example.generator.demo.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.example.generator.demo.common.ResponseCode;
 import com.example.generator.demo.common.ServerResponse;
-import com.example.generator.demo.dao.PrizeMapper;
-import com.example.generator.demo.dto.PrizeDTO;
-import com.example.generator.demo.pojo.Prize;
-import com.example.generator.demo.service.PrizeService;
+import com.example.generator.demo.dao.PeopleMapper;
+import com.example.generator.demo.dto.PeopleDTO;
+import com.example.generator.demo.pojo.People;
+import com.example.generator.demo.service.PeopleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Splitter;
@@ -21,21 +21,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
-* @Title: PrizeServiceImpl
-* @Description: Prize业务层
+* @Title: PeopleServiceImpl
+* @Description: People业务层
 * @Company: example
 * @Author: liuhf
 * @CreateTime: 2019-05-09 00:02:24
 */
 @Service
-public class PrizeServiceImpl implements PrizeService {
+public class PeopleServiceImpl implements PeopleService {
 
     @Autowired
-    private PrizeMapper prizeMapper;
+    private PeopleMapper peopleMapper;
 
     /**
      * @Title: list
-     * @Description: 查询Prize列表
+     * @Description: 查询People列表
      * @Company: example
      * @Author: liuhf
      * @CreateTime: 2019-05-09 00:02:24
@@ -50,88 +50,88 @@ public class PrizeServiceImpl implements PrizeService {
         if (pageNum != null && pageSize != null) {
             PageHelper.startPage(pageNum, pageSize);
         }
-        Prize prize = null;
+        People people = null;
         if (CollectionUtils.isNotEmpty(params.values())) {
-            prize = JSON.parseObject(JSON.toJSONString(params), Prize.class);
+            people = JSON.parseObject(JSON.toJSONString(params), People.class);
         }
-        List<Prize> prizeList = prizeMapper.selectPageList(prize);
-        List<PrizeDTO> prizeDTOList = new ArrayList<>();
-        BeanUtils.copyProperties(prizeList, prizeDTOList, List.class);
-        PageInfo pageInfo = new PageInfo(prizeList);
-        pageInfo.setList(prizeDTOList);
+        List<People> peopleList = peopleMapper.selectPageList(people);
+        List<PeopleDTO> peopleDTOList = new ArrayList<>();
+        BeanUtils.copyProperties(peopleList, peopleDTOList, List.class);
+        PageInfo pageInfo = new PageInfo(peopleList);
+        pageInfo.setList(peopleDTOList);
         return ServerResponse.createBySuccess(pageInfo);
     }
     /**
      * @Title: select
-     * @Description: 查询Prize对象
+     * @Description: 查询People对象
      * @Company: example
      * @Author: liuhf
      * @CreateTime: 2019-05-09 00:02:24
      *
      * @param id
-     * @return ServerResponse<PrizeDTO>
+     * @return ServerResponse<PeopleDTO>
      */
     @Override
-    public ServerResponse<PrizeDTO> select(int id) {
+    public ServerResponse<PeopleDTO> select(int id) {
         if (StringUtils.isBlank(String.valueOf(id))) {
             return ServerResponse.createByErrorMessage("id不能为空");
         }
-        Prize prize = prizeMapper.selectByPrimaryKey(id);
-        if (prize == null) {
-            return ServerResponse.createByErrorMessage("Prize不存在");
+        People people = peopleMapper.selectByPrimaryKey(id);
+        if (people == null) {
+            return ServerResponse.createByErrorMessage("People不存在");
         }
-        PrizeDTO prizeDTO = new PrizeDTO();
-        BeanUtils.copyProperties(prize, prizeDTO);
-        return ServerResponse.createBySuccess(prizeDTO);
+        PeopleDTO peopleDTO = new PeopleDTO();
+        BeanUtils.copyProperties(people, peopleDTO);
+        return ServerResponse.createBySuccess(peopleDTO);
     }
     /**
      * @Title: insert
-     * @Description: 保存Prize对象
+     * @Description: 保存People对象
      * @Company: example
      * @Author: liuhf
      * @CreateTime: 2019-05-09 00:02:24
      *
-     * @param prizeDTO
+     * @param peopleDTO
      * @return ServerResponse<String>
      */
     @Override
-    public ServerResponse<String> insert(PrizeDTO prizeDTO) {
-        Prize prize = new Prize();
-        BeanUtils.copyProperties(prizeDTO, prize);
-        int rowCount = prizeMapper.insertSelective(prize);
+    public ServerResponse<String> insert(PeopleDTO peopleDTO) {
+        People people = new People();
+        BeanUtils.copyProperties(peopleDTO, people);
+        int rowCount = peopleMapper.insertSelective(people);
         if (rowCount == 0) {
-            return ServerResponse.createByErrorMessage("新增Prize失败");
+            return ServerResponse.createByErrorMessage("新增People失败");
         }
-        return ServerResponse.createBySuccessMessage("新增Prize成功");
+        return ServerResponse.createBySuccessMessage("新增People成功");
     }
     /**
      * @Title: update
-     * @Description: 更新Prize对象
+     * @Description: 更新People对象
      * @Company: example
      * @Author: liuhf
      * @CreateTime: 2019-05-09 00:02:24
      *
      * @param id
-     * @param prizeDTO
+     * @param peopleDTO
      * @return ServerResponse<String>
      */
     @Override
-    public ServerResponse<String> update(int id, PrizeDTO prizeDTO) {
+    public ServerResponse<String> update(int id, PeopleDTO peopleDTO) {
         if (StringUtils.isBlank(String.valueOf(id))) {
             return ServerResponse.createByErrorMessage("id不能为空");
         }
-        prizeDTO.setId(id);
-        Prize prize = new Prize();
-        BeanUtils.copyProperties(prizeDTO, prize);
-        int rowCount = prizeMapper.updateByPrimaryKeySelective(prize);
+        peopleDTO.setId(id);
+        People people = new People();
+        BeanUtils.copyProperties(peopleDTO, people);
+        int rowCount = peopleMapper.updateByPrimaryKeySelective(people);
         if (rowCount == 0) {
-            return ServerResponse.createByErrorMessage("更新Prize失败");
+            return ServerResponse.createByErrorMessage("更新People失败");
         }
-        return ServerResponse.createBySuccessMessage("更新Prize成功");
+        return ServerResponse.createBySuccessMessage("更新People成功");
     }
     /**
      * @Title: delete
-     * @Description: 批量删除Prize对象
+     * @Description: 批量删除People对象
      * @Company: example
      * @Author: liuhf
      * @CreateTime: 2019-05-09 00:02:24
@@ -145,10 +145,10 @@ public class PrizeServiceImpl implements PrizeService {
         if (CollectionUtils.isEmpty(idList)) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "id不能为空");
         }
-        int rowCount = prizeMapper.deleteByIdList(idList);
+        int rowCount = peopleMapper.deleteByIdList(idList);
         if (rowCount == 0 || rowCount < idList.size()) {
-            return ServerResponse.createByErrorMessage("批量删除Prize失败");
+            return ServerResponse.createByErrorMessage("批量删除People失败");
         }
-        return ServerResponse.createBySuccessMessage("批量删除Prize成功");
+        return ServerResponse.createBySuccessMessage("批量删除People成功");
     }
 }

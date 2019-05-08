@@ -1,26 +1,26 @@
 package com.example.generator.demo.service;
 
 import com.example.generator.demo.common.ServerResponse;
-import com.example.generator.demo.dto.PrizeDTO;
+import com.example.generator.demo.dto.PeopleDTO;
 import com.github.pagehelper.PageInfo;
 
 import java.util.Map;
 
 /**
- * @Title: PrizeService
- * @Description: Prize接口层
+ * @Title: PeopleService
+ * @Description: People接口层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-04-30 23:29:34
+ * @CreateTime: 2019-05-09 00:02:24
  */
-public interface IPrizeService {
+public interface PeopleService {
 
 	/**
 	 * @Title: list
-	 * @Description: 查询Prize列表
+	 * @Description: 查询People列表
 	 * @Company: example
 	 * @Author: liuhf
-	 * @CreateTime: 2019-04-30 23:29:34
+	 * @CreateTime: 2019-05-09 00:02:24
 	 *
 	 * @param pageNum
 	 * @param pageSize
@@ -31,47 +31,47 @@ public interface IPrizeService {
 
     /**
      * @Title: select
-     * @Description: 查询Prize对象
+     * @Description: 查询People对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-04-30 23:29:34
+     * @CreateTime: 2019-05-09 00:02:24
      *
      * @param id
-     * @return ServerResponse<PrizeDTO>
+     * @return ServerResponse<PeopleDTO>
      */
-	ServerResponse<PrizeDTO> select(int id);
+	ServerResponse<PeopleDTO> select(int id);
 
     /**
      * @Title: insert
-     * @Description: 保存Prize对象
+     * @Description: 保存People对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-04-30 23:29:34
+     * @CreateTime: 2019-05-09 00:02:24
      *
-     * @param prizeDTO
+     * @param peopleDTO
      * @return ServerResponse<String>
      */
-	ServerResponse<String> insert(PrizeDTO prizeDTO);
+	ServerResponse<String> insert(PeopleDTO peopleDTO);
 
     /**
      * @Title: update
-     * @Description: 更新Prize对象
+     * @Description: 更新People对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-04-30 23:29:34
+     * @CreateTime: 2019-05-09 00:02:24
      *
      * @param id
-     * @param prizeDTO
+     * @param peopleDTO
      * @return ServerResponse<String>
      */
-	ServerResponse<String> update(int id, PrizeDTO prizeDTO);
+	ServerResponse<String> update(int id, PeopleDTO peopleDTO);
 
     /**
      * @Title: delete
-     * @Description: 批量删除Prize对象
+     * @Description: 批量删除People对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-04-30 23:29:34
+     * @CreateTime: 2019-05-09 00:02:24
      *
      * @param ids
      * @return ServerResponse<String>

@@ -5,8 +5,8 @@ import com.example.generator.demo.common.ResponseCode;
 import com.example.generator.demo.common.ServerResponse;
 import com.example.generator.demo.dao.ResultMapper;
 import com.example.generator.demo.dto.ResultDTO;
-import com.example.generator.demo.po.Result;
-import com.example.generator.demo.service.IResultService;
+import com.example.generator.demo.pojo.Result;
+import com.example.generator.demo.service.ResultService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Splitter;
@@ -21,14 +21,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Title: ResultServiceImpl
- * @Description: Result业务层
- * @Company: example
- * @Author: liuhf
- * @CreateTime: 2019-04-30 23:29:34
- */
+* @Title: ResultServiceImpl
+* @Description: Result业务层
+* @Company: example
+* @Author: liuhf
+* @CreateTime: 2019-05-09 00:02:24
+*/
 @Service
-public class ResultServiceImpl implements IResultService {
+public class ResultServiceImpl implements ResultService {
 
     @Autowired
     private ResultMapper resultMapper;
@@ -38,7 +38,7 @@ public class ResultServiceImpl implements IResultService {
      * @Description: 查询Result列表
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-04-30 23:29:34
+     * @CreateTime: 2019-05-09 00:02:24
      *
      * @param pageNum
      * @param pageSize
@@ -66,7 +66,7 @@ public class ResultServiceImpl implements IResultService {
      * @Description: 查询Result对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-04-30 23:29:34
+     * @CreateTime: 2019-05-09 00:02:24
      *
      * @param id
      * @return ServerResponse<ResultDTO>

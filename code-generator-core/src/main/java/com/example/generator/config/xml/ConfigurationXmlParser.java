@@ -222,27 +222,33 @@ public class ConfigurationXmlParser {
 
     private TemplateConfiguration parseTemplate(Element templateNode) {
         TemplateConfiguration templateConfiguration = new TemplateConfiguration();
-        Properties properties = XmlPropertyHolder.parseAttributes(templateNode);
-        String name = properties.getProperty("name");
-        templateConfiguration.setName(name);
+        Map<String, String> map = XmlPropertyHolder.parseChildProperty(templateNode.elements());
+        String common = map.get("common");
+        templateConfiguration.setCommon(StringUtil.isTrue(common));
 
-        String template = properties.getProperty("template");
+        String template = map.get("template");
         templateConfiguration.setTemplate(template);
 
-        String suffix = properties.getProperty("suffix");
+        String fileName = map.get("fileName");
+        templateConfiguration.setFileName(fileName);
+
+        String suffix = map.get("suffix");
         templateConfiguration.setSuffix(suffix);
 
-        String fileType = properties.getProperty("fileType");
+        String fileType = map.get("fileType");
         templateConfiguration.setFileType(fileType);
 
-        String override = properties.getProperty("override");
-        templateConfiguration.setOverride(StringUtil.isTrue(override));
-
-        String directory = properties.getProperty("directory");
+        String directory = map.get("directory");
         templateConfiguration.setDirectory(directory);
 
-        String packageName = properties.getProperty("packageName");
+        String packageName = map.get("packageName");
         templateConfiguration.setPackageName(packageName);
+
+        String isGenerate = map.get("isGenerate");
+        templateConfiguration.setGenerate(StringUtil.isTrue(isGenerate));
+
+        String override = map.get("override");
+        templateConfiguration.setOverride(StringUtil.isTrue(override));
 
         return templateConfiguration;
     }

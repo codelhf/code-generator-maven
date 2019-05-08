@@ -1,50 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.generator.demo.dao.PrizeMapper">
-    <resultMap id="BaseResultMap" type="com.example.generator.demo.pojo.Prize">
+<mapper namespace="com.example.generator.demo.dao.PeopleMapper">
+    <resultMap id="BaseResultMap" type="com.example.generator.demo.pojo.People">
         <result column="id" jdbcType="INTEGER" property="id"/>
-        <result column="grade" jdbcType="VARCHAR" property="grade"/>
-        <result column="prize" jdbcType="VARCHAR" property="prize"/>
-        <result column="image" jdbcType="VARCHAR" property="image"/>
-        <result column="stock" jdbcType="INTEGER" property="stock"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="prize_id" jdbcType="INTEGER" property="prizeId"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id,grade,prize,image,stock,create_time,update_time,
+        id,username,phone,prize_id,create_time,update_time,
     </sql>
     <select id="selectByPrimaryKey" parameterType="int" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
-        from lottery_prize
+        from lottery_people
         where id = #{id, jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="int">
-        delete from lottery_prize
+        delete from lottery_people
         where id = #{id, jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.example.generator.demo.pojo.Prize">
-        insert into lottery_prize
-        (id, grade, prize, image, stock, create_time, update_time, )
+    <insert id="insert" parameterType="com.example.generator.demo.pojo.People">
+        insert into lottery_people
+        (id, username, phone, prize_id, create_time, update_time, )
         values
-        (#{id, jdbcType=INTEGER}, #{grade, jdbcType=VARCHAR}, #{prize, jdbcType=VARCHAR}, #{image, jdbcType=VARCHAR}, #{stock, jdbcType=INTEGER}, #{createTime, jdbcType=TIMESTAMP}, #{updateTime, jdbcType=TIMESTAMP}, )
+        (#{id, jdbcType=INTEGER}, #{username, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{prizeId, jdbcType=INTEGER}, #{createTime, jdbcType=TIMESTAMP}, #{updateTime, jdbcType=TIMESTAMP}, )
     </insert>
-    <insert id="insertSelective" parameterType="com.example.generator.demo.pojo.Prize">
-        insert into lottery_prize
+    <insert id="insertSelective" parameterType="com.example.generator.demo.pojo.People">
+        insert into lottery_people
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
             </if>
-            <if test="grade != null">
-                grade,
+            <if test="username != null">
+                username,
             </if>
-            <if test="prize != null">
-                prize,
+            <if test="phone != null">
+                phone,
             </if>
-            <if test="image != null">
-                image,
-            </if>
-            <if test="stock != null">
-                stock,
+            <if test="prizeId != null">
+                prize_id,
             </if>
             <if test="createTime != null">
                 create_time,
@@ -57,17 +53,14 @@
             <if test="id != null">
                 #{id, jdbcType=INTEGER},
             </if>
-            <if test="grade != null">
-                #{grade, jdbcType=VARCHAR},
+            <if test="username != null">
+                #{username, jdbcType=VARCHAR},
             </if>
-            <if test="prize != null">
-                #{prize, jdbcType=VARCHAR},
+            <if test="phone != null">
+                #{phone, jdbcType=VARCHAR},
             </if>
-            <if test="image != null">
-                #{image, jdbcType=VARCHAR},
-            </if>
-            <if test="stock != null">
-                #{stock, jdbcType=INTEGER},
+            <if test="prizeId != null">
+                #{prizeId, jdbcType=INTEGER},
             </if>
             <if test="createTime != null">
                 #{createTime, jdbcType=TIMESTAMP},
@@ -77,23 +70,20 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.example.generator.demo.pojo.Prize">
-        update lottery_prize
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.generator.demo.pojo.People">
+        update lottery_people
         <set>
             <if test="id != null">
                 id = #{id, jdbcType=INTEGER},
             </if>
-            <if test="grade != null">
-                grade = #{grade, jdbcType=VARCHAR},
+            <if test="username != null">
+                username = #{username, jdbcType=VARCHAR},
             </if>
-            <if test="prize != null">
-                prize = #{prize, jdbcType=VARCHAR},
+            <if test="phone != null">
+                phone = #{phone, jdbcType=VARCHAR},
             </if>
-            <if test="image != null">
-                image = #{image, jdbcType=VARCHAR},
-            </if>
-            <if test="stock != null">
-                stock = #{stock, jdbcType=INTEGER},
+            <if test="prizeId != null">
+                prize_id = #{prizeId, jdbcType=INTEGER},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime, jdbcType=TIMESTAMP},
@@ -104,43 +94,39 @@
         </set>
         where id = #{id, jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.example.generator.demo.pojo.Prize">
-        update lottery_prize
+    <update id="updateByPrimaryKey" parameterType="com.example.generator.demo.pojo.People">
+        update lottery_people
         set
             id = #{id, jdbcType=INTEGER},
-            grade = #{grade, jdbcType=VARCHAR},
-            prize = #{prize, jdbcType=VARCHAR},
-            image = #{image, jdbcType=VARCHAR},
-            stock = #{stock, jdbcType=INTEGER},
+            username = #{username, jdbcType=VARCHAR},
+            phone = #{phone, jdbcType=VARCHAR},
+            prize_id = #{prizeId, jdbcType=INTEGER},
             create_time = #{createTime, jdbcType=TIMESTAMP},
             update_time = #{updateTime, jdbcType=TIMESTAMP},
         where id = #{id, jdbcType=INTEGER}
     </update>
     <delete id="deleteByIdList" parameterType="map">
-        delete from lottery_prize
+        delete from lottery_people
         where id in
         <foreach collection="idList" index="index" item="id" open="(" separator="," close=")" >
             #{id}
         </foreach>
     </delete>
-    <select id="selectPageList" parameterType="com.example.generator.demo.pojo.Prize" resultMap="BaseResultMap">
+    <select id="selectPageList" parameterType="com.example.generator.demo.pojo.People" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
-        from lottery_prize
+        from lottery_people
         <where>
             <if test="id != null">
                 and id like #{id}
             </if>
-            <if test="grade != null">
-                and grade like #{grade}
+            <if test="username != null">
+                and username like #{username}
             </if>
-            <if test="prize != null">
-                and prize like #{prize}
+            <if test="phone != null">
+                and phone like #{phone}
             </if>
-            <if test="image != null">
-                and image like #{image}
-            </if>
-            <if test="stock != null">
-                and stock like #{stock}
+            <if test="prizeId != null">
+                and prize_id like #{prizeId}
             </if>
             <if test="createTime != null">
                 and create_time like #{createTime}

@@ -1,4 +1,3 @@
-$!macro
 #set($suffix = $!{Template.getSuffix()})
 package $!{Template.getPackageName()};
 
@@ -7,8 +6,13 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.Date;
 
-##(宏定义)
-$fileHeader("$!{ClassName}$!{suffix}", "$!{ClassName}${suffix}实体对象}")
+/**
+ * @Title: $!{ClassName}$!{suffix}
+ * @Description: $!{ClassName}$!{suffix}实体对象
+ * @Company: $!{company}
+ * @Author: $!{author}
+ * @CreateTime: $!{createTime}
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,9 +22,8 @@ public class $!{ClassName}$!{suffix} implements Serializable {
     private static final long serialVersionUID = 1L;
 
 #foreach($column in $!{columnList})
-    #if($!{column.comment})
-    //$!{column.comment}
-    #end
+    #if($!{column.comment})//$!{column.comment}#end
+
     private $!{column.javaType} $!{column.propertyName};
 
 #end

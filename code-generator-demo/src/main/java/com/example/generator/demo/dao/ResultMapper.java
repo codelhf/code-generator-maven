@@ -1,6 +1,6 @@
 package com.example.generator.demo.dao;
 
-import com.example.generator.demo.po.Result;
+import com.example.generator.demo.pojo.Result;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -8,10 +8,10 @@ import java.util.List;
 
 /**
  * @Title: ResultMapper
- * @Description: Result实体类
+ * @Description: Result持久层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-04-30 23:33:29
+ * @CreateTime: 2019-05-09 00:02:24
  */
 @Mapper
 public interface ResultMapper  {

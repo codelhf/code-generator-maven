@@ -2,7 +2,7 @@ package com.example.generator.demo.controller;
 
 import com.example.generator.demo.common.ServerResponse;
 import com.example.generator.demo.dto.PrizeDTO;
-import com.example.generator.demo.service.IPrizeService;
+import com.example.generator.demo.service.PrizeService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +15,14 @@ import java.util.Map;
  * @Description: Prize控制层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-04-30 23:29:34
+ * @CreateTime: 2019-05-09 00:02:24
  */
 @RestController
 @RequestMapping(value = "/prize")
 public class PrizeController {
 
     @Autowired
-    private IPrizeService iPrizeService;
+    private PrizeService prizeService;
 
     @ApiOperation(value = "查询Prize列表")
     @ApiImplicitParams({
@@ -34,7 +34,7 @@ public class PrizeController {
     public ServerResponse<PageInfo> list(@RequestParam("pageNum") Integer pageNum,
                                            @RequestParam("pageSize") Integer pageSize,
                                            @RequestParam("params") Map<String, String> params) {
-        return iPrizeService.list(pageNum, pageSize, params);
+        return prizeService.list(pageNum, pageSize, params);
     }
 
     @ApiOperation(value = "查询Prize对象}")
@@ -43,7 +43,7 @@ public class PrizeController {
     })
     @GetMapping("/{id}")
     public ServerResponse<PrizeDTO> select(@PathVariable("id") int id) {
-        return iPrizeService.select(id);
+        return prizeService.select(id);
     }
 
     @ApiOperation(value = "保存Prize对象")
@@ -52,7 +52,7 @@ public class PrizeController {
     })
     @PostMapping("")
     public ServerResponse<String> insert(@RequestBody PrizeDTO prizeDTO) {
-        return iPrizeService.insert(prizeDTO);
+        return prizeService.insert(prizeDTO);
     }
 
     @ApiOperation(value = "更新Prize对象")
@@ -63,7 +63,7 @@ public class PrizeController {
     @PutMapping("/{id}")
     public ServerResponse<String> update(@PathVariable("id") int id,
                                            @RequestBody PrizeDTO prizeDTO) {
-        return iPrizeService.update(id, prizeDTO);
+        return prizeService.update(id, prizeDTO);
     }
 
     @ApiOperation(value = "批量删除Prize对象}")
@@ -72,6 +72,6 @@ public class PrizeController {
     })
     @DeleteMapping("/{ids}")
     public ServerResponse<String> delete(@PathVariable("ids") String ids) {
-        return iPrizeService.delete(ids);
+        return prizeService.delete(ids);
     }
 }

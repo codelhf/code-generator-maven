@@ -2,7 +2,7 @@ package com.example.generator.demo.controller;
 
 import com.example.generator.demo.common.ServerResponse;
 import com.example.generator.demo.dto.ResultDTO;
-import com.example.generator.demo.service.IResultService;
+import com.example.generator.demo.service.ResultService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +15,14 @@ import java.util.Map;
  * @Description: Result控制层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-04-30 23:29:34
+ * @CreateTime: 2019-05-09 00:02:24
  */
 @RestController
 @RequestMapping(value = "/result")
 public class ResultController {
 
     @Autowired
-    private IResultService iResultService;
+    private ResultService resultService;
 
     @ApiOperation(value = "查询Result列表")
     @ApiImplicitParams({
@@ -34,7 +34,7 @@ public class ResultController {
     public ServerResponse<PageInfo> list(@RequestParam("pageNum") Integer pageNum,
                                            @RequestParam("pageSize") Integer pageSize,
                                            @RequestParam("params") Map<String, String> params) {
-        return iResultService.list(pageNum, pageSize, params);
+        return resultService.list(pageNum, pageSize, params);
     }
 
     @ApiOperation(value = "查询Result对象}")
@@ -43,7 +43,7 @@ public class ResultController {
     })
     @GetMapping("/{id}")
     public ServerResponse<ResultDTO> select(@PathVariable("id") String id) {
-        return iResultService.select(id);
+        return resultService.select(id);
     }
 
 }

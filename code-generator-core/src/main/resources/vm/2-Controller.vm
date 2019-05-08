@@ -1,13 +1,10 @@
-$!macro
 #set($suffix = $!{Template.getSuffix()})
-
 #set($serverResponsePackageName = $!{serverResponse.getPackageName()})
 #set($entityDTOPackageName = $!{entityDTO.getPackageName()})
 #set($entityDTOSuffix = $!{entityDTO.getSuffix()})
 #set($entitySuffix = $!{entity.getSuffix()})
 #set($servicePackageName = $!{service.getPackageName()})
 #set($serviceSuffix = $!{service.getSuffix()})
-
 #set($pkJavaType = $!{pkColumn.javaType})
 #set($pkPropertyName = $!{pkColumn.propertyName})
 package $!{Template.getPackageName()};
@@ -22,11 +19,16 @@ import io.swagger.annotations.*;
 
 import java.util.Map;
 
-##(宏定义)
-$fileHeader("$!{ClassName}${Template.getSuffix()}", "$!{ClassName}$!{entitySuffix}控制层")
+/**
+ * @Title: $!{ClassName}${suffix}
+ * @Description: $!{ClassName}$!{entitySuffix}控制层
+ * @Company: $!{company}
+ * @Author: $!{author}
+ * @CreateTime: $!{createTime}
+ */
 @RestController
 @RequestMapping(value = "/$!{className}")
-public class $!{ClassName}$!{Template.getSuffix()} {
+public class $!{ClassName}$!{suffix} {
 
     @Autowired
     private $!{ClassName}$!{serviceSuffix} $!{className}$!{serviceSuffix};
@@ -54,7 +56,7 @@ public class $!{ClassName}$!{Template.getSuffix()} {
 #end
     @GetMapping("/{$!{pkColumn.propertyName}}")
     public $!{ResponseClass}<$!{ClassName}$!{entityDTOSuffix}> select(@PathVariable("$!{pkPropertyName}") $!{pkJavaType} $!{pkPropertyName}) {
-        return $!{ClassName}$!{serviceSuffix}.select($!{pkPropertyName});
+        return $!{className}$!{serviceSuffix}.select($!{pkPropertyName});
     }
 
 #if($!{isView} == false)
@@ -66,7 +68,7 @@ public class $!{ClassName}$!{Template.getSuffix()} {
 #end
     @PostMapping("")
     public $!{ResponseClass}<String> insert(@RequestBody $!{ClassName}$!{entityDTOSuffix} $!{className}$!{entityDTOSuffix}) {
-        return $!{ClassName}$!{serviceSuffix}.insert($!{className}$!{entityDTOSuffix});
+        return $!{className}$!{serviceSuffix}.insert($!{className}$!{entityDTOSuffix});
     }
 
 #if ($!{generateSwagger} == true)
@@ -79,7 +81,7 @@ public class $!{ClassName}$!{Template.getSuffix()} {
     @PutMapping("/{$!{pkColumn.propertyName}}")
     public $!{ResponseClass}<String> update(@PathVariable("$!{pkPropertyName}") $!{pkJavaType} $!{pkPropertyName},
                                            @RequestBody $!{ClassName}$!{entityDTOSuffix} $!{className}$!{entityDTOSuffix}) {
-        return $!{ClassName}$!{serviceSuffix}.update($!{pkPropertyName}, $!{className}$!{entityDTOSuffix});
+        return $!{className}$!{serviceSuffix}.update($!{pkPropertyName}, $!{className}$!{entityDTOSuffix});
     }
 
 #if ($!{generateSwagger} == true)
@@ -90,7 +92,7 @@ public class $!{ClassName}$!{Template.getSuffix()} {
 #end
     @DeleteMapping("/{$!{pkPropertyName}s}")
     public $!{ResponseClass}<String> delete(@PathVariable("$!{pkPropertyName}s") String $!{pkPropertyName}s) {
-        return $!{ClassName}$!{serviceSuffix}.delete($!{pkPropertyName}s);
+        return $!{className}$!{serviceSuffix}.delete($!{pkPropertyName}s);
     }
 #end
 }

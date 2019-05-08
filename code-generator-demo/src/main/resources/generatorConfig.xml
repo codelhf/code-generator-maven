@@ -46,12 +46,121 @@
     <!--对应模板的配置-->
     <templates>
         <!--名称不能和api中的字段重复,否则被覆盖无效,并且被依赖模块不能注释-->
-        <template name="controller" template="vm/2-Controller.vm" suffix="Controller" fileType="java" override="false"
-                  directory="./src/main/java" packageName="com.example.generator.demo.controller"/>
-        <template name="service" template="vm/2-Service.vm" suffix="Service" fileType="java" override="false"
-                  directory="./src/main/java" packageName="com.example.generator.demo.service"/>
-        <template name="mapper" template="vm/1-Mapper.vm" suffix="Mapper" fileType="xml" override="false"
-                  directory="./src/main/resources" packageName="mappers"/>
+        <template>
+            <property name="common" value="true"/>
+            <property name="template" value="vm/0-ExceptionResolver.vm"/>
+            <property name="fileName" value="exceptionResolver"/>
+            <property name="suffix" value="ExceptionResolver"/>
+            <property name="fileType" value="java"/>
+            <property name="directory" value="./src/main/java"/>
+            <property name="packageName" value="com.example.generator.demo.common"/>
+            <property name="isGenerate" value="true"/>
+            <property name="override" value="true"/>
+        </template>
+        <template>
+            <property name="common" value="true"/>
+            <property name="template" value="vm/0-Swagger2.vm"/>
+            <property name="fileName" value="swagger2"/>
+            <property name="suffix" value="Swagger2"/>
+            <property name="fileType" value="java"/>
+            <property name="directory" value="./src/main/java"/>
+            <property name="packageName" value="com.example.generator.demo.common"/>
+            <property name="isGenerate" value="true"/>
+            <property name="override" value="true"/>
+        </template>
+        <template>
+            <property name="common" value="true"/>
+            <property name="template" value="vm/0-ResponseCode.vm"/>
+            <property name="fileName" value="responseCode"/>
+            <property name="suffix" value="ResponseCode"/>
+            <property name="fileType" value="java"/>
+            <property name="directory" value="./src/main/java"/>
+            <property name="packageName" value="com.example.generator.demo.common"/>
+            <property name="isGenerate" value="true"/>
+            <property name="override" value="true"/>
+        </template>
+        <template>
+            <property name="common" value="true"/>
+            <property name="template" value="vm/0-ServerResponse.vm"/>
+            <property name="fileName" value="serverResponse"/>
+            <property name="suffix" value="ServerResponse"/>
+            <property name="fileType" value="java"/>
+            <property name="directory" value="./src/main/java"/>
+            <property name="packageName" value="com.example.generator.demo.common"/>
+            <property name="isGenerate" value="true"/>
+            <property name="override" value="true"/>
+        </template>
+
+        <template>
+            <property name="template" value="vm/2-Controller.vm"/>
+            <property name="fileName" value="controller"/>
+            <property name="suffix" value="Controller"/>
+            <property name="fileType" value="java"/>
+            <property name="directory" value="./src/main/java"/>
+            <property name="packageName" value="com.example.generator.demo.controller"/>
+            <property name="isGenerate" value="true"/>
+            <property name="override" value="false"/>
+        </template>
+        <template>
+            <property name="template" value="vm/2-Service.vm"/>
+            <property name="fileName" value="service"/>
+            <property name="suffix" value="Service"/>
+            <property name="fileType" value="java"/>
+            <property name="directory" value="./src/main/java"/>
+            <property name="packageName" value="com.example.generator.demo.service"/>
+            <property name="isGenerate" value="true"/>
+            <property name="override" value="false"/>
+        </template>
+        <template>
+            <property name="template" value="vm/2-ServiceImpl.vm"/>
+            <property name="fileName" value="serviceImpl"/>
+            <property name="suffix" value="ServiceImpl"/>
+            <property name="fileType" value="java"/>
+            <property name="directory" value="./src/main/java"/>
+            <property name="packageName" value="com.example.generator.demo.service.impl"/>
+            <property name="isGenerate" value="true"/>
+            <property name="override" value="false"/>
+        </template>
+        <template>
+            <property name="template" value="vm/1-Dao.vm"/>
+            <property name="fileName" value="dao"/>
+            <property name="suffix" value="Mapper"/>
+            <property name="fileType" value="java"/>
+            <property name="directory" value="./src/main/java"/>
+            <property name="packageName" value="com.example.generator.demo.dao"/>
+            <property name="isGenerate" value="true"/>
+            <property name="override" value="false"/>
+        </template>
+        <template>
+            <property name="template" value="vm/1-Entity.vm"/>
+            <property name="fileName" value="entity"/>
+            <property name="suffix" value=""/>
+            <property name="fileType" value="java"/>
+            <property name="directory" value="./src/main/java"/>
+            <property name="packageName" value="com.example.generator.demo.pojo"/>
+            <property name="isGenerate" value="true"/>
+            <property name="override" value="false"/>
+        </template>
+        <template>
+            <property name="template" value="vm/1-EntityDto.vm"/>
+            <property name="fileName" value="entityDTO"/>
+            <property name="suffix" value="DTO"/>
+            <property name="fileType" value="java"/>
+            <property name="directory" value="./src/main/java"/>
+            <property name="packageName" value="com.example.generator.demo.dto"/>
+            <property name="isGenerate" value="true"/>
+            <property name="override" value="false"/>
+        </template>
+        <template>
+            <property name="template" value="vm/1-Mapper.vm"/>
+            <property name="fileName" value="mapper"/>
+            <property name="suffix" value="Mapper"/>
+            <property name="fileType" value="xml"/>
+            <property name="directory" value="./src/main/resources"/>
+            <property name="packageName" value="mappers"/>
+            <property name="isGenerate" value="true"/>
+            <property name="override" value="false"/>
+        </template>
     </templates>
 
     <!-- 数据库对应数据表-->

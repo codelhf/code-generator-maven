@@ -1,8 +1,12 @@
-$!macro
 package $!{Template.getPackageName()};
 
-##(宏定义)
-$fileHeader("ResponseCode", "服务端响应状态码")
+/**
+ * @Title: ResponseCode
+ * @Description: 服务端响应状态码
+ * @Company: $!{company}
+ * @Author: $!{author}
+ * @CreateTime: $!{createTime}
+ */
 public enum ResponseCode {
 
     SUCCESS(0, "SUCCESS"),
