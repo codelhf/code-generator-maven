@@ -1,14 +1,20 @@
 #set($suffix = $!{Template.getSuffix()})
+## responseCode和serverResponse
 #set($responseCodePackageName = $!{responseCode.getPackageName()})
 #set($serverResponsePackageName = $!{serverResponse.getPackageName()})
+## dao
 #set($daoPackageName = $!{dao.getPackageName()})
 #set($daoSuffix = $!{dao.getSuffix()})
+## entityDTO
 #set($entityDTOPackageName = $!{entityDTO.getPackageName()})
 #set($entityDTOSuffix = $!{entityDTO.getSuffix()})
+## entity
 #set($entityPackageName = $!{entity.getPackageName()})
 #set($entitySuffix = $!{entity.getSuffix()})
+## service
 #set($servicePackageName = $!{service.getPackageName()})
 #set($serviceSuffix = $!{service.getSuffix()})
+## primaryKey
 #set($pkJavaType = $!{pkColumn.javaType})
 #set($pkPropertyName = $!{pkColumn.propertyName})
 package $!{Template.getPackageName()};

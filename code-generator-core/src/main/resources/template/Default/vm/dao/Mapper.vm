@@ -1,7 +1,10 @@
+## dao
 #set($daoPackageName = $!{dao.getPackageName()})
 #set($daoSuffix = $!{dao.getSuffix()})
+## entity
 #set($entityPackageName = $!{entity.getPackageName()})
 #set($entitySuffix = $!{entity.getSuffix()})
+## primaryKey
 #set($pkColumnName = $!{pkColumn.columnName})
 #set($pkPropertyName = $!{pkColumn.propertyName})
 #set($pkJavaType = $!{pkColumn.javaType})

@@ -13,7 +13,7 @@ import java.util.Locale;
  */
 public class FreemarkerUtil {
 
-    private static String path = new File(VelocityUtil.class.getClassLoader().getResource("ftl").getFile()).getPath();
+    private static String path = new File(VelocityUtil.class.getClassLoader().getResource("template/Default/ftl").getFile()).getPath();
 
     private static Configuration configuration;
 
@@ -22,7 +22,7 @@ public class FreemarkerUtil {
             configuration = new Configuration(Configuration.VERSION_2_3_23);
             try {
                 if (path.contains("jar")){
-                    configuration.setClassForTemplateLoading(FreemarkerUtil.class, "/ftl");
+                    configuration.setClassForTemplateLoading(FreemarkerUtil.class, "/template/Default/ftl");
                 } else {
                     configuration.setDirectoryForTemplateLoading(new File(path));
                 }

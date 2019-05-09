@@ -15,19 +15,19 @@ public class VelocityUtil {
 
     //enum本身就是单例的
     public enum FileTypeEnum {
-        EXCEPTION_RESOLVER(-4, "0-ExceptionResolver.vm"),
-        RESPONSE_CODE(-3, "0-ResponseCode.vm"),
-        SERVER_RESPONSE(-2, "0-ServerResponse.vm"),
-        SWAGGER_2(-1, "0-Swagger2.vm"),
-        ENTITY(0, "1-Entity.vm"),
-        ENTITY_DTO(1, "1-EntityDto.vm"),
-        MAPPER(2, "1-Mapper.vm"),
-        DAO(3, "1-Dao.vm"),
-        DAO_TABLE_MAPPER(4, "1-1-TableMapper.vm"),
-        DAO_VIEW_MAPPER(5, "1-1-ViewMapper.vm"),
-        SERVICE_IMPL(6, "2-ServiceImpl.vm"),
-        SERVICE(7, "2-Service.vm"),
-        CONTROLLER(8, "2-Controller.vm");
+        EXCEPTION_RESOLVER(-4, "ExceptionResolver.vm"),
+        RESPONSE_CODE(-3, "ResponseCode.vm"),
+        SERVER_RESPONSE(-2, "ServerResponse.vm"),
+        SWAGGER_2(-1, "Swagger2.vm"),
+        ENTITY(0, "Entity.vm"),
+        ENTITY_DTO(1, "EntityDto.vm"),
+        MAPPER(2, "Mapper.vm"),
+        DAO(3, "Dao.vm"),
+        DAO_TABLE_MAPPER(4, "TableMapper.vm"),
+        DAO_VIEW_MAPPER(5, "ViewMapper.vm"),
+        SERVICE_IMPL(6, "ServiceImpl.vm"),
+        SERVICE(7, "Service.vm"),
+        CONTROLLER(8, "Controller.vm");
 
         private int code;
         private String tpl;
@@ -97,6 +97,6 @@ public class VelocityUtil {
      * @return
      */
     public static Template getTemplate(int type) {
-        return getInstance().getTemplate("vm/" +FileTypeEnum.codeOf(type).getTpl());
+        return getInstance().getTemplate("template/Default/vm/" +FileTypeEnum.codeOf(type).getTpl());
     }
 }

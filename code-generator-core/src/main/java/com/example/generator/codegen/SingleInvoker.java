@@ -76,22 +76,22 @@ public class SingleInvoker {
         // TODO: 2019/5/8 放在上面防止下面key被覆盖
         List<TemplateConfiguration> templateList = configuration.getTemplateList();
         for (TemplateConfiguration template: templateList) {
-            data.put(template.getFileName(), template);
+            data.put(template.getName(), template);
         }
 
         data.put("company", configuration.getCommentGenerator().getCompany());
         data.put("author", configuration.getCommentGenerator().getAuthor());
         data.put("createTime", DateTimeUtil.dateToStr(new Date()));
 
-        data.put("ResponseClass", configuration.getCommentGenerator().getResponseClass());
         data.put("httpPrefix", configuration.getCommentGenerator().getHttpPrefix());
-        data.put("ClassName", className);
-        data.put("className", StringUtil.firstToLowerCase(className));
-        data.put("isView", isView);
-        data.put("CommonMapper", false);
         data.put("generateSwagger", true);
         data.put("generateRemark", true);
+        data.put("CommonMapper", false);
+        data.put("ResponseClass", configuration.getCommentGenerator().getResponseClass());
 
+        data.put("isView", isView);
+        data.put("ClassName", className);
+        data.put("className", StringUtil.firstToLowerCase(className));
         data.put("StringUtil", StringUtil.class);
         data.put("tableName", tableName);
         data.put("columnList", tableInfo);

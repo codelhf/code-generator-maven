@@ -227,32 +227,33 @@ public class ConfigurationXmlParser {
 
     private TemplateConfiguration parseTemplate(Element templateNode) {
         TemplateConfiguration templateConfiguration = new TemplateConfiguration();
-        Map<String, String> map = XmlPropertyHolder.parseChildProperty(templateNode.elements());
-        String common = map.get("common");
-        templateConfiguration.setCommon(StringUtil.isTrue(common));
+        Properties properties = XmlPropertyHolder.parseAttributes(templateNode);
 
-        String template = map.get("template");
+        String name = properties.getProperty("name");
+        templateConfiguration.setName(name);
+
+        String template = properties.getProperty("template");
         templateConfiguration.setTemplate(template);
 
-        String fileName = map.get("fileName");
-        templateConfiguration.setFileName(fileName);
-
-        String suffix = map.get("suffix");
+        String suffix = properties.getProperty("suffix");
         templateConfiguration.setSuffix(suffix);
 
-        String fileType = map.get("fileType");
+        String fileType = properties.getProperty("fileType");
         templateConfiguration.setFileType(fileType);
 
-        String directory = map.get("directory");
+        String directory = properties.getProperty("directory");
         templateConfiguration.setDirectory(directory);
 
-        String packageName = map.get("packageName");
+        String packageName = properties.getProperty("packageName");
         templateConfiguration.setPackageName(packageName);
 
-        String isGenerate = map.get("isGenerate");
+        String common = properties.getProperty("common");
+        templateConfiguration.setCommon(StringUtil.isTrue(common));
+
+        String isGenerate = properties.getProperty("isGenerate");
         templateConfiguration.setGenerate(StringUtil.isTrue(isGenerate));
 
-        String override = map.get("override");
+        String override = properties.getProperty("override");
         templateConfiguration.setOverride(StringUtil.isTrue(override));
 
         return templateConfiguration;

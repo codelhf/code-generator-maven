@@ -14,17 +14,12 @@ public class TemplateConfiguration {
     /**
      * 模板模块名
      */
-    private boolean common = false;
+    private String name;
 
     /**
      * 模板文件路径
      */
     private String template;
-
-    /**
-     * 模板模块名
-     */
-    private String fileName;
 
     /**
      * 生成代码文件名后缀
@@ -47,9 +42,13 @@ public class TemplateConfiguration {
     private String packageName;
 
     /**
+     * 模板模块名
+     */
+    private boolean common = false;
+    /**
      * 是否生成
      */
-    private boolean isGenerate = false;
+    private boolean isGenerate = true;
 
     /**
      * 是否重写
@@ -57,11 +56,11 @@ public class TemplateConfiguration {
     private boolean override = false;
 
     public void validate(List<String> errors, Integer listPosition) {
+        if (StringUtil.isBlank(name)) {
+            errors.add("Missing template name at index {" + listPosition + "}");
+        }
         if (StringUtil.isBlank(template)) {
             errors.add("Missing template filePath at index {" + listPosition + "}");
-        }
-        if (StringUtil.isBlank(fileName)) {
-            errors.add("Missing template fileName at index {" + listPosition + "}");
         }
 //        if (StringUtil.isBlank(suffix)) {
 //            errors.add("template suffix can not be empty");
@@ -96,12 +95,12 @@ public class TemplateConfiguration {
         this.template = template;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getName() {
+        return name;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSuffix() {

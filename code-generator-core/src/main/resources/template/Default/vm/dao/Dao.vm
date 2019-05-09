@@ -1,6 +1,8 @@
 #set($suffix = $!{Template.getSuffix()})
+## entity
 #set($entityPackageName = $!{entity.getPackageName()})
 #set($entitySuffix = $!{entity.getSuffix()})
+## primaryKey
 #set($pkJavaType = $!{pkColumn.javaType})
 #set($pkPropertyName = $!{pkColumn.propertyName})
 package $!{Template.getPackageName()};

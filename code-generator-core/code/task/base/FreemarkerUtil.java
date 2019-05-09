@@ -15,19 +15,19 @@ import java.util.Locale;
 public class FreemarkerUtil {
     //enum本身就是单例的
     public enum FileTypeEnum{
-        EXCEPTION_RESOLVER(-4, "0-ExceptionResolver.ftl"),
-        RESPONSE_CODE(-3, "0-ResponseCode.ftl"),
-        SERVER_RESPONSE(-2, "0-ServerResponse.ftl"),
-        SWAGGER_2(-1, "0-Swagger2.ftl"),
-        ENTITY(0, "1-Entity.ftl"),
-        ENTITY_DTO(1, "1-EntityDto.ftl"),
-        MAPPER(2, "1-Mapper.ftl"),
-        DAO(3, "1-Dao.ftl"),
-        DAO_TABLE_MAPPER(4, "1-1-TableMapper.ftl"),
-        DAO_VIEW_MAPPER(5, "1-1-ViewMapper.ftl"),
-        SERVICE_IMPL(6, "2-ServiceImpl.ftl"),
-        SERVICE(7, "2-Service.ftl"),
-        CONTROLLER(8, "2-Controller.ftl");
+        EXCEPTION_RESOLVER(-4, "ExceptionResolver.ftl"),
+        RESPONSE_CODE(-3, "ResponseCode.ftl"),
+        SERVER_RESPONSE(-2, "ServerResponse.ftl"),
+        SWAGGER_2(-1, "Swagger2.ftl"),
+        ENTITY(0, "Entity.ftl"),
+        ENTITY_DTO(1, "EntityDto.ftl"),
+        MAPPER(2, "Mapper.ftl"),
+        DAO(3, "Dao.ftl"),
+        DAO_TABLE_MAPPER(4, "TableMapper.ftl"),
+        DAO_VIEW_MAPPER(5, "ViewMapper.ftl"),
+        SERVICE_IMPL(6, "ServiceImpl.ftl"),
+        SERVICE(7, "Service.ftl"),
+        CONTROLLER(8, "Controller.ftl");
 
         private int code;
         private String tpl;
@@ -55,7 +55,7 @@ public class FreemarkerUtil {
         }
     }
 
-    private static String path = new File(VelocityUtil.class.getClassLoader().getResource("ftl").getFile()).getPath();
+    private static String path = new File(VelocityUtil.class.getClassLoader().getResource("template/Default/ftl").getFile()).getPath();
 
     private static Configuration configuration;
 
@@ -64,7 +64,7 @@ public class FreemarkerUtil {
             configuration = new Configuration(Configuration.VERSION_2_3_23);
             try {
                 if (path.contains("jar")){
-                    configuration.setClassForTemplateLoading(FreemarkerUtil.class, "/ftl");
+                    configuration.setClassForTemplateLoading(FreemarkerUtil.class, "/template/Default/ftl");
                 } else {
                     configuration.setDirectoryForTemplateLoading(new File(path));
                 }
