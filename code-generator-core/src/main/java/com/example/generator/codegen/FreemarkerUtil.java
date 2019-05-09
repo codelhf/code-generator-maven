@@ -13,7 +13,9 @@ import java.util.Locale;
  */
 public class FreemarkerUtil {
 
-    private static String path = new File(VelocityUtil.class.getClassLoader().getResource("template/Default/ftl").getFile()).getPath();
+//    private static String path = System.getProperty("user.dir");
+
+    private static final String path = "C:/resources/";
 
     private static Configuration configuration;
 
@@ -21,10 +23,10 @@ public class FreemarkerUtil {
         if (null == configuration) {
             configuration = new Configuration(Configuration.VERSION_2_3_23);
             try {
-                if (path.contains("jar")){
-                    configuration.setClassForTemplateLoading(FreemarkerUtil.class, "/template/Default/ftl");
-                } else {
+                if (!path.contains("jar")){
                     configuration.setDirectoryForTemplateLoading(new File(path));
+                } else {
+                    configuration.setClassForTemplateLoading(FreemarkerUtil.class, "/template/Default/ftl");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

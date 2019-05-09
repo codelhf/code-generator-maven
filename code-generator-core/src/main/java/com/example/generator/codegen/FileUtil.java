@@ -70,7 +70,7 @@ public class FileUtil {
         }
         //判断是否为相对路径
         if (directory.startsWith("./")){
-            //截取"./"
+            //截取"."
             directory = directory.substring(1);
             sb.append(getProjectPath(configFilePath));
         }
