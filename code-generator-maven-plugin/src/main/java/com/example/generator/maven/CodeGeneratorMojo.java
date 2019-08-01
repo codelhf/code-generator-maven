@@ -86,10 +86,9 @@ public class CodeGeneratorMojo extends AbstractMojo {
             throw new MojoExecutionException(Messages.getString("RuntimeError.1", configurationFile.toString()));
         }
 
-        ConfigUtil configUtil = new ConfigUtil();
-        Configuration config = configUtil.getConfiguration(configurationFile);
+        Configuration config = ConfigUtil.getConfiguration(configurationFile);
         CodeGenerator codeGenerator = new CodeGenerator(config);
-        codeGenerator.generate(new MavenProgressCallback(getLog(), true));
+        codeGenerator.generate();
 
         if (project != null && outputDirectory != null && outputDirectory.exists()) {
             String absolutePath = outputDirectory.getAbsolutePath();

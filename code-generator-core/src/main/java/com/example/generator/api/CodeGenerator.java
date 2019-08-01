@@ -25,11 +25,7 @@ public class CodeGenerator {
         }
     }
 
-    public void generate(ProgressCallback callback) {
-        if (callback == null) {
-            callback = new NullProgressCallback();
-        }
-
+    public void generate() {
         List<TableConfiguration> tableConfigurationList = configuration.getTableList();
         if (tableConfigurationList != null) {
             for (TableConfiguration tableConfiguration: tableConfigurationList) {
@@ -50,12 +46,10 @@ public class CodeGenerator {
                 single(viewName, domainName, columnOverrideList, null, true, configuration);
             }
         }
-        callback.done();
     }
 
-    private static void single(String tableName, String className,
-                               List<ColumnOverride> columnOverrideList, GeneratedKey generatedKey,
-                               boolean isView, Configuration configuration) {
+    private static void single(String tableName, String className, List<ColumnOverride> columnOverrideList,
+                               GeneratedKey generatedKey, boolean isView, Configuration configuration) {
         SingleInvoker invoker = new SingleInvoker();
         invoker.setTableName(tableName);
         invoker.setClassName(className);
@@ -65,9 +59,7 @@ public class CodeGenerator {
         invoker.setConfiguration(configuration);
         try {
             invoker.execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
     }
