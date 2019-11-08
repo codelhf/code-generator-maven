@@ -3,7 +3,6 @@ package com.example.generator.codegen;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
 
-import java.io.File;
 import java.util.Properties;
 
 /**
@@ -13,9 +12,7 @@ import java.util.Properties;
  */
 public class VelocityUtil {
 
-//    private static String path = System.getProperty("user.dir");
-
-    private static final String path = "C:/resources/";
+    private static String path = System.getProperty("user.dir");
 
     private static VelocityEngine velocityEngine = null;
 

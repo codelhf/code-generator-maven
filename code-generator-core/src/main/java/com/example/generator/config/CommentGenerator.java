@@ -11,13 +11,21 @@ import java.util.List;
  */
 public class CommentGenerator {
     /**
+     * 公司
+     */
+    private String company;
+    /**
      * 作者
      */
     private String author;
     /**
-     * 公司
+     * 生成代码的日期格式
      */
-    private String company;
+    private String dateFormat;
+    /**
+     * 生成文件的编码格式
+     */
+    private String fileEncode;
     /**
      * http接口前缀
      */
@@ -25,37 +33,41 @@ public class CommentGenerator {
     /**
      * 响应类名
      */
-    private String responseClass = "ServerResponse";
+    private String responseClass;
+    /**
+     * 生成注解
+     */
+    private boolean generateRemark = true;
     /**
      * 生成所有内容
      */
-    private boolean suppressAllComments = true;
-    /**
-     * 生成日期注解
-     */
-    private boolean suppressDate = true;
-    /**
-     * 生成日期注解格式
-     */
-    private String dateFormat = "yyyy-MM-dd HH:mm:ss";
+    private boolean generateSwagger = false;
     /**
      * 是否添加备注内容
      */
-    private boolean addRemarkComments = true;
+    private boolean commonMapper = false;
 
     public void validate(List<String> errors) {
+        if (StringUtil.isBlank(company)) {
+            errors.add("CommentGenerator company can not be blank");
+        }
         if(StringUtil.isBlank(author)) {
             errors.add("CommentGenerator author can not be blank");
         }
-        if (StringUtil.isBlank(company)) {
-            errors.add("CommentGenerator company can not be blank");
+        if (StringUtil.isBlank(httpPrefix)) {
+            errors.add("CommentGenerator httpPrefix can not be blank");
         }
         if (StringUtil.isBlank(responseClass)) {
             errors.add("CommentGenerator responseClass can not be blank");
         }
-        if (StringUtil.isBlank(dateFormat)) {
-            errors.add("CommentGenerator dateFormat can not be blank");
-        }
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public String getAuthor() {
@@ -66,12 +78,20 @@ public class CommentGenerator {
         this.author = author;
     }
 
-    public String getCompany() {
-        return company;
+    public String getDateFormat() {
+        return dateFormat;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setDateFormat(String dateFormat) {
+        this.dateFormat = dateFormat;
+    }
+
+    public String getFileEncode() {
+        return fileEncode;
+    }
+
+    public void setFileEncode(String fileEncode) {
+        this.fileEncode = fileEncode;
     }
 
     public String getHttpPrefix() {
@@ -90,35 +110,27 @@ public class CommentGenerator {
         this.responseClass = responseClass;
     }
 
-    public boolean isSuppressDate() {
-        return suppressDate;
+    public boolean isGenerateRemark() {
+        return generateRemark;
     }
 
-    public void setSuppressDate(boolean suppressDate) {
-        this.suppressDate = suppressDate;
+    public void setGenerateRemark(boolean generateRemark) {
+        this.generateRemark = generateRemark;
     }
 
-    public boolean isSuppressAllComments() {
-        return suppressAllComments;
+    public boolean isGenerateSwagger() {
+        return generateSwagger;
     }
 
-    public void setSuppressAllComments(boolean suppressAllComments) {
-        this.suppressAllComments = suppressAllComments;
+    public void setGenerateSwagger(boolean generateSwagger) {
+        this.generateSwagger = generateSwagger;
     }
 
-    public String getDateFormat() {
-        return dateFormat;
+    public boolean isCommonMapper() {
+        return commonMapper;
     }
 
-    public void setDateFormat(String dateFormat) {
-        this.dateFormat = dateFormat;
-    }
-
-    public boolean isAddRemarkComments() {
-        return addRemarkComments;
-    }
-
-    public void setAddRemarkComments(boolean addRemarkComments) {
-        this.addRemarkComments = addRemarkComments;
+    public void setCommonMapper(boolean commonMapper) {
+        this.commonMapper = commonMapper;
     }
 }

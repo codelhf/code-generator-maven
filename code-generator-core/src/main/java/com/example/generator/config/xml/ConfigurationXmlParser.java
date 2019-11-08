@@ -192,10 +192,10 @@ public class ConfigurationXmlParser {
         }
 
         String suppressAllComments = map.get("suppressAllComments");
-        commentGenerator.setSuppressAllComments(StringUtil.isTrue(suppressAllComments));
+        commentGenerator.setGenerateSwagger(StringUtil.isTrue(suppressAllComments));
 
         String suppressDate = map.get("suppressDate");
-        commentGenerator.setSuppressDate(StringUtil.isTrue(suppressDate));
+        commentGenerator.setGenerateRemark(StringUtil.isTrue(suppressDate));
 
         String dateFormat = map.get("dateFormat");
         if (StringUtil.isNotBlank(dateFormat)) {
@@ -203,13 +203,13 @@ public class ConfigurationXmlParser {
         }
 
         String addRemarkComments = map.get("addRemarkComments");
-        commentGenerator.setAddRemarkComments(StringUtil.isTrue(addRemarkComments));
+        commentGenerator.setCommonMapper(StringUtil.isTrue(addRemarkComments));
 
         configuration.setCommentGenerator(commentGenerator);
     }
 
     private void parseTemplates(Configuration configuration, Element node) {
-        List<TemplateConfiguration> templateList = new ArrayList<>();
+        List<TemplateConfig> templateList = new ArrayList<>();
         List<Element> nodeList = node.elements();
         if (nodeList.size() > 0) {
             for (Element childNode: node.elements()) {
@@ -225,8 +225,8 @@ public class ConfigurationXmlParser {
         configuration.setTemplateList(templateList);
     }
 
-    private TemplateConfiguration parseTemplate(Element templateNode) {
-        TemplateConfiguration templateConfiguration = new TemplateConfiguration();
+    private TemplateConfig parseTemplate(Element templateNode) {
+        TemplateConfig templateConfiguration = new TemplateConfig();
         Properties properties = XmlPropertyHolder.parseAttributes(templateNode);
 
         String name = properties.getProperty("name");
@@ -260,7 +260,7 @@ public class ConfigurationXmlParser {
     }
 
     private void parseTables(Configuration configuration, Element node) {
-        List<TableConfiguration> tableList = new ArrayList<>();
+        List<TableConfig> tableList = new ArrayList<>();
         List<Element> nodeList = node.elements();
         if (nodeList.size() > 0) {
             for (Element childNode : nodeList) {
@@ -276,8 +276,8 @@ public class ConfigurationXmlParser {
         configuration.setTableList(tableList);
     }
 
-    private TableConfiguration parseTable(Element table) {
-        TableConfiguration tableConfiguration = new TableConfiguration();
+    private TableConfig parseTable(Element table) {
+        TableConfig tableConfiguration = new TableConfig();
         Properties attributes = XmlPropertyHolder.parseAttributes(table);
         String tableName = attributes.getProperty("tableName");
         tableConfiguration.setTableName(tableName);
@@ -315,7 +315,7 @@ public class ConfigurationXmlParser {
     }
 
     private void parseViews(Configuration configuration, Element node) {
-        List<ViewConfiguration> viewConfigurationList = new ArrayList<>();
+        List<ViewConfig> viewConfigurationList = new ArrayList<>();
         List<Element> nodeList = node.elements();
         if (nodeList.size() > 0) {
             for (Element childNode : nodeList) {
@@ -331,8 +331,8 @@ public class ConfigurationXmlParser {
         configuration.setViewList(viewConfigurationList);
     }
 
-    private ViewConfiguration parseView(Element view) {
-        ViewConfiguration viewConfiguration = new ViewConfiguration();
+    private ViewConfig parseView(Element view) {
+        ViewConfig viewConfiguration = new ViewConfig();
         Properties attributes = XmlPropertyHolder.parseAttributes(view);
         String tableName = attributes.getProperty("viewName");
         viewConfiguration.setViewName(tableName);

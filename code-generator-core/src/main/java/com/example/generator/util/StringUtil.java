@@ -59,6 +59,7 @@ public class StringUtil {
         if (isBlank(columnName)) {
             return EMPTY;
         }
+
         // 列名中不包含 "_"
         if (!columnName.contains("_")) {
             if (isAllUpperCase(columnName)) {
@@ -75,6 +76,23 @@ public class StringUtil {
         return sb.toString();
     }
 
+    /**
+     * 实体的属性名转换为数据库列名
+     */
+    public static String propertyName2ColumnName(String propertyName) {
+        if (isBlank(propertyName)) {
+            return EMPTY;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Character c: propertyName.toCharArray()) {
+            if (!Character.isUpperCase(c)) {
+                sb.append(c);
+            } else {
+                sb.append("_").append(c.toString().toLowerCase());
+            }
+        }
+        return sb.toString();
+    }
 
     /**
      * 给定字符串除特定符号外的字符是否全部大写
@@ -116,5 +134,12 @@ public class StringUtil {
         StringBuilder sb = new StringBuilder();
         sb.append(string.substring(0, 1).toLowerCase()).append(string.substring(1));
         return sb.toString();
+    }
+
+    /**
+     * 截取字符串
+     */
+    public static String subLastCharacter(String string) {
+        return string.substring(0, string.length() - 1);
     }
 }

@@ -33,15 +33,15 @@ public class Configuration implements Serializable {
     /**
      * 模板
      */
-    private List<TemplateConfiguration> templateList = new ArrayList<>();
+    private List<TemplateConfig> templateList = new ArrayList<>();
     /**
      * 表格
      */
-    private List<TableConfiguration> tableList = new ArrayList<>();
+    private List<TableConfig> tableList = new ArrayList<>();
     /**
      * 视图
      */
-    private List<ViewConfiguration> viewList = new ArrayList<>();
+    private List<ViewConfig> viewList = new ArrayList<>();
     /**
      * jdk8
      */
@@ -52,11 +52,6 @@ public class Configuration implements Serializable {
         if (configFilePath == null || "".equals(configFilePath.trim())) {
             errors.add("configFilePath can not be empty");
         }
-        if (commentGenerator == null) {
-            errors.add("commentGenerator can not be empty");
-        } else {
-            commentGenerator.validate(errors);
-        }
         if (jdbcConnection == null) {
             errors.add("jdbcConnection can not be empty");
         } else {
@@ -66,6 +61,11 @@ public class Configuration implements Serializable {
             errors.add("javaTypeResolver can not be empty");
         } else {
             javaTypeResolver.validate(errors);
+        }
+        if (commentGenerator == null) {
+            errors.add("commentGenerator can not be empty");
+        } else {
+            commentGenerator.validate(errors);
         }
         if (templateList == null) {
             errors.add("templateList can not be empty and has no template");
@@ -135,27 +135,27 @@ public class Configuration implements Serializable {
         this.commentGenerator = commentGenerator;
     }
 
-    public List<TemplateConfiguration> getTemplateList() {
+    public List<TemplateConfig> getTemplateList() {
         return templateList;
     }
 
-    public void setTemplateList(List<TemplateConfiguration> templateList) {
+    public void setTemplateList(List<TemplateConfig> templateList) {
         this.templateList = templateList;
     }
 
-    public List<TableConfiguration> getTableList() {
+    public List<TableConfig> getTableList() {
         return tableList;
     }
 
-    public void setTableList(List<TableConfiguration> tableList) {
+    public void setTableList(List<TableConfig> tableList) {
         this.tableList = tableList;
     }
 
-    public List<ViewConfiguration> getViewList() {
+    public List<ViewConfig> getViewList() {
         return viewList;
     }
 
-    public void setViewList(List<ViewConfiguration> viewList) {
+    public void setViewList(List<ViewConfig> viewList) {
         this.viewList = viewList;
     }
 

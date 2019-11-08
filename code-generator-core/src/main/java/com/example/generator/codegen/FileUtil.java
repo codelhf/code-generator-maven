@@ -26,7 +26,7 @@ public class FileUtil {
      * @param override 是否覆盖原有文件
      * @throws IOException
      */
-    public static void generateToCode(String filePath, String fileName, Template tpl,
+    public static void generateToCode(String filePath, String fileName, String fileEncode, Template tpl,
                                       Map<String, Object> data, boolean override) throws IOException {
         File directory = new File(filePath);
         if (!directory.exists()) {
@@ -35,13 +35,13 @@ public class FileUtil {
         }
         File file = new File(filePath + fileName);
         if (!file.exists()) {
-            writerFile(filePath + fileName, tpl, data);
+            writerFile(filePath + fileName, fileEncode, tpl, data);
         } else {
             if (override) {
-                writerFile(filePath + fileName, tpl, data);
+                writerFile(filePath + fileName, fileEncode, tpl, data);
             } else {
                 file = getUniqueFileName(file.getParentFile(), file.getName());
-                writerFile(file.getAbsolutePath(), tpl, data);
+                writerFile(file.getAbsolutePath(), fileEncode, tpl, data);
             }
         }
         System.out.println("[INFO] Generating " + fileName);
@@ -50,9 +50,12 @@ public class FileUtil {
     /**
      * 写入文件
      */
-    public static void writerFile(String filePath, Template tpl, Map<String, Object> data) throws IOException {
+    public static void writerFile(String filePath, String fileEncode, Template tpl, Map<String, Object> data) throws IOException {
+        if (StringUtil.isBlank(fileEncode)) {
+            fileEncode = "UTF-8";
+        }
         // 获取文件的输出流
-        OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8");
+        OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filePath), fileEncode);
         BufferedWriter bw = new BufferedWriter(osw, 1024);
         // 填充数据
         tpl.merge(new VelocityContext(data), bw);
@@ -131,7 +134,7 @@ public class FileUtil {
      * @return the unique file name
      */
     public static File getUniqueFileName(File directory, String fileName) {
-        File answer = null;
+        File uniqueName = null;
 
         // try up to 1000 times to generate a unique file name
         StringBuilder sb = new StringBuilder();
@@ -141,15 +144,15 @@ public class FileUtil {
 
             File testFile = new File(directory, sb.toString());
             if (!testFile.exists()) {
-                answer = testFile;
+                uniqueName = testFile;
                 break;
             }
         }
 
-        if (answer == null) {
+        if (uniqueName == null) {
             throw new RuntimeException("Cannot generate unique file name in directory {" + directory.getAbsolutePath() + "}");
         }
-        return answer;
+        return uniqueName;
     }
 
 }

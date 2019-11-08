@@ -15,4 +15,9 @@ public class DateTimeUtil {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
         return simpleDateFormat.format(date);
     }
+
+    public static String dateToStr(Date date, String format) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        return simpleDateFormat.format(date);
+    }
 }

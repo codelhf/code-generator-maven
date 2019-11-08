@@ -26,9 +26,9 @@ public class CodeGenerator {
     }
 
     public void generate() {
-        List<TableConfiguration> tableConfigurationList = configuration.getTableList();
+        List<TableConfig> tableConfigurationList = configuration.getTableList();
         if (tableConfigurationList != null) {
-            for (TableConfiguration tableConfiguration: tableConfigurationList) {
+            for (TableConfig tableConfiguration: tableConfigurationList) {
                 String tableName = tableConfiguration.getTableName();
                 String domainName = tableConfiguration.getDomainName();
                 List<ColumnOverride> columnOverrideList = tableConfiguration.getColumnOverrides();
@@ -37,9 +37,9 @@ public class CodeGenerator {
             }
         }
 
-        List<ViewConfiguration> viewConfigurationList = configuration.getViewList();
+        List<ViewConfig> viewConfigurationList = configuration.getViewList();
         if (viewConfigurationList != null) {
-            for (ViewConfiguration viewConfiguration: viewConfigurationList) {
+            for (ViewConfig viewConfiguration: viewConfigurationList) {
                 String viewName = viewConfiguration.getViewName();
                 String domainName = viewConfiguration.getDomainName();
                 List<ColumnOverride> columnOverrideList = viewConfiguration.getColumnOverrides();
