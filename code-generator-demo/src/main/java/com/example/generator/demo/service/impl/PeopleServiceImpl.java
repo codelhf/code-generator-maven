@@ -7,7 +7,6 @@ import com.example.generator.demo.dao.PeopleMapper;
 import com.example.generator.demo.dto.PeopleDTO;
 import com.example.generator.demo.entity.People;
 import com.example.generator.demo.service.PeopleService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Splitter;
@@ -26,7 +25,7 @@ import java.util.Map;
 * @Description: People业务层
 * @Company: example
 * @Author: liuhf
-* @CreateTime: 2019-11-09 01:41:38
+* @CreateTime: 2019-11-09 01:45:36
 */
 @Service
 public class PeopleServiceImpl implements PeopleService {
@@ -39,7 +38,7 @@ public class PeopleServiceImpl implements PeopleService {
      * @Description: 查询People列表
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param pageNum
      * @param pageSize
@@ -51,9 +50,11 @@ public class PeopleServiceImpl implements PeopleService {
         if (pageNum != null && pageSize != null) {
             PageHelper.startPage(pageNum, pageSize);
         }
-        QueryWrapper<People> wrapper = new QueryWrapper<>();
-
-        List<People> peopleList = peopleMapper.selectList(wrapper);
+        People people = null;
+        if (CollectionUtils.isNotEmpty(params.values())) {
+            people = JSON.parseObject(JSON.toJSONString(params), People.class);
+        }
+        List<People> peopleList = peopleMapper.selectPage(people);
         List<PeopleDTO> peopleDTOList = new ArrayList<>();
         BeanUtils.copyProperties(peopleList, peopleDTOList, List.class);
         PageInfo pageInfo = new PageInfo(peopleList);
@@ -65,7 +66,7 @@ public class PeopleServiceImpl implements PeopleService {
      * @Description: 查询People对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param id
      * @return ServerResponse<PeopleDTO>
@@ -75,7 +76,7 @@ public class PeopleServiceImpl implements PeopleService {
         if (StringUtils.isBlank(String.valueOf(id))) {
             return ServerResponse.createByErrorMessage("id不能为空");
         }
-        People people = peopleMapper.selectById(id);
+        People people = peopleMapper.selectByPrimaryKey(id);
         if (people == null) {
             return ServerResponse.createByErrorMessage("People不存在");
         }
@@ -88,7 +89,7 @@ public class PeopleServiceImpl implements PeopleService {
      * @Description: 保存People对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param peopleDTO
      * @return ServerResponse<String>
@@ -97,7 +98,7 @@ public class PeopleServiceImpl implements PeopleService {
     public ServerResponse<String> insert(PeopleDTO peopleDTO) {
         People people = new People();
         BeanUtils.copyProperties(peopleDTO, people);
-        int rowCount = peopleMapper.insert(people);
+        int rowCount = peopleMapper.insertSelective(people);
         if (rowCount == 0) {
             return ServerResponse.createByErrorMessage("新增People失败");
         }
@@ -108,7 +109,7 @@ public class PeopleServiceImpl implements PeopleService {
      * @Description: 更新People对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param id
      * @param peopleDTO
@@ -122,7 +123,7 @@ public class PeopleServiceImpl implements PeopleService {
         peopleDTO.setId(id);
         People people = new People();
         BeanUtils.copyProperties(peopleDTO, people);
-        int rowCount = peopleMapper.updateById(people);
+        int rowCount = peopleMapper.updateByPrimaryKeySelective(people);
         if (rowCount == 0) {
             return ServerResponse.createByErrorMessage("更新People失败");
         }
@@ -133,7 +134,7 @@ public class PeopleServiceImpl implements PeopleService {
      * @Description: 批量删除People对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param ids
      * @return ServerResponse<String>

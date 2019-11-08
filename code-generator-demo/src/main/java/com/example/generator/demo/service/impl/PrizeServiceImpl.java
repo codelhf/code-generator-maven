@@ -7,7 +7,6 @@ import com.example.generator.demo.dao.PrizeMapper;
 import com.example.generator.demo.dto.PrizeDTO;
 import com.example.generator.demo.entity.Prize;
 import com.example.generator.demo.service.PrizeService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Splitter;
@@ -26,7 +25,7 @@ import java.util.Map;
 * @Description: Prize业务层
 * @Company: example
 * @Author: liuhf
-* @CreateTime: 2019-11-09 01:41:38
+* @CreateTime: 2019-11-09 01:45:36
 */
 @Service
 public class PrizeServiceImpl implements PrizeService {
@@ -39,7 +38,7 @@ public class PrizeServiceImpl implements PrizeService {
      * @Description: 查询Prize列表
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param pageNum
      * @param pageSize
@@ -51,9 +50,11 @@ public class PrizeServiceImpl implements PrizeService {
         if (pageNum != null && pageSize != null) {
             PageHelper.startPage(pageNum, pageSize);
         }
-        QueryWrapper<Prize> wrapper = new QueryWrapper<>();
-
-        List<Prize> prizeList = prizeMapper.selectList(wrapper);
+        Prize prize = null;
+        if (CollectionUtils.isNotEmpty(params.values())) {
+            prize = JSON.parseObject(JSON.toJSONString(params), Prize.class);
+        }
+        List<Prize> prizeList = prizeMapper.selectPage(prize);
         List<PrizeDTO> prizeDTOList = new ArrayList<>();
         BeanUtils.copyProperties(prizeList, prizeDTOList, List.class);
         PageInfo pageInfo = new PageInfo(prizeList);
@@ -65,7 +66,7 @@ public class PrizeServiceImpl implements PrizeService {
      * @Description: 查询Prize对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param id
      * @return ServerResponse<PrizeDTO>
@@ -75,7 +76,7 @@ public class PrizeServiceImpl implements PrizeService {
         if (StringUtils.isBlank(String.valueOf(id))) {
             return ServerResponse.createByErrorMessage("id不能为空");
         }
-        Prize prize = prizeMapper.selectById(id);
+        Prize prize = prizeMapper.selectByPrimaryKey(id);
         if (prize == null) {
             return ServerResponse.createByErrorMessage("Prize不存在");
         }
@@ -88,7 +89,7 @@ public class PrizeServiceImpl implements PrizeService {
      * @Description: 保存Prize对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param prizeDTO
      * @return ServerResponse<String>
@@ -97,7 +98,7 @@ public class PrizeServiceImpl implements PrizeService {
     public ServerResponse<String> insert(PrizeDTO prizeDTO) {
         Prize prize = new Prize();
         BeanUtils.copyProperties(prizeDTO, prize);
-        int rowCount = prizeMapper.insert(prize);
+        int rowCount = prizeMapper.insertSelective(prize);
         if (rowCount == 0) {
             return ServerResponse.createByErrorMessage("新增Prize失败");
         }
@@ -108,7 +109,7 @@ public class PrizeServiceImpl implements PrizeService {
      * @Description: 更新Prize对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param id
      * @param prizeDTO
@@ -122,7 +123,7 @@ public class PrizeServiceImpl implements PrizeService {
         prizeDTO.setId(id);
         Prize prize = new Prize();
         BeanUtils.copyProperties(prizeDTO, prize);
-        int rowCount = prizeMapper.updateById(prize);
+        int rowCount = prizeMapper.updateByPrimaryKeySelective(prize);
         if (rowCount == 0) {
             return ServerResponse.createByErrorMessage("更新Prize失败");
         }
@@ -133,7 +134,7 @@ public class PrizeServiceImpl implements PrizeService {
      * @Description: 批量删除Prize对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param ids
      * @return ServerResponse<String>

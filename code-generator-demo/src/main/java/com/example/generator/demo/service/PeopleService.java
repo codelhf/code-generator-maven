@@ -11,7 +11,7 @@ import java.util.Map;
  * @Description: People接口层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-11-09 01:41:38
+ * @CreateTime: 2019-11-09 01:45:36
  */
 public interface PeopleService {
 
@@ -20,7 +20,7 @@ public interface PeopleService {
 	 * @Description: 查询People列表
 	 * @Company: example
 	 * @Author: liuhf
-	 * @CreateTime: 2019-11-09 01:41:38
+	 * @CreateTime: 2019-11-09 01:45:36
 	 *
 	 * @param pageNum
 	 * @param pageSize
@@ -34,7 +34,7 @@ public interface PeopleService {
      * @Description: 查询People对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param id
      * @return ServerResponse<PeopleDTO>
@@ -46,7 +46,7 @@ public interface PeopleService {
      * @Description: 保存People对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param peopleDTO
      * @return ServerResponse<String>
@@ -58,7 +58,7 @@ public interface PeopleService {
      * @Description: 更新People对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param id
      * @param peopleDTO
@@ -71,7 +71,7 @@ public interface PeopleService {
      * @Description: 批量删除People对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param ids
      * @return ServerResponse<String>

@@ -7,7 +7,6 @@ import com.example.generator.demo.dao.ResultMapper;
 import com.example.generator.demo.dto.ResultDTO;
 import com.example.generator.demo.entity.Result;
 import com.example.generator.demo.service.ResultService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Splitter;
@@ -26,7 +25,7 @@ import java.util.Map;
 * @Description: Result业务层
 * @Company: example
 * @Author: liuhf
-* @CreateTime: 2019-11-09 01:41:38
+* @CreateTime: 2019-11-09 01:45:36
 */
 @Service
 public class ResultServiceImpl implements ResultService {
@@ -39,7 +38,7 @@ public class ResultServiceImpl implements ResultService {
      * @Description: 查询Result列表
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param pageNum
      * @param pageSize
@@ -51,9 +50,11 @@ public class ResultServiceImpl implements ResultService {
         if (pageNum != null && pageSize != null) {
             PageHelper.startPage(pageNum, pageSize);
         }
-        QueryWrapper<Result> wrapper = new QueryWrapper<>();
-
-        List<Result> resultList = resultMapper.selectList(wrapper);
+        Result result = null;
+        if (CollectionUtils.isNotEmpty(params.values())) {
+            result = JSON.parseObject(JSON.toJSONString(params), Result.class);
+        }
+        List<Result> resultList = resultMapper.selectPage(result);
         List<ResultDTO> resultDTOList = new ArrayList<>();
         BeanUtils.copyProperties(resultList, resultDTOList, List.class);
         PageInfo pageInfo = new PageInfo(resultList);
@@ -65,7 +66,7 @@ public class ResultServiceImpl implements ResultService {
      * @Description: 查询Result对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:41:38
+     * @CreateTime: 2019-11-09 01:45:36
      *
      * @param id
      * @return ServerResponse<ResultDTO>
@@ -75,7 +76,7 @@ public class ResultServiceImpl implements ResultService {
         if (StringUtils.isBlank(String.valueOf(id))) {
             return ServerResponse.createByErrorMessage("id不能为空");
         }
-        Result result = resultMapper.selectById(id);
+        Result result = resultMapper.selectByPrimaryKey(id);
         if (result == null) {
             return ServerResponse.createByErrorMessage("Result不存在");
         }

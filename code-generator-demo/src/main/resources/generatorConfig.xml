@@ -36,13 +36,13 @@
         <!--代码注释配置-->
         <property name="author" value="liuhf"/>
         <property name="company" value="example"/>
-        <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
+        <property name="dateFormat" value="yyyy/MM/dd HH:mm:ss"/>
         <property name="fileEncode" value="UTF-8"/>
         <property name="httpPrefix" value="mm"/>
         <property name="responseClass" value="ServerResponse"/>
         <property name="generateRemark" value="true"/>
         <property name="generateSwagger" value="true"/>
-        <property name="commonMapper" value="true"/>
+        <property name="commonMapper" value="false"/>
     </commentGenerator>
 
     <!--对应模板的配置-->

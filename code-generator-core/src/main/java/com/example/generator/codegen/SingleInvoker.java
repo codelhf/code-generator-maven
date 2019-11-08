@@ -54,7 +54,7 @@ public class SingleInvoker {
         //代码生成信息
         data.put("company", commentGenerator.getCompany());
         data.put("author", commentGenerator.getAuthor());
-        if (StringUtil.isBlank(commentGenerator.getDateFormat())) {
+        if (StringUtil.isNotBlank(commentGenerator.getDateFormat())) {
             data.put("createTime", DateTimeUtil.dateToStr(new Date(), commentGenerator.getDateFormat()));
         } else {
             data.put("createTime", DateTimeUtil.dateToStr(new Date()));

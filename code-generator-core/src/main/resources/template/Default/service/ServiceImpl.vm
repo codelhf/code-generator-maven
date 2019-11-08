@@ -82,7 +82,7 @@ public class ${ClassName}${suffix} implements ${ClassName}${serviceSuffix} {
         List<${ClassName}${entitySuffix}> ${className}${entitySuffix}List = ${className}${daoSuffix}.selectPage(${className}${entitySuffix});
         List<${ClassName}${entityDTOSuffix}> ${className}${entityDTOSuffix}List = new ArrayList<>();
         BeanUtils.copyProperties(${className}${entitySuffix}List, ${className}${entityDTOSuffix}List, List.class);
-        PageInfo pageInfo = new PageInfo(${className}${entitySuffix}List);
+        PageInfo pageInfo = new PageInfo<>(${className}${entitySuffix}List);
         pageInfo.setList(${className}${entityDTOSuffix}List);
         return ${ResponseClass}.createBySuccess(pageInfo);
     }
@@ -97,7 +97,7 @@ public class ${ClassName}${suffix} implements ${ClassName}${serviceSuffix} {
         List<${ClassName}${entitySuffix}> ${className}${entitySuffix}List = ${className}${daoSuffix}.selectList(wrapper);
         List<${ClassName}${entityDTOSuffix}> ${className}${entityDTOSuffix}List = new ArrayList<>();
         BeanUtils.copyProperties(${className}${entitySuffix}List, ${className}${entityDTOSuffix}List, List.class);
-        PageInfo pageInfo = new PageInfo(${className}${entitySuffix}List);
+        PageInfo pageInfo = new PageInfo<>(${className}${entitySuffix}List);
         pageInfo.setList(${className}${entityDTOSuffix}List);
         return ${ResponseClass}.createBySuccess(pageInfo);
     }
