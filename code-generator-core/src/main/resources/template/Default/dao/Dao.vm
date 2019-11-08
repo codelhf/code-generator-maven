@@ -7,8 +7,8 @@
 #set($pkPropertyName = ${pkColumn.propertyName})
 package ${Template.getPackageName()};
 
-#if (${baseMapper})
-import ${Template.getPackageName()}.base.${baseMapper};
+#if (${commonMapper})
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 #end
 import ${entityPackageName}.${ClassName}${entitySuffix};
 import org.apache.ibatis.annotations.Param;
@@ -24,7 +24,7 @@ import java.util.List;
  * @CreateTime: ${createTime}
  */
 @Mapper
-public interface ${ClassName}${suffix} #if (${baseMapper})extends ${baseMapper}<${ClassName}${suffix}>#end {
+public interface ${ClassName}${suffix} #if (${commonMapper})extends BaseMapper<${ClassName}>#end {
 
 #if(${commonMapper} == false)
     ${ClassName}${entitySuffix} selectByPrimaryKey(${pkJavaType} ${pkPropertyName});
@@ -40,9 +40,9 @@ public interface ${ClassName}${suffix} #if (${baseMapper})extends ${baseMapper}<
 
     int updateByPrimaryKey(${ClassName}${entitySuffix} record);
 
-    int deleteByIdList(@Param("${pkPropertyName}List") List<String> ${pkPropertyName}List);
+    int deleteBatchIds(@Param("${pkPropertyName}List") List<String> ${pkPropertyName}List);
     #end
 
-    List<${ClassName}${entitySuffix}> selectPageList(${ClassName}${entitySuffix} example);
+    List<${ClassName}${entitySuffix}> selectPage(${ClassName}${entitySuffix} example);
 #end
 }

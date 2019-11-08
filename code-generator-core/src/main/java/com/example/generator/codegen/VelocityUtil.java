@@ -17,24 +17,25 @@ public class VelocityUtil {
     private static VelocityEngine velocityEngine = null;
 
     public static VelocityEngine getInstance() {
-        if (null == velocityEngine) {
-            //初始化参数
-            Properties properties = new Properties();
-            //设置velocity资源加载方式为file
-            properties.setProperty("resource.loader", "file");
-            //设置velocity资源加载方式为file时的处理类
-            properties.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
-            if (!path.contains("jar")) {
-                properties.setProperty("file.resource.loader.path", path);
-            }
-
-            //设置输入输出编码类型。和这次说的解决的问题无关
-            properties.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
-            properties.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
-            //实例化一个VelocityEngine对象
-            velocityEngine = new VelocityEngine();
-            velocityEngine.init(properties);
-        }
+//        if (null == velocityEngine) {
+//            //初始化参数
+//            Properties properties = new Properties();
+//            //设置velocity资源加载方式为file
+//            properties.setProperty("resource.loader", "file");
+//            //设置velocity资源加载方式为file时的处理类
+//            properties.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
+//            System.out.printf("path: " + path);
+//            if (!path.contains("jar")) {
+//                properties.setProperty("file.resource.loader.path", path);
+//            }
+//
+//            //设置输入输出编码类型。和这次说的解决的问题无关
+//            properties.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
+//            properties.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
+//            //实例化一个VelocityEngine对象
+//            velocityEngine = new VelocityEngine();
+//            velocityEngine.init(properties);
+//        }
 //        if (null == velocityEngine) {
 //            //初始化参数
 //            Properties properties = new Properties();
@@ -52,21 +53,21 @@ public class VelocityUtil {
 //            velocityEngine = new VelocityEngine();
 //            velocityEngine.init(properties);
 //        }
-//        if (null == velocityEngine) {
-//            //初始化参数
-//            Properties properties = new Properties();
-//            //设置velocity资源加载方式为class
-//            properties.setProperty("resource.loader", "class");
-//            //设置velocity资源加载方式为file时的处理类
-//            properties.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-//
-//            //设置输入输出编码类型。和这次说的解决的问题无关
-//            properties.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
-//            properties.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
-//            //实例化一个VelocityEngine对象
-//            velocityEngine = new VelocityEngine();
-//            velocityEngine.init(properties);
-//        }
+        if (null == velocityEngine) {
+            //初始化参数
+            Properties properties = new Properties();
+            //设置velocity资源加载方式为class
+            properties.setProperty("resource.loader", "class");
+            //设置velocity资源加载方式为file时的处理类
+            properties.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+
+            //设置输入输出编码类型。和这次说的解决的问题无关
+            properties.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
+            properties.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
+            //实例化一个VelocityEngine对象
+            velocityEngine = new VelocityEngine();
+            velocityEngine.init(properties);
+        }
         return velocityEngine;
     }
 }

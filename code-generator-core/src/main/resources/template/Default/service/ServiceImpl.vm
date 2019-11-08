@@ -26,14 +26,11 @@ import ${daoPackageName}.${ClassName}${daoSuffix};
 import ${entityDTOPackageName}.${ClassName}${entityDTOSuffix};
 import ${entityPackageName}.${ClassName}${entitySuffix};
 import ${servicePackageName}.${ClassName}${serviceSuffix};
-#if (${commonMapper} == false)
+#if (${commonMapper} == true)
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+#end
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-#else
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-#end
 import com.google.common.base.Splitter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -82,7 +79,7 @@ public class ${ClassName}${suffix} implements ${ClassName}${serviceSuffix} {
         if (CollectionUtils.isNotEmpty(params.values())) {
             ${className}${entitySuffix} = JSON.parseObject(JSON.toJSONString(params), ${ClassName}${entitySuffix}.class);
         }
-        List<${ClassName}${entitySuffix}> ${className}${entitySuffix}List = ${className}${daoSuffix}.selectPageList(${className}${entitySuffix});
+        List<${ClassName}${entitySuffix}> ${className}${entitySuffix}List = ${className}${daoSuffix}.selectPage(${className}${entitySuffix});
         List<${ClassName}${entityDTOSuffix}> ${className}${entityDTOSuffix}List = new ArrayList<>();
         BeanUtils.copyProperties(${className}${entitySuffix}List, ${className}${entityDTOSuffix}List, List.class);
         PageInfo pageInfo = new PageInfo(${className}${entitySuffix}List);
@@ -91,23 +88,18 @@ public class ${ClassName}${suffix} implements ${ClassName}${serviceSuffix} {
     }
 #else
     @Override
-    public ${ResponseClass}<IPage> list(Integer pageNum, Integer pageSize, Map<String, String> params) {
-        IPage<${ClassName}${entitySuffix}> page = new Page<>(pageNum, pageSize);
-        QueryWrapper<${ClassName}${entitySuffix}> wrapper = new QueryWrapper<>();
-        ${ClassName}${entitySuffix} ${className}${entitySuffix} = null;
-        for (Map.Entry<String, Object> entry: params.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-            if (value instanceof String) {
-                wrapper.like("${StringUtil.propertyName2ColumnName(key)}", value);
-            } else {
-                wrapper.eq("${StringUtil.propertyName2ColumnName(key)}", value);
-            }
+    public ${ResponseClass}<PageInfo> list(Integer pageNum, Integer pageSize, Map<String, String> params) {
+        if (pageNum != null && pageSize != null) {
+            PageHelper.startPage(pageNum, pageSize);
         }
-        IPage<${ClassName}${entitySuffix}> ${className}${entitySuffix}List = ${className}${daoSuffix}.selectPage(page, wrapper);
-        IPage<${ClassName}${entityDTOSuffix}> ${className}${entityDTOSuffix}List = new Page<>(pageNum, pageSize);
-        BeanUtils.copyProperties(${className}${entitySuffix}List, ${className}${entityDTOSuffix}List, IPage.class);
-        return ${ResponseClass}.createBySuccess(${className}${entityDTOSuffix}List);
+        QueryWrapper<${ClassName}${entitySuffix}> wrapper = new QueryWrapper<>();
+
+        List<${ClassName}${entitySuffix}> ${className}${entitySuffix}List = ${className}${daoSuffix}.selectList(wrapper);
+        List<${ClassName}${entityDTOSuffix}> ${className}${entityDTOSuffix}List = new ArrayList<>();
+        BeanUtils.copyProperties(${className}${entitySuffix}List, ${className}${entityDTOSuffix}List, List.class);
+        PageInfo pageInfo = new PageInfo(${className}${entitySuffix}List);
+        pageInfo.setList(${className}${entityDTOSuffix}List);
+        return ${ResponseClass}.createBySuccess(pageInfo);
     }
 #end
 #if (${generateRemark} == true)
@@ -250,7 +242,7 @@ public class ${ClassName}${suffix} implements ${ClassName}${serviceSuffix} {
         if (CollectionUtils.isEmpty(${pkPropertyName}List)) {
             return ${ResponseClass}.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "${pkPropertyName}不能为空");
         }
-        int rowCount = ${className}${daoSuffix}.deleteByIdList(${pkPropertyName}List);
+        int rowCount = ${className}${daoSuffix}.deleteBatchIds(${pkPropertyName}List);
         if (rowCount == 0 || rowCount < ${pkPropertyName}List.size()) {
             return ${ResponseClass}.createByErrorMessage("批量删除${ClassName}${entitySuffix}失败");
         }

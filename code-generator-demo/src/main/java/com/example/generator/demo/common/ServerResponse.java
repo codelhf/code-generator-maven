@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @Description: 服务端响应类
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-05-09 13:31:39
+ * @CreateTime: 2019-11-09 01:41:38
  */
 //保证序列化json的时候,如果是null的对象,key也会消失
 @JsonInclude(JsonInclude.Include.NON_NULL)

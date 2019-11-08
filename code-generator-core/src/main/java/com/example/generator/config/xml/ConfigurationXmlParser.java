@@ -181,6 +181,16 @@ public class ConfigurationXmlParser {
         String company = map.get("company");
         commentGenerator.setCompany(company);
 
+        String dateFormat = map.get("dateFormat");
+        if (StringUtil.isNotBlank(dateFormat)) {
+            commentGenerator.setDateFormat(dateFormat);
+        }
+
+        String fileEncode = map.get("fileEncode");
+        if (StringUtil.isNotBlank(fileEncode)) {
+            commentGenerator.setFileEncode(fileEncode);
+        }
+
         String httpPrefix = map.get("httpPrefix");
         if (StringUtil.isNotBlank(httpPrefix)) {
             commentGenerator.setHttpPrefix(httpPrefix);
@@ -191,18 +201,13 @@ public class ConfigurationXmlParser {
             commentGenerator.setResponseClass(responseClass);
         }
 
-        String suppressAllComments = map.get("suppressAllComments");
+        String suppressAllComments = map.get("generateRemark");
         commentGenerator.setGenerateSwagger(StringUtil.isTrue(suppressAllComments));
 
-        String suppressDate = map.get("suppressDate");
+        String suppressDate = map.get("generateSwagger");
         commentGenerator.setGenerateRemark(StringUtil.isTrue(suppressDate));
 
-        String dateFormat = map.get("dateFormat");
-        if (StringUtil.isNotBlank(dateFormat)) {
-            commentGenerator.setDateFormat(dateFormat);
-        }
-
-        String addRemarkComments = map.get("addRemarkComments");
+        String addRemarkComments = map.get("commonMapper");
         commentGenerator.setCommonMapper(StringUtil.isTrue(addRemarkComments));
 
         configuration.setCommentGenerator(commentGenerator);

@@ -7,30 +7,4 @@
         <result column="prize" jdbcType="VARCHAR" property="prize"/>
         <result column="grade" jdbcType="VARCHAR" property="grade"/>
     </resultMap>
-    <sql id="Base_Column_List">
-        username,phone,prize,grade,
-    </sql>
-    <select id="selectByPrimaryKey" parameterType="String" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/>
-        from lottery_result
-        where id = #{id, jdbcType=CHAR}
-    </select>
-    <select id="selectPageList" parameterType="com.example.generator.demo.entity.Result" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/>
-        from lottery_result
-        <where>
-            <if test="username != null">
-                and username like #{username}
-            </if>
-            <if test="phone != null">
-                and phone like #{phone}
-            </if>
-            <if test="prize != null">
-                and prize like #{prize}
-            </if>
-            <if test="grade != null">
-                and grade like #{grade}
-            </if>
-        </where>
-    </select>
 </mapper>

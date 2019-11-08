@@ -1,5 +1,6 @@
 package com.example.generator.demo.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.generator.demo.entity.People;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Mapper;
@@ -11,24 +12,9 @@ import java.util.List;
  * @Description: People持久层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-05-09 13:31:39
+ * @CreateTime: 2019-11-09 01:41:38
  */
 @Mapper
-public interface PeopleMapper  {
+public interface PeopleMapper extends BaseMapper<People> {
 
-    People selectByPrimaryKey(int id);
-    
-    int deleteByPrimaryKey(int id);
-
-    int insert(People record);
-
-    int insertSelective(People record);
-
-    int updateByPrimaryKeySelective(People record);
-
-    int updateByPrimaryKey(People record);
-
-    int deleteByIdList(@Param("idList") List<String> idList);
-    
-    List<People> selectPageList(People example);
 }

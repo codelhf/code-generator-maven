@@ -11,7 +11,7 @@ import java.util.Map;
  * @Description: Prize接口层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-05-09 13:31:39
+ * @CreateTime: 2019-11-09 01:41:38
  */
 public interface PrizeService {
 
@@ -20,7 +20,7 @@ public interface PrizeService {
 	 * @Description: 查询Prize列表
 	 * @Company: example
 	 * @Author: liuhf
-	 * @CreateTime: 2019-05-09 13:31:39
+	 * @CreateTime: 2019-11-09 01:41:38
 	 *
 	 * @param pageNum
 	 * @param pageSize
@@ -34,7 +34,7 @@ public interface PrizeService {
      * @Description: 查询Prize对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-05-09 13:31:39
+     * @CreateTime: 2019-11-09 01:41:38
      *
      * @param id
      * @return ServerResponse<PrizeDTO>
@@ -46,7 +46,7 @@ public interface PrizeService {
      * @Description: 保存Prize对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-05-09 13:31:39
+     * @CreateTime: 2019-11-09 01:41:38
      *
      * @param prizeDTO
      * @return ServerResponse<String>
@@ -58,7 +58,7 @@ public interface PrizeService {
      * @Description: 更新Prize对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-05-09 13:31:39
+     * @CreateTime: 2019-11-09 01:41:38
      *
      * @param id
      * @param prizeDTO
@@ -71,7 +71,7 @@ public interface PrizeService {
      * @Description: 批量删除Prize对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-05-09 13:31:39
+     * @CreateTime: 2019-11-09 01:41:38
      *
      * @param ids
      * @return ServerResponse<String>

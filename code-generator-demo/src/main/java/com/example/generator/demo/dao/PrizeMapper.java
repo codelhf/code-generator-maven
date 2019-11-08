@@ -1,5 +1,6 @@
 package com.example.generator.demo.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.generator.demo.entity.Prize;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Mapper;
@@ -11,24 +12,9 @@ import java.util.List;
  * @Description: Prize持久层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-05-09 13:31:39
+ * @CreateTime: 2019-11-09 01:41:38
  */
 @Mapper
-public interface PrizeMapper  {
+public interface PrizeMapper extends BaseMapper<Prize> {
 
-    Prize selectByPrimaryKey(int id);
-    
-    int deleteByPrimaryKey(int id);
-
-    int insert(Prize record);
-
-    int insertSelective(Prize record);
-
-    int updateByPrimaryKeySelective(Prize record);
-
-    int updateByPrimaryKey(Prize record);
-
-    int deleteByIdList(@Param("idList") List<String> idList);
-    
-    List<Prize> selectPageList(Prize example);
 }

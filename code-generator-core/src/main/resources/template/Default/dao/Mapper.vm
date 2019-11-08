@@ -74,7 +74,7 @@
 #end
         where ${pkColumnName} = #{${pkPropertyName}, jdbcType=${pkJdbcType}}
     </update>
-    <delete id="deleteByIdList" parameterType="map">
+    <delete id="deleteBatchIds" parameterType="map">
         delete from ${tableName}
         where ${pkColumnName} in
         <foreach collection="${pkPropertyName}List" index="index" item="${pkPropertyName}" open="(" separator="," close=")" >
@@ -82,7 +82,7 @@
         </foreach>
     </delete>
 #end
-    <select id="selectPageList" parameterType="${entityPackageName}.${ClassName}${entitySuffix}" resultMap="BaseResultMap">
+    <select id="selectPage" parameterType="${entityPackageName}.${ClassName}${entitySuffix}" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
         from ${tableName}
         <where>
