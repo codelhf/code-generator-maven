@@ -168,13 +168,16 @@ mvn code-generator:generate
 > directory以 ./ 开头是以pom文件为相对路径, packageName为代码生成的包路径
 >
 > suffix是生成代码文件的后缀名
->   1. common=true生成的代码文件以suffix为文件名: suffix.fileType
->   2. common=false且suffix以 / 开头, 文件名: domainName/suffix.fileType
+>   1. common=true生成的代码文件名: suffix.fileType
+>   2. common=false生成的代码文件名: domainNamesuffix.fileType
+>   3. common=false且suffix以 / 开头, 文件名: domainName/js/'index'.js
 >
 > fileType为生成的代码文件类型
 >
 > common代码模板的类型, 是否为通用模板,默认为false
+>
 > isGenerate是否生成代码, 默认为true
+>
 > override是否覆盖原有代码文件, 默认为false
 ```$xslt
 <template name="serverResponse" template="template/Default/common/ServerResponse.vm"
