@@ -1,0 +1,29 @@
+<!-- 新增和修改 -->
+<div class="none" id="edit_${tableName}_div}">
+    <form enctype="multipart/form-data" id="edit_${tableName}_form">
+        <div class="fs-14 bgc-white pd-20">
+#set($length = ${fullColumn.size()} - 1)
+#foreach($step in [0..$length])
+#if($step == 0 || $step % 2 == 0)
+            <div class="clear mgb-20">
+                <div class="col-6 select-ty">
+                    <span>${fullColumn.get($step).getPropertyName()}：</span>
+                    <input type="text" id="${fullColumn.get($step).getPropertyName()}" name="${fullColumn.get($step).getPropertyName()}" value="{{${fullColumn.get($step).getPropertyName()}}}" required="true"/>
+                </div>
+#set($stepNext = $step + 1)
+#if($stepNext <= $length)
+                <div class="col-6 select-ty">
+                    <span>${fullColumn.get($stepNext).getPropertyName()}：</span>
+                    <input type="text" id="${fullColumn.get($stepNext).getPropertyName()}" name="${fullColumn.get($stepNext).getPropertyName()}" value="{{${fullColumn.get($stepNext).getPropertyName()}}}" required="true"/>
+                </div>
+#end
+            </div>
+#end
+#end
+        </div>
+    </form>
+    <div class="pu-btn bottom-button pd-10 tc">
+        <a href="#" class="button-blue ok" id="save_edit_${tableName}">确认</a>
+        <a href="#" class="button-green cancel" id="cancel_edit_${tableName}">取消</a>
+    </div>
+</div>

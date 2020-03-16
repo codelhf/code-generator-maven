@@ -1,0 +1,24 @@
+#set($colspan = ${fullColumn.size()} + 1)
+{{if data.length == 0}}
+<tr>
+    <td colspan="${colspan}">
+        <p class="pdt-50 pdb-50 fs-30 color-9">
+            <img src="/nresource/pub-ui/images/alltable-nullimg1.png" alt="" />
+            <span class="mgl-20">暂无查询结果</span>
+        </P>
+    </td>
+</tr>
+{{/if}}
+{{each list as item index}}
+<tr>
+    <td>
+        <label class="js-checkbox replace-checkbox">
+            <input type="checkbox" name="checkboxs" value="{{item.id}}"/>
+            <span></span>
+        </label>
+    </td>
+#foreach($column in ${fullColumn})
+    <td>{{item.${column.propertyName}}}</td>
+#end
+</tr>
+{{/each}}

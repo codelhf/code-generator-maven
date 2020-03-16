@@ -1,0 +1,128 @@
+#set($suffix = ${Template.getSuffix()})
+## entityDTO、entity
+#set($entityDTOPackageName = ${entityDTO.getPackageName()})
+#set($entityDTOSuffix = ${entityDTO.getSuffix()})
+#set($entitySuffix = ${entity.getSuffix()})
+## service
+#set($servicePackageName = ${service.getPackageName()})
+#set($serviceSuffix = ${service.getSuffix()})
+## primaryKey
+#set($pkJavaType = ${pkColumn.javaType})
+#set($pkPropertyName = ${pkColumn.propertyName})
+package ${Template.getPackageName()};
+
+import com.sitech.cmap.fw.core.wsg.${ResponseClass};
+import ${entityDTOPackageName}.${ClassName}${entityDTOSuffix};
+import ${servicePackageName}.${ClassName}${serviceSuffix};
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.*;
+
+import java.util.Map;
+
+/**
+ * @Title: ${ClassName}${suffix}
+ * @Description: ${ClassName}${entitySuffix}控制层
+ * @Company: ${company}
+ * @Author: ${author}
+ * @CreateTime: ${createTime}
+ */
+#if (${httpPrefix})
+    #set($RequestMapping = "${httpPrefix}/${className}")
+#else
+    #set($RequestMapping = "${className}")
+#end
+@RestController
+@RequestMapping("/${RequestMapping}")
+public class ${ClassName}${suffix} {
+
+    @Autowired
+    private ${ClassName}${serviceSuffix} ${className}${serviceSuffix};
+
+#if (${generateSwagger} == true)
+    @ApiOperation(value = "查询 ${ClassName}${entitySuffix} 列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-Auth-Token", dataType = "String", required = true, paramType = "header",
+                    value = "请求Token参数"),
+            @ApiImplicitParam(name = "params", dataType = "Map", required = false, paramType = "query",
+                    value = "请求参数对象测试，用户支持Get多参数接收"),
+            @ApiImplicitParam(name = "currentPage", dataType = "int", required = false, paramType = "query",
+                    value = "当前页数"),
+            @ApiImplicitParam(name = "pageLimit", dataType = "int", required = false, paramType = "query",
+                    value = "每页记录条数"),
+            @ApiImplicitParam(name = "condition", dataType = "String", required = false, paramType = "query",
+                    value = "模糊查询表达式，默认只支持一个String类型字符串模糊查询"),
+            @ApiImplicitParam(name = "sort", dataType = "String", required = false, paramType = "query",
+                    value = "排序字段，例：-id(id降序)，+name（name升序）,目前支持单字段")
+    })
+#end
+    @GetMapping("")
+    public ${ResponseClass}<PageInfo> list(@RequestParam Map<String, Object> params,
+                                           @RequestParam(name = "currentPage", required = false) Integer currentPage,
+                                           @RequestParam(name = "pageLimit", required = false) Integer pageLimit,
+                                           @RequestParam(name = "condition", required = false) String condition,
+                                           @RequestParam(name = "sort", required = false) String sort) {
+        return ${className}${serviceSuffix}.list(currentPage, pageLimit, params, condition, sort);
+    }
+
+#if (${generateSwagger} == true)
+    @ApiOperation(value = "根据ID查询 ${ClassName}${entitySuffix} 对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-Auth-Token", dataType = "String", required = true, paramType = "header",
+                    value = "请求Token参数"),
+            @ApiImplicitParam(name = "id", dataType = "${pkJavaType}", required = true, paramType = "path",
+                    value = "唯一标识（主键）")
+    })
+#end
+    @GetMapping("/{id}")
+    public ${ResponseClass}<${ClassName}${entityDTOSuffix}> get(@PathVariable("id") ${pkJavaType} id) {
+        return ${className}${serviceSuffix}.get(id);
+    }
+
+#if(${isView} == false)
+#if (${generateSwagger} == true)
+    @ApiOperation(value = "保存 ${ClassName}${entitySuffix} 对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-Auth-Token", dataType = "String", required = true, paramType = "header",
+                    value = "请求Token参数"),
+            @ApiImplicitParam(name = "${className}${entityDTOSuffix}", dataType = "${ClassName}${entityDTOSuffix}", required = true, paramType = "body",
+                    value = "保存数据消息体")
+    })
+#end
+    @PostMapping("")
+    public ${ResponseClass}<String> save(@RequestBody ${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix}) {
+        return ${className}${serviceSuffix}.save(${className}${entityDTOSuffix});
+    }
+
+#if (${generateSwagger} == true)
+    @ApiOperation(value = "根据ID更新 ${ClassName}${entitySuffix} 对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-Auth-Token", dataType = "String", required = true, paramType = "header",
+                    value = "请求Token参数"),
+            @ApiImplicitParam(name = "id", dataType = "${pkJavaType}", required = true, paramType = "path",
+                    value = "唯一标识（主键）"),
+            @ApiImplicitParam(name = "${className}${entityDTOSuffix}", dataType = "${ClassName}${entityDTOSuffix}", required = true, paramType = "body",
+                    value = "更新数据消息体")
+    })
+#end
+    @PutMapping("/{id}")
+    public ${ResponseClass}<String> update(@PathVariable("id") ${pkJavaType} id, @RequestBody ${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix}) {
+        return ${className}${serviceSuffix}.update(id, ${className}${entityDTOSuffix});
+    }
+
+#if (${generateSwagger} == true)
+    @ApiOperation(value = "批量删除 ${ClassName}${entitySuffix} 对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-Auth-Token", dataType = "String", required = true, paramType = "header",
+                    value = "请求Token参数"),
+            @ApiImplicitParam(name = "ids", dataType = "String", required = true, paramType = "path",
+                    value = "唯一标识（主键），若批量，则ID以','分割")
+    })
+#end
+    @DeleteMapping("/{ids}")
+    public ${ResponseClass}<String> delete(@PathVariable("ids") String ids) {
+        return ${className}${serviceSuffix}.delete(ids);
+    }
+#end
+}

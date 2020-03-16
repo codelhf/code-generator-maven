@@ -1,0 +1,194 @@
+#set($tplList = ${tplList.getPackageName})
+#set($tplForm = ${tplForm.getPackageName})
+#if (${httpPrefix})
+    #set($RequestMapping = "${httpPrefix}/${className}")
+#else
+    #set($RequestMapping = "${className}")
+#end
+require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
+    var edit_${tableName}_dialog;
+    // 默认加载
+    $(function() {
+        bindEvent(); //绑定点击事件
+        resetForm(); //清空表单
+        init${ClassName}List(1, true);//初始化
+    });
+    function bindEvent() {
+        //[查询]按钮的onclick事件
+        $(document).on('click', '#btn_search', function() {
+            init${ClassName}List(1, true);
+        });
+        //[重置]按钮的onclick事件
+        $(document).on('click', '#btn_reset', function() {
+            resetForm();
+        });
+        // 全选或全不选
+        $(document).on('click','#checkboxAll', function(){
+            var _this = $(this);
+            if(_this.prop('checked')) {
+                $("input[name='checkboxs']").each(function () {
+                    _this.checked = true;
+                    $(this).parent('.js-checkbox').addClass('checked');
+                });
+            } else {
+                $("input[name='checkboxs']").each(function () {
+                    _this.checked = false;
+                    $(this).parent('.js-checkbox').addClass('checked');
+                });
+            }
+        });
+        // ----------------------------- 新增 & 修改 & 删除按钮----------------------------------------
+        //新增
+        $(document).on('click', '#add_${tableName}', function() {
+            edit_${tableName}_dialog = $('#edit_${tableName}_div').ui_dialog({
+                title: '新增',
+                width: 800,
+                height: 500
+            }).showModal();
+            require(['../tpl/edit.tpl'], function(editTpl) {
+                $('#edit_${tableName}_div').html(editTpl({}));
+            });
+        });
+        //修改
+        $("#edit_omc_vnf_license").on("click", function() {
+            var entity_id = get${ClassName}Id();
+            if (entity_id === null) {
+                return;
+            }
+            edit_${tableName}_dialog = $('#edit_${tableName}_div').ui_dialog({
+                title: '修改',
+                width: 800,
+                height: 500
+            }).showModal();
+
+            require(['../tpl/edit.tpl'], function(editTpl) {
+                ajaxUtil.callrest("${RequestMapping}/" + entity_id, function(result) {
+                    if(result && result.code !== 'SUCCESS') {
+                        pop.warn("加载数据失败：" + result.msg, function(){});
+                    } else {
+                        $('#edit_${tableName}_div}').html(editTpl(result.data));
+                    }
+                });
+            });
+        });
+
+        //[删除]按钮的onclick事件
+        $(document).on('click', '#delete_${tableName}', function() {
+            var checked = $('input[name="checkboxs"]:checked');
+            if (checked.length <= 0) {
+                pop.warn(pop.msg.please_choose_one, function(){});
+                return;
+            }
+            var ids = [];
+            for(var i = 0; i < checked.length; i++) {
+                ids.push($(checked[i]).attr('value'));
+            }
+            ids = ids.join(',');
+            ajaxUtil.delrest("${RequestMapping}/" + ids, function(result) {
+                if (result && result.code !== 'SUCCESS') {
+                    pop.warn(pop.msg.delete_failure + "失败原因：" + result.msg, function(){});
+                } else {
+                    init${ClassName}List(1, true);
+                }
+            })
+        });
+        // 新增和修改界面（edit.html）保存按钮
+        $(document).on("#save_edit_${tableName}", "click", function() {
+            var edit_${tableName}_form = $('#edit_${tableName}_form');
+            if (!edit_${tableName}_form.valid()) {
+                return;
+            }
+            // 防止重复提交
+            $(this).attr("disabled", "true");
+            var edit_${tableName}_form_data = edit_${tableName}_form.serializeObject();
+            if (!edit_${tableName}_form_data.${pkColumn.propertyName}) {
+                add${ClassName}(edit_${tableName}_form_data);
+            } else {
+                update${ClassName}(edit_${tableName}_form_data);
+            }
+        });
+        // 新增和修改界面（edit.html）取消选择
+        $(document).on("#cancel_edit_${tableName}", "click", function() {
+            edit_${tableName}_dialog.close();
+        });
+    }
+
+    //清空查询字段
+    function resetForm() {
+        $(".form-ipt").val("");
+    }
+    // 数据列表
+    function init${ClassName}List(current_page_no, first) {
+        var queryParam = getQueryParam();
+        queryParam.currentPage = current_page_no;
+        queryParam.pageLimit = 10;
+        require(['../tpl/list.tpl'], function(listTpl) {
+            ajaxUtil.callrest("${RequestMapping}", function(result) {
+                if (result && result.code !== 'SUCCESS') {
+                    pop.warn("加载数据列表失败：" + result.msg, function(){});
+                    return;
+                }
+                $("#tbody_${tableName}").html(listTpl(result.data));
+                var paging = {
+                    "everyPage": result.data.pageNum,
+                    "totalPage": result.data.total
+                };
+                if (first) {
+                    page.init('page_${tableName}', paging, init${ClassName}List);
+                }
+            }, queryParam);
+        });
+    }
+
+    //获取模糊查询数据
+    function getQueryParam() {
+        var queryParam = {
+            condition: $.trim($("#fuzzy_search_input").val()),
+            sort: 'updateTime-'
+        };
+        return queryParam;
+    }
+
+    //获取选择的对象id
+    function get${ClassName}Id() {
+        var checkedBox =  $("input[name='checkboxs']:checked");
+        if (checkedBox.length === 1 ){
+            pop.warn(pop.msg.please_choose_one, function(){});
+            return null;
+        }
+        return checkedBox.first().attr('value');
+    }
+
+    //新增
+    function add${ClassName}(edit_${tableName}_form_data) {
+        ajaxUtil.postrest("${RequestMapping}", function(result) {
+            if(result && result.code === 'SUCCESS') {
+                pop.warn("保存数据成功!", function(){
+                    edit_${tableName}_dialog.close();
+                    init${ClassName}List(1, true);
+                    $("#save_edit_${tableName}").removeAttr("disabled");
+                });
+            } else {
+                pop.warn(pop.msg.update_failure + "失败原因：" + result.msg, function(){
+                    $("#save_edit_${tableName}").removeAttr("disabled");
+                });
+            }
+        }, edit_${tableName}_form_data);
+    }
+    //修改
+    function update${ClassName}(edit_${tableName}_form_data) {
+        ajaxUtil.putrest("${RequestMapping}/" + edit_${tableName}_form_data.${pkColumn.propertyName}, function(result) {
+            if(result.code == 'SUCCESS') {
+                pop.warn("更新数据成功！", function(){
+                    edit_${tableName}_dialog.close();
+                    init${ClassName}List(1, true);
+                    $("#save_edit_${tableName}").removeAttr("disabled");
+                });
+            } else {
+                pop.warn(pop.msg.update_failure + "失败原因：" + result.msg, function(){
+                    $("#save_edit_${tableName}").removeAttr("disabled");
+                });
+            }
+        }, edit_${tableName}_form_data);
+    }
+});

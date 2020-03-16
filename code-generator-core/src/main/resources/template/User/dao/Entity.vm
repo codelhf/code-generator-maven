@@ -1,0 +1,30 @@
+#set($suffix = ${Template.getSuffix()})
+package ${Template.getPackageName()};
+
+import lombok.*;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * @Title: ${ClassName}${suffix}
+ * @Description: ${ClassName}${suffix}实体对象
+ * @Company: ${company}
+ * @Author: ${author}
+ * @CreateTime: ${createTime}
+ */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class ${ClassName}${suffix} implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+#foreach($column in ${fullColumn})
+    #if(${column.comment})//${column.comment}#end
+
+    private ${column.javaType} ${column.propertyName};
+
+#end
+}

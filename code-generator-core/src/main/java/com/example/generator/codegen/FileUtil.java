@@ -33,17 +33,14 @@ public class FileUtil {
             directory.mkdirs();
             directory.setWritable(true);
         }
-        File file = new File(filePath + fileName);
-        if (!file.exists()) {
-            writerFile(filePath + fileName, fileEncode, tpl, data);
+        File file = new File(directory + "/" + fileName);
+        if (!file.exists() || override) {
+            writerFile(file.getAbsolutePath(), fileEncode, tpl, data);
         } else {
-            if (override) {
-                writerFile(filePath + fileName, fileEncode, tpl, data);
-            } else {
-                file = getUniqueFileName(file.getParentFile(), file.getName());
-                writerFile(file.getAbsolutePath(), fileEncode, tpl, data);
-            }
+            file = getUniqueFileName(file.getParentFile(), file.getName());
+            writerFile(file.getAbsolutePath(), fileEncode, tpl, data);
         }
+        System.out.println("[INFO] generating " + directory);
         System.out.println("[INFO] Generating " + fileName);
     }
 

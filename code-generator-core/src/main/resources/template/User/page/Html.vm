@@ -1,0 +1,77 @@
+## js
+#set($jsPackageName = ${js.getPackageName()})
+#set($jsSuffix = ${js.getSuffix()})
+#set($jsFileType = ${js.getFileType()})
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>${ClassName}</title>
+    #set($a = '<!-- #include virtual="/npage/sys/link.html" -->')$a
+    #set($a = '<!-- #include virtual="/npage/paas/link.html" -->')$a
+</head>
+<body>
+<!--主体内容-->
+<div class="min-width1200 main-padd">
+    <div class="bdt-box mg-10 mgb-0 bgc-white pd-10 animation-left" id="myDraft">
+        <p class="fs-20 pdl-10">${ClassName}</p>
+        <form action="#none" class="clear fs-14 alltable-form pdt-20" id="searchForm">
+            <div class="col-3">
+                <span class="mw mw-100 of-title">模糊搜索条件</span>
+                <input class="query-input form-ipt" type="text" name="name" id="fuzzy_search_input"/>
+            </div>
+            <div class="col-3">
+                <input type="button" value="查询" class="form-btn fb-submit search-request" id="btn_search"/>
+                <input type="button" value="重置" class="form-btn fb-reset mgl-10 reset-form" id="btn_reset"/>
+            </div>
+        </form>
+    </div>
+    <div class="pd-10 clear animation-right">
+        <div class="alltable-link clear">
+            <ul class="fr">
+                <li>
+                    <a href="#" class="link-list link-list-new" id="add_${tableName}">新增</a>
+                </li>
+                <li>
+                    <a href="#" class="link-list link-list-edit" id="edit_${tableName}">修改</a>
+                </li>
+                <li>
+                    <a href="#" class="link-list link-list-del" id="delete_${tableName}">删除</a>
+                </li>
+            </ul>
+        </div>
+        <div class="approval-table fs-14">
+            <table id="theTable">
+                <thead>
+                <tr>
+                    <th class="bdl-0 w-50">
+                        <label class="js-checkbox replace-checkbox">
+                            <input type="checkbox" name="chackAll" id="checkboxAll"/>
+                            <span></span>
+                        </label>
+                    </th>
+#foreach($column in ${fullColumn})
+                    <th>${column.getPropertyName()}</th>
+#end
+                </tr>
+                </thead>
+                <tbody id="tbody_${tableName}">
+
+                </tbody>
+            </table>
+            <!--分页div-->
+            <div class="page" id="page_${tableName}"></div>
+        </div>
+    </div>
+</div>
+<div class="none" id="edit_${tableName}_div"></div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function() {
+        require(['/${jsPackageName}/${className}${jsSuffix}.${jsFileType}']);
+    });
+</script>
+</html>

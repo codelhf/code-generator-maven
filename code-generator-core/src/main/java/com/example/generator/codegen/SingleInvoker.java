@@ -88,13 +88,16 @@ public class SingleInvoker {
             data.put("Template", template);
             //文件生成路径支持相对路径和绝对路径
             String filePath = FileUtil.getGeneratePath(configFilePath, template.getDirectory(), template.getPackageName());
-            String fileName;
-            if (template.isCommon()) {
-                //后缀加文件格式
-                fileName = template.getSuffix() + "." + template.getFileType();
-            } else {
+            String fileName = template.getSuffix() + "." + template.getFileType();;
+            if (!template.isCommon()) {
                 //表名加后缀加文件格式
                 fileName = className + template.getSuffix() + "." + template.getFileType();
+            }
+            //以 / 开头的文件名
+            if (fileName.contains("/")) {
+                int index = fileName.lastIndexOf("/");
+                filePath = filePath + StringUtil.firstToLowerCase(fileName.substring(0, index));
+                fileName = fileName.substring(index + 1);
             }
             if (template.isGenerate()) {
                 FileUtil.generateToCode(filePath, fileName, fileEncode, tpl, data, template.isOverride());

@@ -1,0 +1,23 @@
+#set($suffix = ${Template.getSuffix()})
+## entity
+#set($entityPackageName = ${entity.getPackageName()})
+#set($entitySuffix = ${entity.getSuffix()})
+package ${Template.getPackageName()};
+
+#if (${isView} == false)
+import com.sitech.cmap.fw.dao.simple.mbt.TableMapper;
+#else
+import com.sitech.cmap.fw.dao.simple.mbt.ViewMapper;
+#end
+import ${entityPackageName}.${ClassName}${entitySuffix};
+
+/**
+ * @Title: ${ClassName}${suffix}
+ * @Description: ${ClassName}${entitySuffix}持久层
+ * @Company: ${company}
+ * @Author: ${author}
+ * @CreateTime: ${createTime}
+ */
+public interface ${ClassName}${suffix} extends#if (${isView} == false) TableMapper#else ViewMapper#end<${ClassName}> {
+
+}

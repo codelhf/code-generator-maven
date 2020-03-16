@@ -1,0 +1,35 @@
+package ${Template.getPackageName()};
+
+import com.github.pagehelper.PageHelper;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+
+import java.util.regex.Pattern;
+
+/**
+ * @Title: PageUtil
+ * @Description: PageHelper分页工具类
+ * @Company: ${company}
+ * @Author: ${author}
+ * @CreateTime: ${createTime}
+ */
+public class PageUtil {
+
+    public static void initPage(Integer pageIndex, Integer pageLimit, String... sortKeys) {
+        Assert.notNull(pageIndex, "分页查询，参数pageIndex不能为Null!");
+        Assert.notNull(pageLimit, "分页查询，参数pageLimit不能为Null!");
+        if (StringUtils.isEmpty(sortKeys)) {
+            PageHelper.startPage(pageIndex, pageLimit);
+        } else {
+            String sort = sortKeys[0];
+            if (!Pattern.matches("((\\+|\\-)[\\w]+)+", sort)) {
+                PageHelper.startPage(pageIndex, pageLimit);
+            } else {
+                sort = sort.replaceAll("\\+([\\w]+)", " $1" + " asc,");
+                sort = sort.replaceAll("\\-([\\w]+)", " $1" + " desc,");
+                sort = sort.substring(0, sort.length() - 1);
+                PageHelper.startPage(pageIndex, pageLimit, sort);
+            }
+        }
+    }
+}
