@@ -48,6 +48,20 @@
     <!--对应模板的配置-->
     <templates>
         <!--名称不能和api中的字段重复,否则被覆盖无效,并且被依赖模块不能注释-->
+        <!--common类型的以suffix为文件名-->
+        <template name="exceptionResolver" template="template/Default/common/ExceptionResolver.vm"
+                  directory="./src/main/java" packageName="com.example.generator.demo.common"
+                  suffix="ExceptionResolver" fileType="java" common="true" isGenerate="true" override="true"/>
+        <template name="swagger2" template="template/Default/common/Swagger2.vm"
+                  directory="./src/main/java" packageName="com.example.generator.demo.common"
+                  suffix="Swagger2" fileType="java" common="true" isGenerate="true" override="true"/>
+        <template name="responseCode" template="template/Default/common/ResponseCode.vm"
+                  directory="./src/main/java" packageName="com.example.generator.demo.common"
+                  suffix="ResponseCode" fileType="java" common="true" isGenerate="true" override="true"/>
+        <template name="serverResponse" template="template/Default/common/ServerResponse.vm"
+                  directory="./src/main/java" packageName="com.example.generator.demo.common"
+                  suffix="ServerResponse" fileType="java" common="true" isGenerate="true" override="true"/>
+        <!--非common类型的domainName加suffix为文件名-->
         <template name="entity" template="template/Default/dao/Entity.vm"
                   directory="./src/main/java" packageName="com.example.generator.demo.entity"
                   suffix="" fileType="java" isGenerate="true" override="true"/>
@@ -69,19 +83,13 @@
         <template name="controller" template="template/Default/service/Controller.vm"
                   directory="./src/main/java" packageName="com.example.generator.demo.controller"
                   suffix="Controller" fileType="java" isGenerate="true" override="true"/>
-        <!--common类型的以suffix为文件名-->
-        <template name="exceptionResolver" template="template/Default/common/ExceptionResolver.vm"
-                  directory="./src/main/java" packageName="com.example.generator.demo.common"
-                  suffix="ExceptionResolver" fileType="java" common="true" isGenerate="true" override="true"/>
-        <template name="swagger2" template="template/Default/common/Swagger2.vm"
-                  directory="./src/main/java" packageName="com.example.generator.demo.common"
-                  suffix="Swagger2" fileType="java" common="true" isGenerate="true" override="true"/>
-        <template name="responseCode" template="template/Default/common/ResponseCode.vm"
-                  directory="./src/main/java" packageName="com.example.generator.demo.common"
-                  suffix="ResponseCode" fileType="java" common="true" isGenerate="true" override="true"/>
-        <template name="serverResponse" template="template/Default/common/ServerResponse.vm"
-                  directory="./src/main/java" packageName="com.example.generator.demo.common"
-                  suffix="ServerResponse" fileType="java" common="true" isGenerate="true" override="true"/>
+        <!--非common类型的suffix以 / 开头的生成在domainName目录下以suffix的最后为文件名-->
+<!--        <template name="html" template="template/User/page/Html.vm"-->
+<!--                  directory="F:\super-op\5G\onap\OMC\omc-ui\pnms_op_web_view" packageName="npage/trace"-->
+<!--                  suffix="/index" fileType="html" isGenerate="true" override="true"/>-->
+<!--        <template name="js" template="template/User/page/JS.vm"-->
+<!--                  directory="F:\super-op\5G\onap\OMC\omc-ui\pnms_op_web_view" packageName="apps/trace"-->
+<!--                  suffix="/js/index" fileType="js" isGenerate="true" override="true"/>-->
     </templates>
 
     <!-- 数据库对应数据表-->
