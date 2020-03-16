@@ -154,7 +154,7 @@ mvn code-generator:generate
 ```$xslt
 <property name="httpPrefix" value="mm"/>
 ```
-3. 请求接口通用返回类名, 在使用生成器生成通用返回类是必须指定
+3. 请求接口通用返回类名, 在使用生成器生成通用返回类时必须指定
 ```$xslt
 <property name="responseClass" value="ServerResponse"/>
 ```
@@ -165,7 +165,7 @@ mvn code-generator:generate
  5. 模板配置
 > name为模板名称, 不能和6中的字段重复, template模板相对resources的路径
 >
-> directory以pom文件为相对路径, packageName为代码生成的包路径
+> directory以 ./ 开头是以pom文件为相对路径, packageName为代码生成的包路径
 >
 > suffix是生成代码文件的后缀名
 >   1. common=true生成的代码文件以suffix为文件名: suffix.fileType
