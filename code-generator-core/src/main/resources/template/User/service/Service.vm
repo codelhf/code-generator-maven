@@ -41,7 +41,7 @@ public interface ${ClassName}${suffix} {
 
 #if (${generateRemark} == true)
     /**
-     * @Title: select
+     * @Title: get
      * @Description: 查询 ${ClassName}${entitySuffix} 对象
      * @Company: ${company}
      * @Author: ${author}
@@ -56,7 +56,7 @@ public interface ${ClassName}${suffix} {
 #if(${isView} == false)
 #if (${generateRemark} == true)
     /**
-     * @Title: insert
+     * @Title: save
      * @Description: 保存 ${ClassName}${entitySuffix} 对象
      * @Company: ${company}
      * @Author: ${author}

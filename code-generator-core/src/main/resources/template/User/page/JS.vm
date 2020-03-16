@@ -63,7 +63,7 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
             }).showModal();
 
             require(['../tpl/edit.tpl'], function(editTpl) {
-                ajaxUtil.callrest("${RequestMapping}/" + entity_id, function(result) {
+                ajaxUtil.callrest("/${RequestMapping}/" + entity_id, function(result) {
                     if(result && result.code !== 'SUCCESS') {
                         pop.warn("加载数据失败：" + result.msg, function(){});
                     } else {
@@ -84,7 +84,7 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
                 ids.push($(checked[i]).attr('value'));
             }
             ids = ids.join(',');
-            ajaxUtil.delrest("${RequestMapping}/" + ids, function(result) {
+            ajaxUtil.delrest("/${RequestMapping}/" + ids, function(result) {
                 if (result && result.code !== 'SUCCESS') {
                     pop.warn(pop.msg.delete_failure + "失败原因：" + result.msg, function(){});
                 } else {
@@ -123,7 +123,7 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
         queryParam.currentPage = current_page_no;
         queryParam.pageLimit = 10;
         require(['../tpl/list.tpl'], function(listTpl) {
-            ajaxUtil.callrest("${RequestMapping}", function(result) {
+            ajaxUtil.callrest("/${RequestMapping}", function(result) {
                 if (result && result.code !== 'SUCCESS') {
                     pop.warn("加载数据列表失败：" + result.msg, function(){});
                     return;
@@ -161,7 +161,7 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
 
     //新增
     function add${ClassName}(edit_${tableName}_form_data) {
-        ajaxUtil.postrest("${RequestMapping}", function(result) {
+        ajaxUtil.postrest("/${RequestMapping}", function(result) {
             if(result && result.code === 'SUCCESS') {
                 pop.warn("保存数据成功!", function(){
                     edit_${tableName}_dialog.close();
@@ -177,7 +177,7 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
     }
     //修改
     function update${ClassName}(edit_${tableName}_form_data) {
-        ajaxUtil.putrest("${RequestMapping}/" + edit_${tableName}_form_data.${pkColumn.propertyName}, function(result) {
+        ajaxUtil.putrest("/${RequestMapping}/" + edit_${tableName}_form_data.${pkColumn.propertyName}, function(result) {
             if(result.code == 'SUCCESS') {
                 pop.warn("更新数据成功！", function(){
                     edit_${tableName}_dialog.close();
