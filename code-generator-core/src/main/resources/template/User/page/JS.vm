@@ -93,7 +93,7 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
             })
         });
         // 新增和修改界面（edit.html）保存按钮
-        $(document).on("#save_edit_${tableName}", "click", function() {
+        $(document).on("click", "#save_edit_${tableName}", function() {
             var edit_${tableName}_form = $('#edit_${tableName}_form');
             if (!edit_${tableName}_form.valid()) {
                 return;
@@ -108,7 +108,7 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
             }
         });
         // 新增和修改界面（edit.html）取消按钮
-        $(document).on("#cancel_edit_${tableName}", "click", function() {
+        $(document).on("click", "#cancel_edit_${tableName}", function() {
             edit_${tableName}_dialog.close();
         });
     }
