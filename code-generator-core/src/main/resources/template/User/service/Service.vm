@@ -8,10 +8,9 @@
 #set($pkPropertyName = ${pkColumn.propertyName})
 package ${Template.getPackageName()};
 
-import com.sitech.cmap.fw.core.wsg.${ResponseClass};
 import ${entityDTOPackageName}.${ClassName}${entityDTOSuffix};
-import com.github.pagehelper.PageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,10 +33,27 @@ public interface ${ClassName}${suffix} {
 	 * @param pageNum
 	 * @param pageSize
 	 * @param params
-	 * @return ${ResponseClass}<PageInfo>
+     * @param condition
+     * @param sortKeys
+	 * @return List<${ClassName}${entityDTOSuffix}>
 	 */
 #end
-	${ResponseClass}<PageInfo> list(Integer pageNum, Integer pageSize, Map<String, Object> params, String condition, String... sortKeys);
+	List<${ClassName}${entityDTOSuffix}> list(Integer pageNum, Integer pageSize, Map<String, Object> params, String condition, String... sortKeys);
+
+#if (${generateRemark} == true)
+    /**
+     * @Title: list
+     * @Description: 查询 ${ClassName}${entitySuffix} 列表总量
+     * @Company: ${company}
+     * @Author: ${author}
+     * @CreateTime: ${createTime}
+     *
+     * @param params
+     * @param condition
+     * @return int
+     */
+#end
+    int total(Map<String, Object> params, String condition);
 
 #if (${generateRemark} == true)
     /**
@@ -48,10 +64,10 @@ public interface ${ClassName}${suffix} {
      * @CreateTime: ${createTime}
      *
      * @param ${pkColumn.propertyName}
-     * @return ${ResponseClass}<${ClassName}${entityDTOSuffix}>
+     * @return ${ClassName}${entityDTOSuffix}
      */
 #end
-	${ResponseClass}<${ClassName}${entityDTOSuffix}> get(${pkJavaType} ${pkPropertyName});
+	${ClassName}${entityDTOSuffix} get(${pkJavaType} ${pkPropertyName});
 
 #if(${isView} == false)
 #if (${generateRemark} == true)
@@ -63,10 +79,10 @@ public interface ${ClassName}${suffix} {
      * @CreateTime: ${createTime}
      *
      * @param ${className}${entityDTOSuffix}
-     * @return ${ResponseClass}<String>
+     * @return int
      */
 #end
-	${ResponseClass}<String> save(${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix});
+	int save(${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix});
 
 #if (${generateRemark} == true)
     /**
@@ -78,10 +94,10 @@ public interface ${ClassName}${suffix} {
      *
      * @param ${pkColumn.propertyName}
      * @param ${className}${entityDTOSuffix}
-     * @return ${ResponseClass}<String>
+     * @return int
      */
 #end
-	${ResponseClass}<String> update(${pkJavaType} ${pkPropertyName}, ${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix});
+	int update(${pkJavaType} ${pkPropertyName}, ${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix});
 
 #if (${generateRemark} == true)
     /**
@@ -91,10 +107,10 @@ public interface ${ClassName}${suffix} {
      * @Author: ${author}
      * @CreateTime: ${createTime}
      *
-     * @param ${pkPropertyName}s
-     * @return ${ResponseClass}<String>
+     * @param ${pkPropertyName}List
+     * @return int
      */
 #end
-	${ResponseClass}<String> delete(String ${pkPropertyName}s);
+	int delete(List<String> ${pkPropertyName}List);
 #end
 }

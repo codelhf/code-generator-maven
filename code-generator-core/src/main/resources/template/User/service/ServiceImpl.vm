@@ -18,7 +18,6 @@
 package ${Template.getPackageName()};
 
 import com.alibaba.fastjson.JSON;
-import com.sitech.cmap.fw.core.wsg.${ResponseClass};
 import ${daoPackageName}.${ClassName}${daoSuffix};
 import ${entityDTOPackageName}.${ClassName}${entityDTOSuffix};
 import ${entityPackageName}.${ClassName}${entitySuffix};
@@ -27,15 +26,11 @@ import com.sitech.cmap.fw.core.common.EmptyValidator;
 import com.sitech.cmap.fw.core.common.bean.BeanConvertor;
 import com.sitech.cmap.fw.core.common.string.UUIDGenerator;
 import ${pageUtilPackageName}.PageUtil;
-import com.github.pagehelper.PageInfo;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -63,15 +58,20 @@ public class ${ClassName}${suffix} implements ${ClassName}${serviceSuffix} {
      * @param pageNum
      * @param pageSize
      * @param params
-     * @return ${ResponseClass}<PageInfo>
+     * @param condition
+     * @param sortKeys
+     * @return List<${ClassName}${entityDTOSuffix}>
      */
 #end
     @Override
-    public ${ResponseClass}<PageInfo> list(Integer pageNum, Integer pageSize, Map<String, Object> params, String condition, String... sortKeys) {
+    public List<${ClassName}${entityDTOSuffix}> list(Integer pageNum, Integer pageSize, Map<String, Object> params, String condition, String... sortKeys) {
         if (pageNum != null && pageSize != null) {
             PageUtil.initPage(pageNum, pageSize, sortKeys);
         }
-        ${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix} = JSON.parseObject(JSON.toJSONString(params), ${ClassName}${entityDTOSuffix}.class);
+        ${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix} = null;
+        if (params.size() > 6) {
+            ${className}${entityDTOSuffix} = JSON.parseObject(JSON.toJSONString(params), ${ClassName}${entityDTOSuffix}.class);
+        }
         List<${ClassName}${entitySuffix}> ${className}${entitySuffix}List = new ArrayList<>();
         if (EmptyValidator.isNotEmpty(${className}${entityDTOSuffix})) {
             ${className}${entitySuffix}List = ${className}${daoSuffix}.selectByExample(initExample(${className}${entityDTOSuffix}));
@@ -80,10 +80,37 @@ public class ${ClassName}${suffix} implements ${ClassName}${serviceSuffix} {
         } else {
             ${className}${entitySuffix}List = ${className}${daoSuffix}.selectAll();
         }
-        List<${ClassName}${entityDTOSuffix}> ${className}${entityDTOSuffix}List = BeanConvertor.getCopyList(${ClassName}${entityDTOSuffix}.class, ${className}${entitySuffix}List);
-        PageInfo pageInfo = new PageInfo<>(${className}${entitySuffix}List);
-        pageInfo.setList(${className}${entityDTOSuffix}List);
-        return ${ResponseClass}.createBySuccess(pageInfo);
+        return BeanConvertor.getCopyList(${ClassName}${entityDTOSuffix}.class, ${className}${entitySuffix}List);
+    }
+
+#if (${generateRemark} == true)
+    /**
+     * @Title: list
+     * @Description: 查询 ${ClassName}${entitySuffix} 列表总量
+     * @Company: ${company}
+     * @Author: ${author}
+     * @CreateTime: ${createTime}
+     *
+     * @param params
+     * @param condition
+     * @return int
+     */
+#end
+    @Override
+    public int total(Map<String, Object> params, String condition) {
+        ${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix} = null;
+        if (params.size() > 6) {
+            ${className}${entityDTOSuffix} = JSON.parseObject(JSON.toJSONString(params), ${ClassName}${entityDTOSuffix}.class);
+        }
+        int ${className}${entitySuffix}Total = 0;
+        if (EmptyValidator.isNotEmpty(${className}${entityDTOSuffix})) {
+            ${className}${entitySuffix}Total = ${className}${daoSuffix}.selectCountByExample(initExample(${className}${entityDTOSuffix}));
+        } else if (EmptyValidator.isNotEmpty(condition)) {
+            ${className}${entitySuffix}Total = ${className}${daoSuffix}.selectCountByExample(initFuzzyExample(condition));
+        } else {
+            ${className}${entitySuffix}Total = ${className}${daoSuffix}.selectCount(null);
+        }
+        return ${className}${entitySuffix}Total;
     }
 
 #if (${generateRemark} == true)
@@ -95,20 +122,13 @@ public class ${ClassName}${suffix} implements ${ClassName}${serviceSuffix} {
      * @CreateTime: ${createTime}
      *
      * @param ${pkPropertyName}
-     * @return ${ResponseClass}<${ClassName}${entityDTOSuffix}>
+     * @return ${ClassName}${entityDTOSuffix}
      */
 #end
     @Override
-    public ${ResponseClass}<${ClassName}${entityDTOSuffix}> get(${pkJavaType} ${pkPropertyName}) {
-        if (StringUtils.isBlank(String.valueOf(${pkPropertyName}))) {
-            return ${ResponseClass}.createByError("${pkPropertyName}不能为空");
-        }
+    public ${ClassName}${entityDTOSuffix} get(${pkJavaType} ${pkPropertyName}) {
         ${ClassName}${entitySuffix} ${className}${entitySuffix} = ${className}${daoSuffix}.selectByPrimaryKey(${pkPropertyName});
-        if (${className}${entitySuffix} == null) {
-            return ${ResponseClass}.createByError("${ClassName}${entitySuffix}不存在");
-        }
-        ${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix} = BeanConvertor.getCopyObject(${ClassName}${entityDTOSuffix}.class, ${className}${entitySuffix});
-        return ${ResponseClass}.createBySuccess(${className}${entityDTOSuffix});
+        return BeanConvertor.getCopyObject(${ClassName}${entityDTOSuffix}.class, ${className}${entitySuffix});
     }
 
 #if($isView == false)
@@ -121,20 +141,16 @@ public class ${ClassName}${suffix} implements ${ClassName}${serviceSuffix} {
      * @CreateTime: ${createTime}
      *
      * @param ${className}${entityDTOSuffix}
-     * @return ${ResponseClass}<String>
+     * @return int
      */
 #end
     @Override
-    public ${ResponseClass}<String> save(${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix}) {
+    public int save(${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix}) {
 #if(${pkJavaType} == 'String')
         ${className}${entityDTOSuffix}.set${StringUtil.firstToUpperCase(${pkPropertyName})}(UUIDGenerator.create());
 #end
         ${ClassName}${entitySuffix} ${className}${entitySuffix} = BeanConvertor.getCopyObject(${ClassName}${entitySuffix}.class, ${className}${entityDTOSuffix});
-        int rowCount = ${className}${daoSuffix}.insertSelective(${className}${entitySuffix});
-        if (rowCount != 1) {
-            return ${ResponseClass}.createByError("新增${ClassName}${entitySuffix}失败");
-        }
-        return ${ResponseClass}.createBySuccessMessage("新增${ClassName}${entitySuffix}成功");
+        return ${className}${daoSuffix}.insertSelective(${className}${entitySuffix});
     }
 
 #if (${generateRemark} == true)
@@ -147,21 +163,14 @@ public class ${ClassName}${suffix} implements ${ClassName}${serviceSuffix} {
      *
      * @param ${pkPropertyName}
      * @param ${className}${entityDTOSuffix}
-     * @return ${ResponseClass}<String>
+     * @return int
      */
 #end
     @Override
-    public ${ResponseClass}<String> update(${pkJavaType} ${pkPropertyName}, ${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix}) {
-        if (StringUtils.isBlank(String.valueOf(${pkPropertyName}))) {
-            return ${ResponseClass}.createByError("${pkPropertyName}不能为空");
-        }
+    public int update(${pkJavaType} ${pkPropertyName}, ${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix}) {
         ${className}${entityDTOSuffix}.set${StringUtil.firstToUpperCase(${pkPropertyName})}(${pkPropertyName});
         ${ClassName}${entitySuffix} ${className}${entitySuffix} = BeanConvertor.getCopyObject(${ClassName}${entitySuffix}.class, ${className}${entityDTOSuffix});
-        int rowCount = ${className}${daoSuffix}.updateByPrimaryKeySelective(${className}${entitySuffix});
-        if (rowCount != 1) {
-            return ${ResponseClass}.createByError("修改${ClassName}${entitySuffix}失败");
-        }
-        return ${ResponseClass}.createBySuccessMessage("修改${ClassName}${entitySuffix}成功");
+        return ${className}${daoSuffix}.updateByPrimaryKeySelective(${className}${entitySuffix});
     }
 
 #if (${generateRemark} == true)
@@ -172,16 +181,12 @@ public class ${ClassName}${suffix} implements ${ClassName}${serviceSuffix} {
      * @Author: ${author}
      * @CreateTime: ${createTime}
      *
-     * @param ${pkPropertyName}s
-     * @return ${ResponseClass}<String>
+     * @param ${pkPropertyName}List
+     * @return int
      */
 #end
     @Override
-    public ${ResponseClass}<String> delete(String ${pkPropertyName}s) {
-        List<String> ${pkPropertyName}List = Arrays.asList(${pkPropertyName}s.split(","));
-        if (CollectionUtils.isEmpty(${pkPropertyName}List)) {
-            return ${ResponseClass}.createByError("${pkPropertyName}不能为空");
-        }
+    public int delete(List<String> ${pkPropertyName}List) {
         List<${ClassName}${entitySuffix}> ${className}${entitySuffix}List = new ArrayList<>();
         for(String id: ${pkPropertyName}List) {
             ${ClassName}${entitySuffix} ${className}${entitySuffix} = new ${ClassName}${entitySuffix}();
@@ -192,11 +197,7 @@ public class ${ClassName}${suffix} implements ${ClassName}${serviceSuffix} {
 #end
             ${className}${entitySuffix}List.add(${className}${entitySuffix});
         }
-        int rowCount = ${className}${daoSuffix}.deleteBatchByIds(${className}${entitySuffix}List);
-        if (rowCount == 0 || rowCount < ${pkPropertyName}List.size()) {
-            return ${ResponseClass}.createByError("批量删除${ClassName}${entitySuffix}失败");
-        }
-        return ${ResponseClass}.createBySuccessMessage("批量删除${ClassName}${entitySuffix}成功");
+        return ${className}${daoSuffix}.deleteBatchByIds(${className}${entitySuffix}List);
     }
 #end
 
