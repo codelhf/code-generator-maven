@@ -51,9 +51,15 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
             });
         });
         //修改
-        $("#edit_omc_vnf_license").on("click", function() {
+        $(document).on("click", "#edit_${tableName}", function() {
+            var checked = $('input[name="checkboxs"]:checked');
+            if (checked.length <= 0) {
+                pop.warn(pop.msg.please_choose_one, function(){});
+                return;
+            }
             var entity_id = get${ClassName}Id();
             if (entity_id === null) {
+                pop.warn(pop.msg.please_choose_one, function(){});
                 return;
             }
             edit_${tableName}_dialog = $('#edit_${tableName}_div').ui_dialog({
