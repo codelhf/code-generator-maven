@@ -9,11 +9,11 @@
     </td>
 </tr>
 {{/if}}
-{{each list as item index}}
+{{each data as item index}}
 <tr>
     <td>
         <label class="js-checkbox replace-checkbox">
-            <input type="checkbox" name="checkboxs" value="{{item.${pkColumn.propertyName}}"/>
+            <input type="checkbox" name="checkboxs" value="{{item.${pkColumn.propertyName}}}"/>
             <span></span>
         </label>
     </td>

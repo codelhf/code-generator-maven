@@ -73,7 +73,7 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
                     if(result && result.code !== 'SUCCESS') {
                         pop.warn("加载数据失败：" + result.msg, function(){});
                     } else {
-                        $('#edit_${tableName}_div}').html(editTpl(result.data));
+                        $('#edit_${tableName}_div').html(editTpl(result.data));
                     }
                 });
             });
@@ -115,6 +115,7 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
         });
         // 新增和修改界面（edit.html）取消按钮
         $(document).on("click", "#cancel_edit_${tableName}", function() {
+            $("#edit_${tableName}_form").find("input").val("");
             edit_${tableName}_dialog.close();
         });
     }
@@ -134,7 +135,7 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
                     pop.warn("加载数据列表失败：" + result.msg, function(){});
                     return;
                 }
-                $("#tbody_${tableName}").html(listTpl(result.data));
+                $("#tbody_${tableName}").html(listTpl(result));
                 var paging = {
                     "everyPage": result.data.pageNum,
                     "totalPage": result.data.total
@@ -158,7 +159,7 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
     //获取选择的对象id
     function get${ClassName}Id() {
         var checkedBox =  $("input[name='checkboxs']:checked");
-        if (checkedBox.length === 1 ){
+        if (checkedBox.length !== 1 ){
             pop.warn(pop.msg.please_choose_one, function(){});
             return null;
         }

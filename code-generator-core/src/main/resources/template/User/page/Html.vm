@@ -36,7 +36,7 @@
                     <a href="#" class="link-list link-list-new" id="add_${tableName}">新增</a>
                 </li>
                 <li>
-                    <a href="#" class="link-list link-list-edit" id="edit_${tableName}">修改</a>
+                    <a href="#" class="link-list link-list-modify" id="edit_${tableName}">修改</a>
                 </li>
                 <li>
                     <a href="#" class="link-list link-list-del" id="delete_${tableName}">删除</a>

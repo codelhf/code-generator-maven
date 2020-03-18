@@ -1,22 +1,22 @@
 <!-- 新增和修改 -->
 <div class="" id="edit_${tableName}_div">
     <form enctype="multipart/form-data" id="edit_${tableName}_form">
+        <input name="${pkColumn.propertyName}" type="hidden" value="{{${pkColumn.propertyName}}}">
         <div class="fs-14 bgc-white pd-20">
-#set($length = ${fullColumn.size()} - 1)
-#foreach($step in [0..$length])
-#if($step == 0 || $step % 2 == 0)
+#set($step = 0)
+#foreach($column in ${fullColumn})
+#set($propertyName = ${column.propertyName})
+#if(${propertyName} != ${pkColumn.propertyName})
+#set($step = $step + 1)
+#if($step % 2 == 1)
             <div class="clear mgb-20">
+#end
                 <div class="col-6 select-ty">
-                    <span>${fullColumn.get($step).getPropertyName()}：</span>
-                    <input type="text" id="${fullColumn.get($step).getPropertyName()}" name="${fullColumn.get($step).getPropertyName()}" value="{{${fullColumn.get($step).getPropertyName()}}}" required="true"/>
-                </div>
-#set($stepNext = $step + 1)
-#if($stepNext <= $length)
-                <div class="col-6 select-ty">
-                    <span>${fullColumn.get($stepNext).getPropertyName()}：</span>
-                    <input type="text" id="${fullColumn.get($stepNext).getPropertyName()}" name="${fullColumn.get($stepNext).getPropertyName()}" value="{{${fullColumn.get($stepNext).getPropertyName()}}}" required="true"/>
+                    <span>${propertyName}：</span>
+                    <input type="text" id="${propertyName}" name="${propertyName}" value="{{${propertyName}}}" required="true"/>
                 </div>
 #end
+#if($step % 2 == 0)
             </div>
 #end
 #end
