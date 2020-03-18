@@ -10,8 +10,8 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${ClassName}</title>
-    #set($a = '<!-- #include virtual="/npage/sys/link.html" -->')$a
-    #set($a = '<!-- #include virtual="/npage/paas/link.html" -->')$a
+    #set($a = '<!--#include virtual="/npage/sys/link.html" -->')$a
+    #set($a = '<!--#include virtual="/npage/paas/link.html" -->')$a
 </head>
 <body>
 <!--主体内容-->

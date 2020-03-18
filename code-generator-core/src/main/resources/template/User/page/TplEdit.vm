@@ -1,5 +1,5 @@
 <!-- 新增和修改 -->
-<div class="none" id="edit_${tableName}_div}">
+<div class="" id="edit_${tableName}_div">
     <form enctype="multipart/form-data" id="edit_${tableName}_form">
         <div class="fs-14 bgc-white pd-20">
 #set($length = ${fullColumn.size()} - 1)
