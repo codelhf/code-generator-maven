@@ -13,7 +13,7 @@
 <tr>
     <td>
         <label class="js-checkbox replace-checkbox">
-            <input type="checkbox" name="checkboxs" value="{{item.id}}"/>
+            <input type="checkbox" name="checkboxs" value="{{item.${pkColumn.propertyName}}"/>
             <span></span>
         </label>
     </td>
