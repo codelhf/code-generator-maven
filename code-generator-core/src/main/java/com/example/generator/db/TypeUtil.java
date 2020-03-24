@@ -20,26 +20,26 @@ public class TypeUtil {
         switch (sqlType) {
             case Types.BIT:
             case Types.BOOLEAN:
-                sb.append("boolean");
+                sb.append("Boolean");
                 break;
             case Types.TINYINT:
-                sb.append("byte");
+                sb.append("Byte");
                 break;
             case Types.SMALLINT:
-                sb.append("short");
+                sb.append("Short");
                 break;
             case Types.INTEGER:
-                sb.append("int");
+                sb.append("Integer");
                 break;
             case Types.BIGINT:
-                sb.append("long");
+                sb.append("Long");
                 break;
             case Types.REAL:
-                sb.append("float");
+                sb.append("Float");
                 break;
             case Types.FLOAT:
             case Types.DOUBLE:
-                sb.append("double");
+                sb.append("Double");
                 break;
             case Types.DECIMAL:
             case Types.NUMERIC:
@@ -68,15 +68,15 @@ public class TypeUtil {
             case Types.BINARY:
             case Types.VARBINARY:
             case Types.LONGVARBINARY:
-                sb.append("byte[]");
+                sb.append("Byte[]");
                 break;
             case Types.NULL:
             case Types.OTHER:
             case Types.JAVA_OBJECT:
-                sb.append("object");
+                sb.append("Object");
                 break;
             default:
-                sb.append("object");
+                sb.append("Object");
 
         }
         return sb.toString();

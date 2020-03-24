@@ -62,7 +62,7 @@ public class ${ClassName}${suffix} {
     })
 #end
     @GetMapping("")
-    public WsgPageResult<List> list(@RequestParam(name = "params", required = false) Map<String, Object> params,
+    public WsgPageResult<List> list(@RequestParam Map<String, Object> params,
                                     @RequestParam(name = "currentPage", required = false) Integer currentPage,
                                     @RequestParam(name = "pageLimit", required = false) Integer pageLimit,
                                     @RequestParam(name = "condition", required = false) String condition,
