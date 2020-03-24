@@ -69,7 +69,7 @@ public class ${ClassName}${suffix} implements ${ClassName}${serviceSuffix} {
             PageUtil.initPage(pageNum, pageSize, sortKeys);
         }
         ${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix} = null;
-        if (params.size() > 6) {
+        if (params != null && params.size() > 6) {
             ${className}${entityDTOSuffix} = JSON.parseObject(JSON.toJSONString(params), ${ClassName}${entityDTOSuffix}.class);
         }
         List<${ClassName}${entitySuffix}> ${className}${entitySuffix}List = new ArrayList<>();
@@ -99,7 +99,7 @@ public class ${ClassName}${suffix} implements ${ClassName}${serviceSuffix} {
     @Override
     public int total(Map<String, Object> params, String condition) {
         ${ClassName}${entityDTOSuffix} ${className}${entityDTOSuffix} = null;
-        if (params.size() > 6) {
+        if (params != null && params.size() > 6) {
             ${className}${entityDTOSuffix} = JSON.parseObject(JSON.toJSONString(params), ${ClassName}${entityDTOSuffix}.class);
         }
         int ${className}${entitySuffix}Total = 0;

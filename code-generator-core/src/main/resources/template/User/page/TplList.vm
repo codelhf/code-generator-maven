@@ -3,7 +3,7 @@
 <tr>
     <td colspan="${colspan}">
         <p class="pdt-50 pdb-50 fs-30 color-9">
-            <img src="/nresource/pub-ui/images/alltable-nullimg1.png" alt="" />
+            <img src="/baseop/nresource/pub-ui/images/alltable-nullimg1.png" alt="" />
             <span class="mgl-20">暂无查询结果</span>
         </P>
     </td>

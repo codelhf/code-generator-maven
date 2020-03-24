@@ -62,13 +62,16 @@ public class ${ClassName}${suffix} {
     })
 #end
     @GetMapping("")
-    public WsgPageResult<List> list(@RequestParam Map<String, Object> params,
+    public WsgPageResult<List> list(@RequestParam(name = "params", required = false) Map<String, Object> params,
                                     @RequestParam(name = "currentPage", required = false) Integer currentPage,
                                     @RequestParam(name = "pageLimit", required = false) Integer pageLimit,
                                     @RequestParam(name = "condition", required = false) String condition,
                                     @RequestParam(name = "sort", required = false) String sort) {
         int total = ${className}${serviceSuffix}.total(params, condition);
         List<${ClassName}${entityDTOSuffix}> ${className}${entityDTOSuffix}List = ${className}${serviceSuffix}.list(currentPage, pageLimit, params, condition, sort);
+        if (currentPage == null || pageLimit == null) {
+            return new WsgPageResult<>(${className}${entityDTOSuffix}List, 0, 0, total);
+        }
         return new WsgPageResult<>(${className}${entityDTOSuffix}List, currentPage, pageLimit, total);
     }
 
