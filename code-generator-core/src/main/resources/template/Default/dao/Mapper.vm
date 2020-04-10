@@ -19,8 +19,11 @@
     </resultMap>
 #if (${commonMapper} == false)
     <sql id="Base_Column_List">
-        #foreach($column in ${fullColumn})${column.columnName},#end
-
+#set($baseColumnList = "")
+#foreach($column in ${fullColumn})
+    #set($baseColumnList = $baseColumnList + ${column.columnName} + ",")
+#end
+        ${StringUtil.subLastCharacter($baseColumnList)}
     </sql>
     <select id="selectByPrimaryKey" parameterType="${pkJavaType}" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
@@ -33,10 +36,16 @@
         where ${pkColumnName} = #{${pkPropertyName}, jdbcType=${pkJdbcType}}
     </delete>
     <insert id="insert" parameterType="${entityPackageName}.${ClassName}${entitySuffix}">
+#set($baseColumnList = "")
+#set($baseColumnListValues = "")
+#foreach($column in ${fullColumn})
+    #set($baseColumnList = $baseColumnList + "${column.columnName},")
+    #set($baseColumnListValues = $baseColumnListValues + "#{${column.propertyName}, jdbcType=${column.jdbcType}},")
+#end
         insert into ${tableName}
-        (#foreach($column in ${fullColumn})${column.columnName}, #end)
+        (${StringUtil.subLastCharacter($baseColumnList)})
         values
-        (#foreach($column in ${fullColumn})#{${column.propertyName}, jdbcType=${column.jdbcType}}, #end)
+        (${StringUtil.subLastCharacter($baseColumnListValues)})
     </insert>
     <insert id="insertSelective" parameterType="${entityPackageName}.${ClassName}${entitySuffix}">
         insert into ${tableName}
@@ -69,8 +78,15 @@
     <update id="updateByPrimaryKey" parameterType="${entityPackageName}.${ClassName}${entitySuffix}">
         update ${tableName}
         set
+#set($size = ${fullColumn.size()})
+#set($step = 0)
 #foreach($column in ${fullColumn})
+#if($step < $size)
             ${column.columnName} = #{${column.propertyName}, jdbcType=${column.jdbcType}},
+#else
+            ${column.columnName} = #{${column.propertyName}, jdbcType=${column.jdbcType}}
+#end
+#set($step = $step + 1)
 #end
         where ${pkColumnName} = #{${pkPropertyName}, jdbcType=${pkJdbcType}}
     </update>

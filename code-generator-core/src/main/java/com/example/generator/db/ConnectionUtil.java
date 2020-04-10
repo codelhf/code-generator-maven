@@ -14,8 +14,6 @@ import java.util.List;
 public class ConnectionUtil {
 
     private Connection connection;
-    private Statement statement;
-    private ResultSet resultSet;
 
     /**
      * 初始化数据库连接
@@ -41,28 +39,42 @@ public class ConnectionUtil {
      * @return 包含表结构数据的列表
      */
     public List<ColumnInfo> getMetaData(String tableName) throws SQLException {
-        ResultSet tempResultSet = connection.getMetaData().getPrimaryKeys(null, null, tableName);
+        DatabaseMetaData databaseMetaData = connection.getMetaData();
         String primaryKey = null;
-        if (tempResultSet.next()) {
-            primaryKey = tempResultSet.getObject(4).toString();
+        ResultSet primaryKeys = databaseMetaData.getPrimaryKeys(null, null, tableName);
+        if (primaryKeys.next()) {
+            primaryKey = primaryKeys.getObject(4).toString();
         }
         List<ColumnInfo> columnInfoList = new ArrayList<>();
-        statement = connection.createStatement();
-        String sql = "SELECT * FROM " + tableName + " WHERE 1 != 1";
-        resultSet = statement.executeQuery(sql);
-        ResultSetMetaData metaData = resultSet.getMetaData();
-        for (int i = 1; i <= metaData.getColumnCount(); i++) {
-            ColumnInfo info;
-            if (metaData.getColumnName(i).equals(primaryKey)) {
-                info = new ColumnInfo(metaData.getColumnName(i), metaData.getColumnType(i), true, "");
+        ResultSet columns = databaseMetaData.getColumns(null, getSchema(connection), tableName, "%");
+        while (columns.next()) {
+            String columnName = columns.getString("COLUMN_NAME");
+            int columnType = columns.getInt("DATA_TYPE");
+            String columnComment = columns.getString("REMARKS");
+            ColumnInfo columnInfo;
+            if (columnName.equals(primaryKey)) {
+                columnInfo = new ColumnInfo(columnName, columnType, true, columnComment);
             } else {
-                info = new ColumnInfo(metaData.getColumnName(i), metaData.getColumnType(i), false, "");
+                columnInfo = new ColumnInfo(columnName, columnType, false, columnComment);
             }
-            columnInfoList.add(info);
+            columnInfoList.add(columnInfo);
         }
-        statement.close();
-        resultSet.close();
+        primaryKeys.close();
+        columns.close();
         return columnInfoList;
+    }
+
+    //其他数据库不需要这个方法 oracle和db2需要
+    private static String getSchema(Connection conn) throws SQLException {
+        String driverName = conn.getMetaData().getDriverName();
+        if (!"oracle.jdbc.driver.OracleDriver".equals(driverName) && !"com.ibm.db2.jcc.DB2Driver".equals(driverName)) {
+            return null;
+        }
+        String schema = conn.getMetaData().getUserName();
+        if ((schema == null) || (schema.length() == 0)) {
+            throw new SQLException("ORACLE数据库模式不允许为空");
+        }
+        return schema.toUpperCase();
     }
 
     /**

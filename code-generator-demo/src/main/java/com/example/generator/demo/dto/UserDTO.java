@@ -6,8 +6,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Title: PrizeDTO
- * @Description: PrizeDTO对象
+ * @Title: UserDTO
+ * @Description: UserDTO对象
  * @Company: example
  * @Author: liuhf
  * @CreateTime: 2020/04/10 23:39:06
@@ -17,32 +17,26 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PrizeDTO implements Serializable {
+public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    //奖品表id
+    //ID
     private Integer id;
 
     //管理员id
     private Integer adminId;
 
-    //奖品等级
-    private String grade;
+    //用户所获奖品ID
+    private Integer prizeId;
 
-    //奖品名称
-    private String prize;
+    //用户头像
+    private String headImg;
 
-    //奖品排序
-    private Integer serial;
+    //用户名或昵称
+    private String username;
 
-    //奖品数量
-    private Integer stock;
-
-    //奖品重置数量
-    private Integer resetStock;
-
-    //奖品图片
-    private String image;
+    //用户备注
+    private String description;
 
     //创建时间
     private Date createTime;

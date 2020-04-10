@@ -15,7 +15,7 @@ import java.util.Map;
  * @Description: Prize控制层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-11-09 01:45:36
+ * @CreateTime: 2020/04/10 23:39:06
  */
 @RestController
 @RequestMapping(value = "/mm/prize")
@@ -39,10 +39,10 @@ public class PrizeController {
 
     @ApiOperation(value = "查询Prize对象}")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "id", value = "Prize主键", dataType = "int", required = true)
+        @ApiImplicitParam(name = "id", value = "Prize主键", dataType = "Integer", required = true)
     })
     @GetMapping("/{id}")
-    public ServerResponse<PrizeDTO> select(@PathVariable("id") int id) {
+    public ServerResponse<PrizeDTO> select(@PathVariable("id") Integer id) {
         return prizeService.select(id);
     }
 
@@ -57,11 +57,11 @@ public class PrizeController {
 
     @ApiOperation(value = "更新Prize对象")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "id", value = "Prize主键", dataType = "int", required = true),
+        @ApiImplicitParam(name = "id", value = "Prize主键", dataType = "Integer", required = true),
         @ApiImplicitParam(name = "prizeDTO", value = "PrizeDTO对象", dataType = "PrizeDTO", required = true)
     })
     @PutMapping("/{id}")
-    public ServerResponse<String> update(@PathVariable("id") int id,
+    public ServerResponse<String> update(@PathVariable("id") Integer id,
                                            @RequestBody PrizeDTO prizeDTO) {
         return prizeService.update(id, prizeDTO);
     }

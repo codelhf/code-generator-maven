@@ -3,10 +3,10 @@ package com.example.generator.demo.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.example.generator.demo.common.ResponseCode;
 import com.example.generator.demo.common.ServerResponse;
-import com.example.generator.demo.dao.PrizeMapper;
-import com.example.generator.demo.dto.PrizeDTO;
-import com.example.generator.demo.entity.Prize;
-import com.example.generator.demo.service.PrizeService;
+import com.example.generator.demo.dao.AdminMapper;
+import com.example.generator.demo.dto.AdminDTO;
+import com.example.generator.demo.entity.Admin;
+import com.example.generator.demo.service.AdminService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Splitter;
@@ -21,21 +21,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
-* @Title: PrizeServiceImpl
-* @Description: Prize业务层
+* @Title: AdminServiceImpl
+* @Description: Admin业务层
 * @Company: example
 * @Author: liuhf
 * @CreateTime: 2020/04/10 23:39:06
 */
 @Service
-public class PrizeServiceImpl implements PrizeService {
+public class AdminServiceImpl implements AdminService {
 
     @Autowired
-    private PrizeMapper prizeMapper;
+    private AdminMapper adminMapper;
 
     /**
      * @Title: list
-     * @Description: 查询Prize列表
+     * @Description: 查询Admin列表
      * @Company: example
      * @Author: liuhf
      * @CreateTime: 2020/04/10 23:39:06
@@ -50,88 +50,88 @@ public class PrizeServiceImpl implements PrizeService {
         if (pageNum != null && pageSize != null) {
             PageHelper.startPage(pageNum, pageSize);
         }
-        Prize prize = null;
+        Admin admin = null;
         if (CollectionUtils.isNotEmpty(params.values())) {
-            prize = JSON.parseObject(JSON.toJSONString(params), Prize.class);
+            admin = JSON.parseObject(JSON.toJSONString(params), Admin.class);
         }
-        List<Prize> prizeList = prizeMapper.selectPage(prize);
-        List<PrizeDTO> prizeDTOList = new ArrayList<>();
-        BeanUtils.copyProperties(prizeList, prizeDTOList, List.class);
-        PageInfo pageInfo = new PageInfo<>(prizeList);
-        pageInfo.setList(prizeDTOList);
+        List<Admin> adminList = adminMapper.selectPage(admin);
+        List<AdminDTO> adminDTOList = new ArrayList<>();
+        BeanUtils.copyProperties(adminList, adminDTOList, List.class);
+        PageInfo pageInfo = new PageInfo<>(adminList);
+        pageInfo.setList(adminDTOList);
         return ServerResponse.createBySuccess(pageInfo);
     }
     /**
      * @Title: select
-     * @Description: 查询Prize对象
+     * @Description: 查询Admin对象
      * @Company: example
      * @Author: liuhf
      * @CreateTime: 2020/04/10 23:39:06
      *
      * @param id
-     * @return ServerResponse<PrizeDTO>
+     * @return ServerResponse<AdminDTO>
      */
     @Override
-    public ServerResponse<PrizeDTO> select(Integer id) {
+    public ServerResponse<AdminDTO> select(Integer id) {
         if (StringUtils.isBlank(String.valueOf(id))) {
             return ServerResponse.createByErrorMessage("id不能为空");
         }
-        Prize prize = prizeMapper.selectByPrimaryKey(id);
-        if (prize == null) {
-            return ServerResponse.createByErrorMessage("Prize不存在");
+        Admin admin = adminMapper.selectByPrimaryKey(id);
+        if (admin == null) {
+            return ServerResponse.createByErrorMessage("Admin不存在");
         }
-        PrizeDTO prizeDTO = new PrizeDTO();
-        BeanUtils.copyProperties(prize, prizeDTO);
-        return ServerResponse.createBySuccess(prizeDTO);
+        AdminDTO adminDTO = new AdminDTO();
+        BeanUtils.copyProperties(admin, adminDTO);
+        return ServerResponse.createBySuccess(adminDTO);
     }
     /**
      * @Title: insert
-     * @Description: 保存Prize对象
+     * @Description: 保存Admin对象
      * @Company: example
      * @Author: liuhf
      * @CreateTime: 2020/04/10 23:39:06
      *
-     * @param prizeDTO
+     * @param adminDTO
      * @return ServerResponse<String>
      */
     @Override
-    public ServerResponse<String> insert(PrizeDTO prizeDTO) {
-        Prize prize = new Prize();
-        BeanUtils.copyProperties(prizeDTO, prize);
-        int rowCount = prizeMapper.insertSelective(prize);
+    public ServerResponse<String> insert(AdminDTO adminDTO) {
+        Admin admin = new Admin();
+        BeanUtils.copyProperties(adminDTO, admin);
+        int rowCount = adminMapper.insertSelective(admin);
         if (rowCount == 0) {
-            return ServerResponse.createByErrorMessage("新增Prize失败");
+            return ServerResponse.createByErrorMessage("新增Admin失败");
         }
-        return ServerResponse.createBySuccessMessage("新增Prize成功");
+        return ServerResponse.createBySuccessMessage("新增Admin成功");
     }
     /**
      * @Title: update
-     * @Description: 更新Prize对象
+     * @Description: 更新Admin对象
      * @Company: example
      * @Author: liuhf
      * @CreateTime: 2020/04/10 23:39:06
      *
      * @param id
-     * @param prizeDTO
+     * @param adminDTO
      * @return ServerResponse<String>
      */
     @Override
-    public ServerResponse<String> update(Integer id, PrizeDTO prizeDTO) {
+    public ServerResponse<String> update(Integer id, AdminDTO adminDTO) {
         if (StringUtils.isBlank(String.valueOf(id))) {
             return ServerResponse.createByErrorMessage("id不能为空");
         }
-        prizeDTO.setId(id);
-        Prize prize = new Prize();
-        BeanUtils.copyProperties(prizeDTO, prize);
-        int rowCount = prizeMapper.updateByPrimaryKeySelective(prize);
+        adminDTO.setId(id);
+        Admin admin = new Admin();
+        BeanUtils.copyProperties(adminDTO, admin);
+        int rowCount = adminMapper.updateByPrimaryKeySelective(admin);
         if (rowCount == 0) {
-            return ServerResponse.createByErrorMessage("更新Prize失败");
+            return ServerResponse.createByErrorMessage("更新Admin失败");
         }
-        return ServerResponse.createBySuccessMessage("更新Prize成功");
+        return ServerResponse.createBySuccessMessage("更新Admin成功");
     }
     /**
      * @Title: delete
-     * @Description: 批量删除Prize对象
+     * @Description: 批量删除Admin对象
      * @Company: example
      * @Author: liuhf
      * @CreateTime: 2020/04/10 23:39:06
@@ -145,10 +145,10 @@ public class PrizeServiceImpl implements PrizeService {
         if (CollectionUtils.isEmpty(idList)) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "id不能为空");
         }
-        int rowCount = prizeMapper.deleteBatchIds(idList);
+        int rowCount = adminMapper.deleteBatchIds(idList);
         if (rowCount == 0 || rowCount < idList.size()) {
-            return ServerResponse.createByErrorMessage("批量删除Prize失败");
+            return ServerResponse.createByErrorMessage("批量删除Admin失败");
         }
-        return ServerResponse.createBySuccessMessage("批量删除Prize成功");
+        return ServerResponse.createBySuccessMessage("批量删除Admin成功");
     }
 }

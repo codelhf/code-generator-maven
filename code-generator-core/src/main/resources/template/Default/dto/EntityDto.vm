@@ -22,8 +22,7 @@ public class ${ClassName}${suffix} implements Serializable {
     private static final long serialVersionUID = 1L;
 
 #foreach($column in ${fullColumn})
-    #if(${column.comment})//${column.comment}#end
-
+    //${column.comment}
     private ${column.javaType} ${column.propertyName};
 
 #end

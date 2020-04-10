@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Title: Prize
- * @Description: Prize实体对象
+ * @Title: User
+ * @Description: User实体对象
  * @Company: example
  * @Author: liuhf
  * @CreateTime: 2020/04/10 23:39:06
@@ -18,10 +18,10 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Prize implements Serializable {
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    //奖品表id
+    //ID
     @Id
     @Column(name = "id")
     private Integer id;
@@ -30,29 +30,21 @@ public class Prize implements Serializable {
     @Column(name = "admin_id")
     private Integer adminId;
 
-    //奖品等级
-    @Column(name = "grade")
-    private String grade;
+    //用户所获奖品ID
+    @Column(name = "prize_id")
+    private Integer prizeId;
 
-    //奖品名称
-    @Column(name = "prize")
-    private String prize;
+    //用户头像
+    @Column(name = "head_img")
+    private String headImg;
 
-    //奖品排序
-    @Column(name = "serial")
-    private Integer serial;
+    //用户名或昵称
+    @Column(name = "username")
+    private String username;
 
-    //奖品数量
-    @Column(name = "stock")
-    private Integer stock;
-
-    //奖品重置数量
-    @Column(name = "reset_stock")
-    private Integer resetStock;
-
-    //奖品图片
-    @Column(name = "image")
-    private String image;
+    //用户备注
+    @Column(name = "description")
+    private String description;
 
     //创建时间
     @Column(name = "create_time")

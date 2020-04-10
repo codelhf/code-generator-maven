@@ -1,23 +1,23 @@
 package com.example.generator.demo.service;
 
 import com.example.generator.demo.common.ServerResponse;
-import com.example.generator.demo.dto.PrizeDTO;
+import com.example.generator.demo.dto.UserDTO;
 import com.github.pagehelper.PageInfo;
 
 import java.util.Map;
 
 /**
- * @Title: PrizeService
- * @Description: Prize接口层
+ * @Title: UserService
+ * @Description: User接口层
  * @Company: example
  * @Author: liuhf
  * @CreateTime: 2020/04/10 23:39:06
  */
-public interface PrizeService {
+public interface UserService {
 
 	/**
 	 * @Title: list
-	 * @Description: 查询Prize列表
+	 * @Description: 查询User列表
 	 * @Company: example
 	 * @Author: liuhf
 	 * @CreateTime: 2020/04/10 23:39:06
@@ -31,44 +31,44 @@ public interface PrizeService {
 
     /**
      * @Title: select
-     * @Description: 查询Prize对象
+     * @Description: 查询User对象
      * @Company: example
      * @Author: liuhf
      * @CreateTime: 2020/04/10 23:39:06
      *
      * @param id
-     * @return ServerResponse<PrizeDTO>
+     * @return ServerResponse<UserDTO>
      */
-	ServerResponse<PrizeDTO> select(Integer id);
+	ServerResponse<UserDTO> select(Integer id);
 
     /**
      * @Title: insert
-     * @Description: 保存Prize对象
+     * @Description: 保存User对象
      * @Company: example
      * @Author: liuhf
      * @CreateTime: 2020/04/10 23:39:06
      *
-     * @param prizeDTO
+     * @param userDTO
      * @return ServerResponse<String>
      */
-	ServerResponse<String> insert(PrizeDTO prizeDTO);
+	ServerResponse<String> insert(UserDTO userDTO);
 
     /**
      * @Title: update
-     * @Description: 更新Prize对象
+     * @Description: 更新User对象
      * @Company: example
      * @Author: liuhf
      * @CreateTime: 2020/04/10 23:39:06
      *
      * @param id
-     * @param prizeDTO
+     * @param userDTO
      * @return ServerResponse<String>
      */
-	ServerResponse<String> update(Integer id, PrizeDTO prizeDTO);
+	ServerResponse<String> update(Integer id, UserDTO userDTO);
 
     /**
      * @Title: delete
-     * @Description: 批量删除Prize对象
+     * @Description: 批量删除User对象
      * @Company: example
      * @Author: liuhf
      * @CreateTime: 2020/04/10 23:39:06

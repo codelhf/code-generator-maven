@@ -94,10 +94,14 @@
 
     <!-- 数据库对应数据表-->
     <tables>
-        <table tableName="lottery_people" domainName="People">
+        <table tableName="lottery_admin" domainName="Admin">
+            <columnOverride columnName="head_img" jdbcType="VARCHAR"/>
         </table>
         <table tableName="lottery_prize" domainName="Prize">
             <columnOverride columnName="image" jdbcType="VARCHAR"/>
+        </table>
+        <table tableName="lottery_user" domainName="User">
+            <columnOverride columnName="head_img" jdbcType="VARCHAR"/>
         </table>
     </tables>
 

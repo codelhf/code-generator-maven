@@ -3,6 +3,7 @@ package ${Template.getPackageName()};
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,8 +23,11 @@ public class ${ClassName}${suffix} implements Serializable {
     private static final long serialVersionUID = 1L;
 
 #foreach($column in ${fullColumn})
-    #if(${column.comment})//${column.comment}#end
-
+    //${column.comment}
+#if(${column.isPrimaryKey()})
+    @Id
+#end
+    @Column(name = "${column.columnName}")
     private ${column.javaType} ${column.propertyName};
 
 #end

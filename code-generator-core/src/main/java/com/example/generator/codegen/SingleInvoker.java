@@ -36,6 +36,8 @@ public class SingleInvoker {
 
     private Configuration configuration;
 
+    private ConnectionUtil connectionUtil;
+
     public void execute() throws IOException, SQLException {
         //检验参数
         checkBeforeExecute();
@@ -68,7 +70,6 @@ public class SingleInvoker {
         //代码文件编码
         String fileEncode = commentGenerator.getFileEncode();
 
-
         //实体表信息
         data.put("isView", isView);
         data.put("ClassName", className);
@@ -84,16 +85,19 @@ public class SingleInvoker {
         VelocityEngine velocityEngine = VelocityUtil.getInstance();
         for (TemplateConfig template: templateList) {
             Template tpl = velocityEngine.getTemplate(template.getTemplate());
-            //设置包名,覆盖Template获取当前模板配置
+            //设置包名,设置Template获取当前模板配置
             data.put("Template", template);
             //文件生成路径支持相对路径和绝对路径
             String filePath = FileUtil.getGeneratePath(configFilePath, template.getDirectory(), template.getPackageName());
-            String fileName = template.getSuffix() + "." + template.getFileType();;
-            if (!template.isCommon()) {
+            String fileName = null;
+            if (template.isCommon()) {
+                //后缀加文件格式
+                fileName = template.getSuffix() + "." + template.getFileType();
+            } else {
                 //表名加后缀加文件格式
                 fileName = className + template.getSuffix() + "." + template.getFileType();
             }
-            //以 / 开头的文件名
+            //文件名包含 / 最后一个 / 后面为生成文件名
             if (fileName.contains("/")) {
                 int index = fileName.lastIndexOf("/");
                 filePath = filePath + StringUtil.firstToLowerCase(fileName.substring(0, index));
@@ -112,6 +116,9 @@ public class SingleInvoker {
         if (configuration == null) {
             throw new RuntimeException("configuration can not be null");
         }
+        if (connectionUtil == null) {
+            throw new RuntimeException("jdbcConnection can not be null");
+        }
         if (StringUtil.isBlank(tableName)) {
             throw new RuntimeException("Expect table's name, but get a blank String.");
         }
@@ -121,10 +128,6 @@ public class SingleInvoker {
     }
 
     private void initTableInfo() throws SQLException {
-        ConnectionUtil connectionUtil = new ConnectionUtil();
-        if (!connectionUtil.initConnection(configuration.getJdbcConnection())) {
-            throw new RuntimeException("Failed to connect to database at url:" + configuration.getJdbcConnection().getUrl());
-        }
         List<ColumnInfo> columnInfoList = connectionUtil.getMetaData(tableName);
         //修改用户自定义配置
         for (ColumnInfo columnInfo: columnInfoList) {
@@ -136,15 +139,14 @@ public class SingleInvoker {
                 for (ColumnOverride columnOverride: columnOverrideList) {
                     if (column.equals(columnOverride.getColumnName())) {
                         columnInfo.setJdbcType(columnOverride.getJdbcType());
+                        // TODO: 2019/11/8 javaTypeResolver
 //                        columnInfo.setJavaType(TypeUtil.jdbcTypeToJavaType(columnOverride.getJdbcType()));
                         break;
                     }
                 }
             }
         }
-        // TODO: 2019/11/8 javaTypeResolver
         this.fullColumn = columnInfoList;
-        connectionUtil.close();
     }
 
     private ColumnInfo getPrimaryKeyColumnInfo(List<ColumnInfo> list) {
@@ -207,5 +209,13 @@ public class SingleInvoker {
 
     public void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
+    }
+
+    public ConnectionUtil getConnectionUtil() {
+        return connectionUtil;
+    }
+
+    public void setConnectionUtil(ConnectionUtil connectionUtil) {
+        this.connectionUtil = connectionUtil;
     }
 }

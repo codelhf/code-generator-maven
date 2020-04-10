@@ -11,14 +11,14 @@ import java.util.List;
  * @Description: Prize持久层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-11-09 01:45:36
+ * @CreateTime: 2020/04/10 23:39:06
  */
 @Mapper
 public interface PrizeMapper  {
 
-    Prize selectByPrimaryKey(int id);
+    Prize selectByPrimaryKey(Integer id);
     
-    int deleteByPrimaryKey(int id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(Prize record);
 

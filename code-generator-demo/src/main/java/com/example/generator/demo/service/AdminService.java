@@ -1,26 +1,26 @@
 package com.example.generator.demo.service;
 
 import com.example.generator.demo.common.ServerResponse;
-import com.example.generator.demo.dto.PeopleDTO;
+import com.example.generator.demo.dto.AdminDTO;
 import com.github.pagehelper.PageInfo;
 
 import java.util.Map;
 
 /**
- * @Title: PeopleService
- * @Description: People接口层
+ * @Title: AdminService
+ * @Description: Admin接口层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-11-09 01:45:36
+ * @CreateTime: 2020/04/10 23:39:06
  */
-public interface PeopleService {
+public interface AdminService {
 
 	/**
 	 * @Title: list
-	 * @Description: 查询People列表
+	 * @Description: 查询Admin列表
 	 * @Company: example
 	 * @Author: liuhf
-	 * @CreateTime: 2019-11-09 01:45:36
+	 * @CreateTime: 2020/04/10 23:39:06
 	 *
 	 * @param pageNum
 	 * @param pageSize
@@ -31,47 +31,47 @@ public interface PeopleService {
 
     /**
      * @Title: select
-     * @Description: 查询People对象
+     * @Description: 查询Admin对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:45:36
+     * @CreateTime: 2020/04/10 23:39:06
      *
      * @param id
-     * @return ServerResponse<PeopleDTO>
+     * @return ServerResponse<AdminDTO>
      */
-	ServerResponse<PeopleDTO> select(int id);
+	ServerResponse<AdminDTO> select(Integer id);
 
     /**
      * @Title: insert
-     * @Description: 保存People对象
+     * @Description: 保存Admin对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:45:36
+     * @CreateTime: 2020/04/10 23:39:06
      *
-     * @param peopleDTO
+     * @param adminDTO
      * @return ServerResponse<String>
      */
-	ServerResponse<String> insert(PeopleDTO peopleDTO);
+	ServerResponse<String> insert(AdminDTO adminDTO);
 
     /**
      * @Title: update
-     * @Description: 更新People对象
+     * @Description: 更新Admin对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:45:36
+     * @CreateTime: 2020/04/10 23:39:06
      *
      * @param id
-     * @param peopleDTO
+     * @param adminDTO
      * @return ServerResponse<String>
      */
-	ServerResponse<String> update(int id, PeopleDTO peopleDTO);
+	ServerResponse<String> update(Integer id, AdminDTO adminDTO);
 
     /**
      * @Title: delete
-     * @Description: 批量删除People对象
+     * @Description: 批量删除Admin对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2019-11-09 01:45:36
+     * @CreateTime: 2020/04/10 23:39:06
      *
      * @param ids
      * @return ServerResponse<String>

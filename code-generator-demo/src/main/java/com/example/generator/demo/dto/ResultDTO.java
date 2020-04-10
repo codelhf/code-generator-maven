@@ -10,7 +10,7 @@ import java.util.Date;
  * @Description: ResultDTO对象
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2019-11-09 01:45:36
+ * @CreateTime: 2020/04/10 23:39:06
  */
 @Getter
 @Setter
@@ -20,16 +20,13 @@ import java.util.Date;
 public class ResultDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    //
+    //用户名或昵称
     private String username;
 
-    //
-    private String phone;
-
-    //
+    //奖品名称
     private String prize;
 
-    //
+    //奖品等级
     private String grade;
 
 }

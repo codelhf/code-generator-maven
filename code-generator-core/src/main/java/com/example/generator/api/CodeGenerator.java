@@ -2,6 +2,7 @@ package com.example.generator.api;
 
 import com.example.generator.codegen.SingleInvoker;
 import com.example.generator.config.*;
+import com.example.generator.db.ConnectionUtil;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -26,6 +27,11 @@ public class CodeGenerator {
     }
 
     public void generate() {
+        ConnectionUtil connectionUtil = new ConnectionUtil();
+        if (!connectionUtil.initConnection(configuration.getJdbcConnection())) {
+            throw new RuntimeException("Failed to connect to database at url:" + configuration.getJdbcConnection().getUrl());
+        }
+
         List<TableConfig> tableConfigurationList = configuration.getTableList();
         if (tableConfigurationList != null) {
             for (TableConfig tableConfiguration: tableConfigurationList) {
@@ -33,7 +39,7 @@ public class CodeGenerator {
                 String domainName = tableConfiguration.getDomainName();
                 List<ColumnOverride> columnOverrideList = tableConfiguration.getColumnOverrides();
                 GeneratedKey generatedKey = tableConfiguration.getGeneratedKey();
-                single(tableName, domainName, columnOverrideList, generatedKey, false, configuration);
+                single(tableName, domainName, columnOverrideList, generatedKey, false, configuration, connectionUtil);
             }
         }
 
@@ -43,13 +49,14 @@ public class CodeGenerator {
                 String viewName = viewConfiguration.getViewName();
                 String domainName = viewConfiguration.getDomainName();
                 List<ColumnOverride> columnOverrideList = viewConfiguration.getColumnOverrides();
-                single(viewName, domainName, columnOverrideList, null, true, configuration);
+                single(viewName, domainName, columnOverrideList, null, true, configuration, connectionUtil);
             }
         }
+        connectionUtil.close();
     }
 
     private static void single(String tableName, String className, List<ColumnOverride> columnOverrideList,
-                               GeneratedKey generatedKey, boolean isView, Configuration configuration) {
+                               GeneratedKey generatedKey, boolean isView, Configuration configuration, ConnectionUtil connectionUtil) {
         SingleInvoker invoker = new SingleInvoker();
         invoker.setTableName(tableName);
         invoker.setClassName(className);
@@ -57,6 +64,7 @@ public class CodeGenerator {
         invoker.setGeneratedKey(generatedKey);
         invoker.setView(isView);
         invoker.setConfiguration(configuration);
+        invoker.setConnectionUtil(connectionUtil);
         try {
             invoker.execute();
         } catch (IOException | SQLException e) {
