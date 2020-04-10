@@ -11,7 +11,7 @@ import java.util.Map;
  * @Description: Result接口层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2020/04/10 23:39:06
+ * @CreateTime: 2020/04/11 00:24:48
  */
 public interface ResultService {
 
@@ -20,7 +20,7 @@ public interface ResultService {
 	 * @Description: 查询Result列表
 	 * @Company: example
 	 * @Author: liuhf
-	 * @CreateTime: 2020/04/10 23:39:06
+	 * @CreateTime: 2020/04/11 00:24:48
 	 *
 	 * @param pageNum
 	 * @param pageSize
@@ -34,7 +34,7 @@ public interface ResultService {
      * @Description: 查询Result对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/10 23:39:06
+     * @CreateTime: 2020/04/11 00:24:48
      *
      * @param id
      * @return ServerResponse<ResultDTO>

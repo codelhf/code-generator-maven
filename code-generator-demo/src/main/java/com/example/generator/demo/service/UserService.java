@@ -11,7 +11,7 @@ import java.util.Map;
  * @Description: User接口层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2020/04/10 23:39:06
+ * @CreateTime: 2020/04/11 00:24:48
  */
 public interface UserService {
 
@@ -20,7 +20,7 @@ public interface UserService {
 	 * @Description: 查询User列表
 	 * @Company: example
 	 * @Author: liuhf
-	 * @CreateTime: 2020/04/10 23:39:06
+	 * @CreateTime: 2020/04/11 00:24:48
 	 *
 	 * @param pageNum
 	 * @param pageSize
@@ -34,7 +34,7 @@ public interface UserService {
      * @Description: 查询User对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/10 23:39:06
+     * @CreateTime: 2020/04/11 00:24:48
      *
      * @param id
      * @return ServerResponse<UserDTO>
@@ -46,7 +46,7 @@ public interface UserService {
      * @Description: 保存User对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/10 23:39:06
+     * @CreateTime: 2020/04/11 00:24:48
      *
      * @param userDTO
      * @return ServerResponse<String>
@@ -58,7 +58,7 @@ public interface UserService {
      * @Description: 更新User对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/10 23:39:06
+     * @CreateTime: 2020/04/11 00:24:48
      *
      * @param id
      * @param userDTO
@@ -71,7 +71,7 @@ public interface UserService {
      * @Description: 批量删除User对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/10 23:39:06
+     * @CreateTime: 2020/04/11 00:24:48
      *
      * @param ids
      * @return ServerResponse<String>

@@ -25,7 +25,7 @@ import java.util.Map;
 * @Description: Prize业务层
 * @Company: example
 * @Author: liuhf
-* @CreateTime: 2020/04/10 23:39:06
+* @CreateTime: 2020/04/11 00:24:48
 */
 @Service
 public class PrizeServiceImpl implements PrizeService {
@@ -38,7 +38,7 @@ public class PrizeServiceImpl implements PrizeService {
      * @Description: 查询Prize列表
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/10 23:39:06
+     * @CreateTime: 2020/04/11 00:24:48
      *
      * @param pageNum
      * @param pageSize
@@ -66,7 +66,7 @@ public class PrizeServiceImpl implements PrizeService {
      * @Description: 查询Prize对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/10 23:39:06
+     * @CreateTime: 2020/04/11 00:24:48
      *
      * @param id
      * @return ServerResponse<PrizeDTO>
@@ -89,7 +89,7 @@ public class PrizeServiceImpl implements PrizeService {
      * @Description: 保存Prize对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/10 23:39:06
+     * @CreateTime: 2020/04/11 00:24:48
      *
      * @param prizeDTO
      * @return ServerResponse<String>
@@ -109,7 +109,7 @@ public class PrizeServiceImpl implements PrizeService {
      * @Description: 更新Prize对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/10 23:39:06
+     * @CreateTime: 2020/04/11 00:24:48
      *
      * @param id
      * @param prizeDTO
@@ -134,7 +134,7 @@ public class PrizeServiceImpl implements PrizeService {
      * @Description: 批量删除Prize对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/10 23:39:06
+     * @CreateTime: 2020/04/11 00:24:48
      *
      * @param ids
      * @return ServerResponse<String>

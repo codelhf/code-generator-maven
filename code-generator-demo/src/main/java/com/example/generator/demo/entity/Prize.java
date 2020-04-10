@@ -11,7 +11,7 @@ import java.util.Date;
  * @Description: Prize实体对象
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2020/04/10 23:39:06
+ * @CreateTime: 2020/04/11 00:24:48
  */
 @Getter
 @Setter

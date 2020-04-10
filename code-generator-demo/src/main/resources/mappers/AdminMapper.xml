@@ -102,7 +102,7 @@
             username = #{username, jdbcType=VARCHAR},
             password = #{password, jdbcType=VARCHAR},
             create_time = #{createTime, jdbcType=TIMESTAMP},
-            update_time = #{updateTime, jdbcType=TIMESTAMP},
+            update_time = #{updateTime, jdbcType=TIMESTAMP}
         where id = #{id, jdbcType=INTEGER}
     </update>
     <delete id="deleteBatchIds" parameterType="map">

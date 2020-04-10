@@ -81,12 +81,12 @@
 #set($size = ${fullColumn.size()})
 #set($step = 0)
 #foreach($column in ${fullColumn})
+#set($step = $step + 1)
 #if($step < $size)
             ${column.columnName} = #{${column.propertyName}, jdbcType=${column.jdbcType}},
 #else
             ${column.columnName} = #{${column.propertyName}, jdbcType=${column.jdbcType}}
 #end
-#set($step = $step + 1)
 #end
         where ${pkColumnName} = #{${pkPropertyName}, jdbcType=${pkJdbcType}}
     </update>
