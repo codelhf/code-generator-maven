@@ -2,7 +2,6 @@ package com.example.generator.logging.log4j2;
 
 import com.example.generator.logging.AbstractLogFactory;
 import com.example.generator.logging.Log;
-import com.example.generator.logging.Log;
 
 public class Log4j2LoggingLogFactory implements AbstractLogFactory {
     @Override

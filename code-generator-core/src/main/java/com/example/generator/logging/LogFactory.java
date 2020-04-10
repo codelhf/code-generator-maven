@@ -6,10 +6,6 @@ import com.example.generator.logging.log4j.Log4jLoggingLogFactory;
 import com.example.generator.logging.log4j2.Log4j2LoggingLogFactory;
 import com.example.generator.logging.nologging.NoLoggingLogFactory;
 import com.example.generator.logging.slf4j.Slf4jLoggingLogFactory;
-import com.example.generator.logging.log4j2.Log4j2LoggingLogFactory;
-import com.example.generator.logging.nologging.NoLoggingLogFactory;
-import com.example.generator.logging.slf4j.Slf4jLoggingLogFactory;
-import com.example.generator.util.Messages;
 import com.example.generator.util.Messages;
 
 public class LogFactory {

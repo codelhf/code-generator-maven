@@ -1,7 +1,6 @@
 package com.example.generator.logging.nologging;
 
 import com.example.generator.logging.Log;
-import com.example.generator.logging.Log;
 
 public class NoLoggingImpl implements Log {
 

@@ -2,8 +2,6 @@ package com.example.generator.logging.slf4j;
 
 import com.example.generator.logging.Log;
 import com.example.generator.logging.LogFactory;
-import com.example.generator.logging.Log;
-import com.example.generator.logging.LogFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.slf4j.spi.LocationAwareLogger;

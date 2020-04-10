@@ -1,7 +1,6 @@
 package com.example.generator.logging.jdk14;
 
 import com.example.generator.logging.Log;
-import com.example.generator.logging.Log;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

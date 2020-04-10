@@ -2,8 +2,6 @@ package com.example.generator.logging.log4j2;
 
 import com.example.generator.logging.Log;
 import com.example.generator.logging.LogFactory;
-import com.example.generator.logging.Log;
-import com.example.generator.logging.LogFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;

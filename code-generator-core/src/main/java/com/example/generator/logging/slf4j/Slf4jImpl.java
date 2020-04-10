@@ -1,7 +1,6 @@
 package com.example.generator.logging.slf4j;
 
 import com.example.generator.logging.Log;
-import com.example.generator.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
