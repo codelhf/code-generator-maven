@@ -11,7 +11,7 @@
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
             <el-button type="primary" icon="el-icon-refresh" @click="handleReset">重置</el-button>
-            <el-button type="primary" icon="el-icon-plus" @click="handleCreate">增加返回码</el-button>
+            <el-button type="primary" icon="el-icon-plus" @click="handleCreate">新增User</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -73,7 +73,7 @@
               <p>确定删除吗？</p>
               <div style="text-align: right; margin: 0">
                 <el-button size="mini" type="text" @click="cancelDelete(scope.$index)">取消</el-button>
-                <el-button type="primary" size="mini" @click="handleDelete(scope.$index,scope.row)">确定</el-button>
+                <el-button type="primary" size="mini" @click="handleDelete(scope.$index, scope.row)">确定</el-button>
               </div>
             </el-popover>
           </template>
@@ -122,7 +122,7 @@
 </template>
 
 <script>
-import { fetchUserList, fetchUser, createUser, updateUser, deleteUser } from '@/api/static/vue/src/view';
+import { fetchUserList, fetchUser, createUser, updateUser, deleteUser } from '@/api/user/index';
 import Pagination from '@/components/Pagination';
 
 export default {
@@ -198,13 +198,13 @@ export default {
       this.user = {};
     },
     handleEdit(index, row) {
-      fetchResultCode(row.id).then(res => {
+      fetchUser(row.id).then(res => {
         this.dialogFormVisible = true;
         this.user = res;
       });
     },
     handleDelete: function(index, row) {
-      deleteInfo(row.id).then(() => {
+      deleteUser(row.id).then(() => {
         this.getList();
         this.$refs[index].doClose();
         this.$message({

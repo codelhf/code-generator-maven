@@ -1,4 +1,4 @@
-#set($apiPackageName = ${api.getPackageName()})
+#set($apiPackageName = ${api.getPackageName()} + '/' + ${className} + ${api.getSuffix()})
 <template>
   <div class="page-container">
     <el-form :model="listQuery" :inline="true" label-width="120px" label-suffix=":">
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { fetch${ClassName}List, fetch${ClassName}, create${ClassName}, update${ClassName}, delete${ClassName} } from '@/api/${apiPackageName}';
+import { fetch${ClassName}List, fetch${ClassName}, create${ClassName}, update${ClassName}, delete${ClassName} } from '@/${apiPackageName}';
 import Pagination from '@/components/Pagination';
 
 export default {

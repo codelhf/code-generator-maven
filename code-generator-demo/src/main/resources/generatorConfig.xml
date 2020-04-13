@@ -85,22 +85,22 @@
                   suffix="Controller" fileType="java" isGenerate="true" override="true"/>
         <!--非common类型的suffix以 / 开头的生成在domainName目录下以suffix的最后为文件名-->
         <template name="html" template="template/User/page/Html.vm"
-                  directory="./src/main/resources" packageName="static/page/trace"
+                  directory="./src/main/resources/static" packageName="page/trace"
                   suffix="/index" fileType="html" isGenerate="true" override="true"/>
         <template name="js" template="template/User/page/JS.vm"
-                  directory="./src/main/resources" packageName="static/apps/trace"
+                  directory="./src/main/resources/static" packageName="apps/trace"
                   suffix="/js/index" fileType="js" isGenerate="true" override="true"/>
         <template name="tpl" template="template/User/page/TplEdit.vm"
-                  directory="./src/main/resources" packageName="static/apps/trace"
+                  directory="./src/main/resources/static" packageName="apps/trace"
                   suffix="/tpl/edit" fileType="tpl" isGenerate="true" override="true"/>
         <template name="tpl" template="template/User/page/TplList.vm"
-                  directory="./src/main/resources" packageName="static/apps/trace"
+                  directory="./src/main/resources/static" packageName="apps/trace"
                   suffix="/tpl/list" fileType="tpl" isGenerate="true" override="true"/>
         <template name="api" template="template/User/vue/Api.vm"
-                  directory="./src/main/resources" packageName="static/vue/src/api"
+                  directory="./src/main/resources/static/vue/src" packageName="api"
                   suffix="/index" fileType="js" isGenerate="true" override="true"/>
-        <template name="api" template="template/User/vue/View.vm"
-                  directory="./src/main/resources" packageName="static/vue/src/view"
+        <template name="view" template="template/User/vue/View.vm"
+                  directory="./src/main/resources/static/vue/src" packageName="view"
                   suffix="/index" fileType="vue" isGenerate="true" override="true"/>
     </templates>
 
