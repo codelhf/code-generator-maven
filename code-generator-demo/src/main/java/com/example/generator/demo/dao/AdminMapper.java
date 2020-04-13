@@ -11,7 +11,7 @@ import java.util.List;
  * @Description: Admin持久层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2020/04/11 00:24:48
+ * @CreateTime: 2020/04/13 15:24:00
  */
 @Mapper
 public interface AdminMapper  {

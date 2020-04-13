@@ -84,12 +84,24 @@
                   directory="./src/main/java" packageName="com.example.generator.demo.controller"
                   suffix="Controller" fileType="java" isGenerate="true" override="true"/>
         <!--非common类型的suffix以 / 开头的生成在domainName目录下以suffix的最后为文件名-->
-<!--        <template name="html" template="template/User/page/Html.vm"-->
-<!--                  directory="F:\super-op\5G\onap\OMC\omc-ui\pnms_op_web_view" packageName="npage/trace"-->
-<!--                  suffix="/index" fileType="html" isGenerate="true" override="true"/>-->
-<!--        <template name="js" template="template/User/page/JS.vm"-->
-<!--                  directory="F:\super-op\5G\onap\OMC\omc-ui\pnms_op_web_view" packageName="apps/trace"-->
-<!--                  suffix="/js/index" fileType="js" isGenerate="true" override="true"/>-->
+        <template name="html" template="template/User/page/Html.vm"
+                  directory="./src/main/resources" packageName="static/page/trace"
+                  suffix="/index" fileType="html" isGenerate="true" override="true"/>
+        <template name="js" template="template/User/page/JS.vm"
+                  directory="./src/main/resources" packageName="static/apps/trace"
+                  suffix="/js/index" fileType="js" isGenerate="true" override="true"/>
+        <template name="tpl" template="template/User/page/TplEdit.vm"
+                  directory="./src/main/resources" packageName="static/apps/trace"
+                  suffix="/tpl/edit" fileType="tpl" isGenerate="true" override="true"/>
+        <template name="tpl" template="template/User/page/TplList.vm"
+                  directory="./src/main/resources" packageName="static/apps/trace"
+                  suffix="/tpl/list" fileType="tpl" isGenerate="true" override="true"/>
+        <template name="api" template="template/User/vue/Api.vm"
+                  directory="./src/main/resources" packageName="static/vue/src/api"
+                  suffix="/index" fileType="js" isGenerate="true" override="true"/>
+        <template name="api" template="template/User/vue/View.vm"
+                  directory="./src/main/resources" packageName="static/vue/src/view"
+                  suffix="/index" fileType="vue" isGenerate="true" override="true"/>
     </templates>
 
     <!-- 数据库对应数据表-->

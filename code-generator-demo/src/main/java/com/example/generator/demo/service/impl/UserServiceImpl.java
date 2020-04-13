@@ -25,7 +25,7 @@ import java.util.Map;
 * @Description: User业务层
 * @Company: example
 * @Author: liuhf
-* @CreateTime: 2020/04/11 00:24:48
+* @CreateTime: 2020/04/13 15:24:00
 */
 @Service
 public class UserServiceImpl implements UserService {
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
      * @Description: 查询User列表
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/11 00:24:48
+     * @CreateTime: 2020/04/13 15:24:00
      *
      * @param pageNum
      * @param pageSize
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
      * @Description: 查询User对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/11 00:24:48
+     * @CreateTime: 2020/04/13 15:24:00
      *
      * @param id
      * @return ServerResponse<UserDTO>
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
      * @Description: 保存User对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/11 00:24:48
+     * @CreateTime: 2020/04/13 15:24:00
      *
      * @param userDTO
      * @return ServerResponse<String>
@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
      * @Description: 更新User对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/11 00:24:48
+     * @CreateTime: 2020/04/13 15:24:00
      *
      * @param id
      * @param userDTO
@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserService {
      * @Description: 批量删除User对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/11 00:24:48
+     * @CreateTime: 2020/04/13 15:24:00
      *
      * @param ids
      * @return ServerResponse<String>

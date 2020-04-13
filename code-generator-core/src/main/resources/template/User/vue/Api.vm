@@ -1,0 +1,44 @@
+import request from '@/utils/request'
+
+#if (${httpPrefix})
+  #set($RequestMapping = "${httpPrefix}/${className}")
+#else
+  #set($RequestMapping = "${className}")
+#end
+export function fetch${ClassName}List(query) {
+  return request({
+    url: '/${RequestMapping}',
+    method: 'GET',
+    params: query
+  })
+}
+
+export function fetch${ClassName}(id) {
+  return request({
+    url: '/${RequestMapping}/' + id,
+    method: 'GET'
+})
+}
+
+export function create${ClassName}(formData) {
+  return request({
+    url: '/${RequestMapping}',
+    method: 'POST',
+    data: formData
+  })
+}
+
+export function update${ClassName}(formData) {
+  return request({
+    url: '/${RequestMapping}/' + formData.id,
+    method: 'PUT',
+    data: formData
+  })
+}
+
+export function delete${ClassName}(ids) {
+  return request({
+    url: '/${RequestMapping}/' + ids,
+    method: 'DELETE'
+  })
+}
