@@ -1,6 +1,7 @@
 #set($apiPackageName = ${api.getPackageName()} + '/' + ${className} + ${api.getSuffix()})
 <template>
   <div class="page-container">
+    <!-- 搜索表单 -->
     <el-form :model="listQuery" :inline="true" label-width="120px" label-suffix=":">
       <el-row>
         <el-form-item label="关键字">
@@ -17,7 +18,7 @@
         </el-col>
       </el-row>
     </el-form>
-
+    <!-- 列表 -->
     <el-table
       :key="tableKey"
       v-loading="listLoading"
@@ -34,22 +35,26 @@
 #end
       <el-table-column label="操作" align="center" width="160">
         <template slot-scope="scope">
-          <i title="编辑" class="el-icon-edit-outline action_icon" @click="handleEdit(#set($a = 'scope.$index')$a, scope.row)"/>
-          <template>
-            <el-popover :ref="#set($a = 'scope.$index')$a" placement="top" width="160" trigger="click">
-              <i slot="reference" title="删除" class="el-icon-delete action_icon" />
-              <p>确定删除吗？</p>
-              <div style="text-align: right; margin: 0">
-                <el-button size="mini" type="text" @click="cancelDelete(#set($a = 'scope.$index')$a)">取消</el-button>
-                <el-button type="primary" size="mini" @click="handleDelete(#set($a = 'scope.$index')$a, scope.row)">确定</el-button>
-              </div>
-            </el-popover>
-          </template>
+          <el-button size="mini" cricle title="编辑" icon="el-icon-edit-outline" @click="handleEdit(#set($a = 'scope.$index')$a, scope.row)"/>
+          <el-popover :ref="#set($a = 'scope.$index')$a" placement="top" width="160" trigger="click">
+            <p>确定删除吗？</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="cancelDelete(#set($a = 'scope.$index')$a)">取消</el-button>
+              <el-button type="primary" size="mini" @click="handleDelete(#set($a = 'scope.$index')$a, scope.row)">确定</el-button>
+            </div>
+            <el-button size="mini" cricle title="删除" icon="el-icon-delete action_icon" slot="reference" />
+          </el-popover>
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageLimit" @pagination="getList" />
-
+    <!-- 分页 -->
+    <pagination
+       v-show="total>0"
+       :total="total"
+       :page.sync="listQuery.currentPage"
+       :limit.sync="listQuery.pageLimit"
+       @pagination="getList" />
+    <!-- dialog表单 -->
     <el-dialog
       :title="${className}.id ? '修改${ClassName}' : '新增${ClassName}'"
       :visible.sync="dialogFormVisible"
@@ -156,9 +161,11 @@ export default {
         this.${className} = res;
       });
     },
+    cancelDelete: function(id) {
+      #set($a = 'this.$refs[id].doClose();')$a
+    },
     handleDelete: function(index, row) {
       delete${ClassName}(row.id).then(() => {
-        this.getList();
         #set($a = 'this.$refs[index].doClose();')$a
         this.#set($a = '$message')$a({
           type: 'success',
@@ -166,10 +173,8 @@ export default {
           duration: 1500,
           forbidClick: true
         });
+        this.getList();
       });
-    },
-    cancelDelete: function(id) {
-      #set($a = 'this.$refs[id].doClose();')$a
     },
     handleFormClose: function(formName) {
       #set($a = 'this.$refs[formName].resetFields();')$a
@@ -183,15 +188,15 @@ export default {
             create${ClassName}(this.${className}).then(res => {
               this.dialogFormVisible = false;
               this.getList();
-            })
+            });
           } else {
             update${ClassName}(this.${className}).then(res => {
               this.dialogFormVisible = false;
               this.getList();
-            })
+            });
           }
         }
-      })
+      });
     }
   }
 }
