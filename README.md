@@ -16,9 +16,9 @@ mvn clean install
 <plugin>
     <groupId>com.example.generator</groupId>
     <artifactId>code-generator-maven-plugin</artifactId>
-    <version>2.1.0-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
     <!--<configuration>-->
-        <!--<configurationFile>src/main/resources/test/generatorConfig-test.xml</configurationFile>-->
+        <!--<configurationFile>src/test/resources/generatorConfig-test.xml</configurationFile>-->
     <!--</configuration>-->
     <dependencies>
         <dependency>
@@ -36,14 +36,14 @@ mvn clean install
 <!--标签为对象, property为对象的属性-->
 <generatorConfiguration>
     <!--导入配置文件,非必须参数-->
-    <properties resource="datasource.properties"/>
+    <!--<properties resource="datasource.properties"/>-->
 
     <!--jdbc的数据库连接 -->
     <jdbcConnection>
         <!--driverLocation非必须参数-->
-        <property name="driverLocation" value="src/main/resources/mysql-connector-java-5.1.6-bin.jar"/>
+        <!--<property name="driverLocation" value="src/main/resources/mysql-connector-java-5.1.6-bin.jar"/>-->
         <!--driverClass非必须参数-->
-        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <!--<property name="driverClass" value="com.mysql.jdbc.Driver"/>-->
         <property name="url" value="jdbc:mysql://localhost:3306/lottery?characterEncoding=utf-8"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
