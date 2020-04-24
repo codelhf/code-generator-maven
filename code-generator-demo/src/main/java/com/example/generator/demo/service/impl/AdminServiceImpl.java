@@ -25,7 +25,7 @@ import java.util.Map;
 * @Description: Admin业务层
 * @Company: example
 * @Author: liuhf
-* @CreateTime: 2020/04/13 16:00:43
+* @CreateTime: 2020/04/24 22:31:44
 */
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -38,7 +38,7 @@ public class AdminServiceImpl implements AdminService {
      * @Description: 查询Admin列表
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/13 16:00:43
+     * @CreateTime: 2020/04/24 22:31:44
      *
      * @param pageNum
      * @param pageSize
@@ -66,7 +66,7 @@ public class AdminServiceImpl implements AdminService {
      * @Description: 查询Admin对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/13 16:00:43
+     * @CreateTime: 2020/04/24 22:31:44
      *
      * @param id
      * @return ServerResponse<AdminDTO>
@@ -89,7 +89,7 @@ public class AdminServiceImpl implements AdminService {
      * @Description: 保存Admin对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/13 16:00:43
+     * @CreateTime: 2020/04/24 22:31:44
      *
      * @param adminDTO
      * @return ServerResponse<String>
@@ -109,7 +109,7 @@ public class AdminServiceImpl implements AdminService {
      * @Description: 更新Admin对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/13 16:00:43
+     * @CreateTime: 2020/04/24 22:31:44
      *
      * @param id
      * @param adminDTO
@@ -134,7 +134,7 @@ public class AdminServiceImpl implements AdminService {
      * @Description: 批量删除Admin对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/13 16:00:43
+     * @CreateTime: 2020/04/24 22:31:44
      *
      * @param ids
      * @return ServerResponse<String>

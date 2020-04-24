@@ -5,12 +5,7 @@
 
     <groupId>com.example.generator</groupId>
     <artifactId>code-generator</artifactId>
-    <version>2.1.0-SNAPSHOT</version>
-    <modules>
-        <module>code-generator-core</module>
-        <module>code-generator-maven-plugin</module>
-        <module>code-generator-demo</module>
-    </modules>
+    <version>2.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>code-generator</name>
@@ -22,6 +17,12 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+
+    <modules>
+        <module>code-generator-core</module>
+        <module>code-generator-maven-plugin</module>
+        <module>code-generator-demo</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>
@@ -92,6 +93,7 @@
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.0</version>
                     <configuration>
@@ -101,6 +103,7 @@
                     </configuration>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
                     <version>3.5.1</version>
                 </plugin>

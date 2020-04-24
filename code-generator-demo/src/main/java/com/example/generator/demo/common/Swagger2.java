@@ -21,7 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @Description: Swagger2接口文档配置类
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2020/04/13 16:00:44
+ * @CreateTime: 2020/04/24 22:31:44
  */
 @Configuration
 @EnableSwagger2 //启用Swagger2

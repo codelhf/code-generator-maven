@@ -1,3 +1,4 @@
+#set($apiPackageName = ${api.getPackageName()} + '/' + ${className} + ${api.getSuffix()})
 <template>
   <div class="page-container">
     <!-- 搜索表单 -->
@@ -12,7 +13,7 @@
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
             <el-button type="primary" icon="el-icon-refresh" @click="handleReset">重置</el-button>
-            <el-button type="primary" icon="el-icon-plus" @click="handleCreate">新增Result</el-button>
+            <el-button type="primary" icon="el-icon-plus" @click="handleCreate">新增${ClassName}</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -25,29 +26,21 @@
       highlight-current-row
       border="border"
     >
-      <el-table-column label="用户名或昵称" align="center" width="100">
+#foreach($column in ${fullColumn})
+      <el-table-column label="${column.comment}" align="center" width="100">
         <template slot-scope="scope">
-          <span>{{ scope.row.username }}</span>
+          <span>{{ scope.row.${column.propertyName} }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="奖品名称" align="center" width="100">
-        <template slot-scope="scope">
-          <span>{{ scope.row.prize }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="奖品等级" align="center" width="100">
-        <template slot-scope="scope">
-          <span>{{ scope.row.grade }}</span>
-        </template>
-      </el-table-column>
+#end
       <el-table-column label="操作" align="center" width="160">
         <template slot-scope="scope">
-          <el-button size="mini" cricle title="编辑" icon="el-icon-edit-outline" @click="handleEdit(scope.$index, scope.row)"/>
-          <el-popover :ref="scope.$index" placement="top" width="160" trigger="click">
+          <el-button size="mini" cricle title="编辑" icon="el-icon-edit-outline" @click="handleEdit(#set($a = 'scope.$index')$a, scope.row)"/>
+          <el-popover :ref="#set($a = 'scope.$index')$a" placement="top" width="160" trigger="click">
             <p>确定删除吗？</p>
             <div style="text-align: right; margin: 0">
-              <el-button size="mini" type="text" @click="cancelDelete(scope.$index)">取消</el-button>
-              <el-button type="primary" size="mini" @click="handleDelete(scope.$index, scope.row)">确定</el-button>
+              <el-button size="mini" type="text" @click="cancelDelete(#set($a = 'scope.$index')$a)">取消</el-button>
+              <el-button type="primary" size="mini" @click="handleDelete(#set($a = 'scope.$index')$a, scope.row)">确定</el-button>
             </div>
             <el-button size="mini" cricle title="删除" icon="el-icon-delete action_icon" slot="reference" />
           </el-popover>
@@ -63,35 +56,31 @@
        @pagination="getList" />
     <!-- dialog表单 -->
     <el-dialog
-      :title="result.id ? '修改Result' : '新增Result'"
+      :title="${className}.id ? '修改${ClassName}' : '新增${ClassName}'"
       :visible.sync="dialogFormVisible"
-      @close="handleFormClose('resultForm')"
+      @close="handleFormClose('${className}Form')"
     >
-      <el-form ref="resultForm" :model="result" :rules="resultRules" label-width="130px" label-suffix=":">
-      <el-form-item label="用户名或昵称" prop="username">
-        <el-input v-model="result.username" placeholder="请输入用户名或昵称" />
+      <el-form ref="${className}Form" :model="${className}" :rules="${className}Rules" label-width="130px" label-suffix=":">
+#foreach($column in ${fullColumn})
+      <el-form-item label="${column.comment}" prop="${column.propertyName}">
+        <el-input v-model="${className}.${column.propertyName}" placeholder="请输入${column.comment}" />
       </el-form-item>
-      <el-form-item label="奖品名称" prop="prize">
-        <el-input v-model="result.prize" placeholder="请输入奖品名称" />
-      </el-form-item>
-      <el-form-item label="奖品等级" prop="grade">
-        <el-input v-model="result.grade" placeholder="请输入奖品等级" />
-      </el-form-item>
+#end
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="handleFormClose('resultForm')">返回</el-button>
-        <el-button type="primary" @click="handleSubmit('resultForm')">确定</el-button>
+        <el-button @click="handleFormClose('${className}Form')">返回</el-button>
+        <el-button type="primary" @click="handleSubmit('${className}Form')">确定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { fetchResultList, fetchResult, createResult, updateResult, deleteResult } from '@/api/result/index';
+import { fetch${ClassName}List, fetch${ClassName}, create${ClassName}, update${ClassName}, delete${ClassName} } from '@/${apiPackageName}';
 import Pagination from '@/components/Pagination';
 
 export default {
-  name: 'Result',
+  name: '${ClassName}',
   components: {
     Pagination
   },
@@ -108,15 +97,29 @@ export default {
         keyword: ''
       },
       dialogFormVisible: false,
-      result: {
-        username: '',
-        prize: '',
-        grade: ''
+      ${className}: {
+#set($size = ${fullColumn.size()})
+#set($step = 0)
+#foreach($column in ${fullColumn})
+#set($step = $step + 1)
+#if($step < $size)
+        ${column.propertyName}: '',
+#else
+        ${column.propertyName}: ''
+#end
+#end
       },
-      resultRules: {
-        username: [{ required: true, message: '用户名或昵称不能为空', trigger: 'blur' }],
-        prize: [{ required: true, message: '奖品名称不能为空', trigger: 'blur' }],
-        grade: [{ required: true, message: '奖品等级不能为空', trigger: 'blur' }]
+      ${className}Rules: {
+#set($size = ${fullColumn.size()})
+#set($step = 0)
+#foreach($column in ${fullColumn})
+#set($step = $step + 1)
+#if($step < $size)
+        ${column.propertyName}: [{ required: true, message: '${column.comment}不能为空', trigger: 'blur' }],
+#else
+        ${column.propertyName}: [{ required: true, message: '${column.comment}不能为空', trigger: 'blur' }]
+#end
+#end
       }
     }
   },
@@ -126,7 +129,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true;
-      fetchResultList(this.listQuery)
+      fetch${ClassName}List(this.listQuery)
         .then(response => {
           this.list = response.data;
           this.total = response.totalCount;
@@ -150,21 +153,21 @@ export default {
     },
     handleCreate() {
       this.dialogFormVisible = true;
-      this.result = {};
+      this.${className} = {};
     },
     handleEdit(index, row) {
-      fetchResult(row.id).then(res => {
+      fetch${ClassName}(row.id).then(res => {
         this.dialogFormVisible = true;
-        this.result = res;
+        this.${className} = res;
       });
     },
     cancelDelete: function(id) {
-      this.$refs[id].doClose();
+      #set($a = 'this.$refs[id].doClose();')$a
     },
     handleDelete: function(index, row) {
-      deleteResult(row.id).then(() => {
-        this.$refs[index].doClose();
-        this.$message({
+      delete${ClassName}(row.id).then(() => {
+        #set($a = 'this.$refs[index].doClose();')$a
+        this.#set($a = '$message')$a({
           type: 'success',
           message: '删除成功',
           duration: 1500,
@@ -174,20 +177,20 @@ export default {
       });
     },
     handleFormClose: function(formName) {
-      this.$refs[formName].resetFields();
-      this.result = {};
+      #set($a = 'this.$refs[formName].resetFields();')$a
+      this.${className} = {};
       this.dialogFormVisible = false;
     },
     handleSubmit(formName) {
-      this.$refs[formName].validate(valid => {
+      #set($a = 'this.$refs[formName].validate')$a(valid => {
         if (valid) {
-          if (!this.result.id) {
-            createResult(this.result).then(res => {
+          if (!this.${className}.id) {
+            create${ClassName}(this.${className}).then(res => {
               this.dialogFormVisible = false;
               this.getList();
             });
           } else {
-            updateResult(this.result).then(res => {
+            update${ClassName}(this.${className}).then(res => {
               this.dialogFormVisible = false;
               this.getList();
             });

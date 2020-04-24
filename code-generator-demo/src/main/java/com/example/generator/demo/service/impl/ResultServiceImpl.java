@@ -25,7 +25,7 @@ import java.util.Map;
 * @Description: Result业务层
 * @Company: example
 * @Author: liuhf
-* @CreateTime: 2020/04/13 16:00:44
+* @CreateTime: 2020/04/24 22:31:44
 */
 @Service
 public class ResultServiceImpl implements ResultService {
@@ -38,7 +38,7 @@ public class ResultServiceImpl implements ResultService {
      * @Description: 查询Result列表
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/13 16:00:44
+     * @CreateTime: 2020/04/24 22:31:44
      *
      * @param pageNum
      * @param pageSize
@@ -66,7 +66,7 @@ public class ResultServiceImpl implements ResultService {
      * @Description: 查询Result对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/13 16:00:44
+     * @CreateTime: 2020/04/24 22:31:44
      *
      * @param id
      * @return ServerResponse<ResultDTO>

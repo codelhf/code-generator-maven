@@ -10,7 +10,7 @@ git clone git@github.com:codelhf/generator.git
 ```$xslt
 mvn clean install
 ```
-3. 在项目中引入插件
+3. 在目标项目中引入插件
 > 版本号和code-generator保持一致
 ```
 <plugin>
@@ -30,7 +30,7 @@ mvn clean install
 </plugin>
 ```
 ### 配置文件
-1. 在项目中添加配置文件
+1. 在目标项目中添加配置文件
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <!--标签为对象, property为对象的属性-->
@@ -115,12 +115,24 @@ mvn clean install
                   directory="./src/main/java" packageName="com.example.generator.demo.controller"
                   suffix="Controller" fileType="java" isGenerate="true" override="true"/>
         <!--非common类型的suffix以 / 开头的生成在domainName目录下以suffix的最后为文件名-->
-<!--        <template name="html" template="template/User/page/Html.vm"-->
-<!--                  directory="F:\super-op\5G\onap\OMC\omc-ui\pnms_op_web_view" packageName="npage/trace"-->
-<!--                  suffix="/index" fileType="html" isGenerate="true" override="true"/>-->
-<!--        <template name="js" template="template/User/page/JS.vm"-->
-<!--                  directory="F:\super-op\5G\onap\OMC\omc-ui\pnms_op_web_view" packageName="apps/trace"-->
-<!--                  suffix="/js/index" fileType="js" isGenerate="true" override="true"/>-->
+        <template name="html" template="template/User/page/Html.vm"
+                  directory="./src/main/resources/static" packageName="page/trace"
+                  suffix="/index" fileType="html" isGenerate="true" override="true"/>
+        <template name="js" template="template/User/page/JS.vm"
+                  directory="./src/main/resources/static" packageName="apps/trace"
+                  suffix="/js/index" fileType="js" isGenerate="true" override="true"/>
+        <template name="tpl" template="template/User/page/TplEdit.vm"
+                  directory="./src/main/resources/static" packageName="apps/trace"
+                  suffix="/tpl/edit" fileType="tpl" isGenerate="true" override="true"/>
+        <template name="tpl" template="template/User/page/TplList.vm"
+                  directory="./src/main/resources/static" packageName="apps/trace"
+                  suffix="/tpl/list" fileType="tpl" isGenerate="true" override="true"/>
+        <template name="api" template="template/User/vue/Api.vm"
+                  directory="./src/main/resources/static/vue/src" packageName="api"
+                  suffix="/index" fileType="js" isGenerate="true" override="true"/>
+        <template name="view" template="template/User/vue/View.vm"
+                  directory="./src/main/resources/static/vue/src" packageName="view"
+                  suffix="/index" fileType="vue" isGenerate="true" override="true"/>
     </templates>
 
     <!-- 数据库对应数据表-->
@@ -141,7 +153,7 @@ mvn clean install
     <!-- code-generator插件的搭建 -->
 </generatorConfiguration>
 ```
-2. 生成代码在项目中执行命令或者使用IDE
+2. 在目标项目中执行命令或者使用IDE
 ```$xslt
 mvn code-generator:generate
 ```
@@ -163,9 +175,9 @@ mvn code-generator:generate
 <property name="commonMapper" value="false"/>
 ```
  5. 模板配置
-> name为模板名称, 不能和6中的字段重复, template模板相对resources的路径
+> name为模板名称, 不能和6中的字段重复, template模板相对generator的resources的路径
 >
-> directory以 ./ 开头是以pom文件为相对路径, packageName为代码生成的包路径
+> directory以 ./ 开头是以pom文件为相对路径, packageName为目标项目的代码生成的包路径
 >
 > suffix是生成代码文件的后缀名
 >   1. common=true生成的代码文件名: suffix.fileType

@@ -10,7 +10,7 @@ import java.util.Date;
  * @Description: PrizeDTO对象
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2020/04/13 16:00:44
+ * @CreateTime: 2020/04/24 22:31:44
  */
 @Getter
 @Setter

@@ -1,5 +1,6 @@
 <template>
   <div class="page-container">
+    <!-- 搜索表单 -->
     <el-form :model="listQuery" :inline="true" label-width="120px" label-suffix=":">
       <el-row>
         <el-form-item label="关键字">
@@ -16,7 +17,7 @@
         </el-col>
       </el-row>
     </el-form>
-
+    <!-- 列表 -->
     <el-table
       :key="tableKey"
       v-loading="listLoading"
@@ -76,22 +77,26 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="160">
         <template slot-scope="scope">
-          <i title="编辑" class="el-icon-edit-outline action_icon" @click="handleEdit(scope.$index, scope.row)"/>
-          <template>
-            <el-popover :ref="scope.$index" placement="top" width="160" trigger="click">
-              <i slot="reference" title="删除" class="el-icon-delete action_icon" />
-              <p>确定删除吗？</p>
-              <div style="text-align: right; margin: 0">
-                <el-button size="mini" type="text" @click="cancelDelete(scope.$index)">取消</el-button>
-                <el-button type="primary" size="mini" @click="handleDelete(scope.$index, scope.row)">确定</el-button>
-              </div>
-            </el-popover>
-          </template>
+          <el-button size="mini" cricle title="编辑" icon="el-icon-edit-outline" @click="handleEdit(scope.$index, scope.row)"/>
+          <el-popover :ref="scope.$index" placement="top" width="160" trigger="click">
+            <p>确定删除吗？</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="cancelDelete(scope.$index)">取消</el-button>
+              <el-button type="primary" size="mini" @click="handleDelete(scope.$index, scope.row)">确定</el-button>
+            </div>
+            <el-button size="mini" cricle title="删除" icon="el-icon-delete action_icon" slot="reference" />
+          </el-popover>
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageLimit" @pagination="getList" />
-
+    <!-- 分页 -->
+    <pagination
+       v-show="total>0"
+       :total="total"
+       :page.sync="listQuery.currentPage"
+       :limit.sync="listQuery.pageLimit"
+       @pagination="getList" />
+    <!-- dialog表单 -->
     <el-dialog
       :title="prize.id ? '修改Prize' : '新增Prize'"
       :visible.sync="dialogFormVisible"
@@ -223,9 +228,11 @@ export default {
         this.prize = res;
       });
     },
+    cancelDelete: function(id) {
+      this.$refs[id].doClose();
+    },
     handleDelete: function(index, row) {
       deletePrize(row.id).then(() => {
-        this.getList();
         this.$refs[index].doClose();
         this.$message({
           type: 'success',
@@ -233,10 +240,8 @@ export default {
           duration: 1500,
           forbidClick: true
         });
+        this.getList();
       });
-    },
-    cancelDelete: function(id) {
-      this.$refs[id].doClose();
     },
     handleFormClose: function(formName) {
       this.$refs[formName].resetFields();
@@ -250,15 +255,15 @@ export default {
             createPrize(this.prize).then(res => {
               this.dialogFormVisible = false;
               this.getList();
-            })
+            });
           } else {
             updatePrize(this.prize).then(res => {
               this.dialogFormVisible = false;
               this.getList();
-            })
+            });
           }
         }
-      })
+      });
     }
   }
 }

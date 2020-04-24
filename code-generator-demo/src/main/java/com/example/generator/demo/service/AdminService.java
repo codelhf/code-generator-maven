@@ -11,7 +11,7 @@ import java.util.Map;
  * @Description: Admin接口层
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2020/04/13 16:00:43
+ * @CreateTime: 2020/04/24 22:31:44
  */
 public interface AdminService {
 
@@ -20,7 +20,7 @@ public interface AdminService {
 	 * @Description: 查询Admin列表
 	 * @Company: example
 	 * @Author: liuhf
-	 * @CreateTime: 2020/04/13 16:00:43
+	 * @CreateTime: 2020/04/24 22:31:44
 	 *
 	 * @param pageNum
 	 * @param pageSize
@@ -34,7 +34,7 @@ public interface AdminService {
      * @Description: 查询Admin对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/13 16:00:43
+     * @CreateTime: 2020/04/24 22:31:44
      *
      * @param id
      * @return ServerResponse<AdminDTO>
@@ -46,7 +46,7 @@ public interface AdminService {
      * @Description: 保存Admin对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/13 16:00:43
+     * @CreateTime: 2020/04/24 22:31:44
      *
      * @param adminDTO
      * @return ServerResponse<String>
@@ -58,7 +58,7 @@ public interface AdminService {
      * @Description: 更新Admin对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/13 16:00:43
+     * @CreateTime: 2020/04/24 22:31:44
      *
      * @param id
      * @param adminDTO
@@ -71,7 +71,7 @@ public interface AdminService {
      * @Description: 批量删除Admin对象
      * @Company: example
      * @Author: liuhf
-     * @CreateTime: 2020/04/13 16:00:43
+     * @CreateTime: 2020/04/24 22:31:44
      *
      * @param ids
      * @return ServerResponse<String>
