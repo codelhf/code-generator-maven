@@ -4,7 +4,7 @@ code-generator基于maven的代码生成器, 支持**自定义代码模板**,
 ### 使用方法
 1. 下载代码 
 ```
-git clone git@github.com:codelhf/generator.git
+git clone https://github.com:codelhf/generator.git
 ```
 2. 打包安装到本地仓库
 ```$xslt
