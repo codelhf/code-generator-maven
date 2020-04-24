@@ -35,15 +35,13 @@ mvn clean install
 <?xml version="1.0" encoding="UTF-8"?>
 <!--标签为对象, property为对象的属性-->
 <generatorConfiguration>
-    <!--导入配置文件,非必须参数-->
-    <!--<properties resource="datasource.properties"/>-->
+    <!--导入配置文件,非必须参数(待完善)-->
+    <properties resource="datasource.properties"/>
 
     <!--jdbc的数据库连接 -->
     <jdbcConnection>
-        <!--driverLocation非必须参数-->
-        <!--<property name="driverLocation" value="src/main/resources/mysql-connector-java-5.1.6-bin.jar"/>-->
-        <!--driverClass非必须参数-->
-        <!--<property name="driverClass" value="com.mysql.jdbc.Driver"/>-->
+        <!--driverClass非必须参数(支持MySQL、Oracle、SQLServer)-->
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/lottery?characterEncoding=utf-8"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
