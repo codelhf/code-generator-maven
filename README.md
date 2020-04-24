@@ -38,7 +38,7 @@ mvn clean install
     <!--导入配置文件,非必须参数(待完善)-->
     <properties resource="datasource.properties"/>
 
-    <!--jdbc的数据库连接 -->
+    <!--jdbc的数据库连接-->
     <jdbcConnection>
         <!--driverClass非必须参数(支持MySQL、Oracle、SQLServer)-->
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
@@ -47,7 +47,7 @@ mvn clean install
         <property name="password" value="root"/>
     </jdbcConnection>
 
-    <!--java类型适配-->
+    <!--java类型适配(待完善)-->
     <javaTypeResolver>
         <!-- 当表名或者字段名为SQL关键字的时候，可以设置该属性为true，MBG会自动给表名或字段名添加分隔符  -->
         <property name="autoDelimitKeywords" value="true"/>
