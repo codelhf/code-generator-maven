@@ -23,8 +23,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2 //启用Swagger2
-//@EnableWebMvc //springMVC环境使用
-public class Swagger2 extends WebMvcConfigurationSupport {
+@EnableWebMvc //springMVC环境使用
+public class Swagger2 extends WebMvcConfigurerAdapter {
 
     @Value(#set ($a = '${swagger.ui.title:swagger.ui.title}')"$a")
     private String title = "Swagger Apis";
@@ -87,7 +87,7 @@ public class Swagger2 extends WebMvcConfigurationSupport {
      * @param registry
      */
     @Override
-    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
 
