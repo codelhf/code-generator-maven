@@ -27,7 +27,7 @@
       border="border"
     >
 #foreach($column in ${fullColumn})
-      <el-table-column label="${column.comment}" align="center" width="100">
+      <el-table-column label="${column.comment}" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.${column.propertyName} }}</span>
         </template>
@@ -35,25 +35,26 @@
 #end
       <el-table-column label="操作" align="center" width="160">
         <template slot-scope="scope">
-          <el-button size="mini" cricle title="编辑" icon="el-icon-edit-outline" @click="handleEdit(#set($a = 'scope.$index')$a, scope.row)"/>
+          <el-button size="mini" circle title="编辑" icon="el-icon-edit-outline" @click="handleEdit(#set($a = 'scope.$index')$a, scope.row)"/>
           <el-popover :ref="#set($a = 'scope.$index')$a" placement="top" width="160" trigger="click">
             <p>确定删除吗？</p>
             <div style="text-align: right; margin: 0">
               <el-button size="mini" type="text" @click="cancelDelete(#set($a = 'scope.$index')$a)">取消</el-button>
               <el-button type="primary" size="mini" @click="handleDelete(#set($a = 'scope.$index')$a, scope.row)">确定</el-button>
             </div>
-            <el-button size="mini" cricle title="删除" icon="el-icon-delete action_icon" slot="reference" />
+            <el-button size="mini" circle title="删除" icon="el-icon-delete action_icon" slot="reference" />
           </el-popover>
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页 -->
     <pagination
-       v-show="total>0"
-       :total="total"
-       :page.sync="listQuery.currentPage"
-       :limit.sync="listQuery.pageLimit"
-       @pagination="getList" />
+      v-show="total>0"
+      :total="total"
+      :page.sync="listQuery.currentPage"
+      :limit.sync="listQuery.pageLimit"
+      @pagination="getList"
+    />
     <!-- dialog表单 -->
     <el-dialog
       :title="${className}.id ? '修改${ClassName}' : '新增${ClassName}'"
@@ -62,9 +63,9 @@
     >
       <el-form ref="${className}Form" :model="${className}" :rules="${className}Rules" label-width="130px" label-suffix=":">
 #foreach($column in ${fullColumn})
-      <el-form-item label="${column.comment}" prop="${column.propertyName}">
-        <el-input v-model="${className}.${column.propertyName}" placeholder="请输入${column.comment}" />
-      </el-form-item>
+        <el-form-item label="${column.comment}" prop="${column.propertyName}">
+          <el-input v-model="${className}.${column.propertyName}" placeholder="请输入${column.comment}" />
+        </el-form-item>
 #end
       </el-form>
       <span slot="footer" class="dialog-footer">
