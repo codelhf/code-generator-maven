@@ -137,8 +137,8 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
                 }
                 $("#tbody_${tableName}").html(listTpl(result));
                 var paging = {
-                    "everyPage": result.data.pageNum,
-                    "totalPage": result.data.total
+                    "everyPage": result.everyPage,
+                    "totalPage": result.totalCount
                 };
                 if (first) {
                     page.init('page_${tableName}', paging, init${ClassName}List);

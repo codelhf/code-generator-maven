@@ -54,7 +54,7 @@
                         </label>
                     </th>
 #foreach($column in ${fullColumn})
-                    <th>${column.getPropertyName()}</th>
+                    <th>${column.getColumnName()}</th>
 #end
                 </tr>
                 </thead>

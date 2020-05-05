@@ -12,7 +12,7 @@
             <div class="clear mgb-20">
 #end
                 <div class="col-6 select-ty">
-                    <span>${propertyName}：</span>
+                    <span>${column.getColumnName()}：</span>
                     <input type="text" id="${propertyName}" name="${propertyName}" value="{{${propertyName}}}" required="true"/>
                 </div>
 #end
