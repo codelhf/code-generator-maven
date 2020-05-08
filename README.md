@@ -194,7 +194,7 @@ mvn code-generator:generate
           directory="./src/main/java" packageName="com.example.generator.demo.common"
           suffix="ServerResponse" fileType="java" common="true" isGenerate="true" override="true"/>
 ```
-6. 代码生成器中的通用字段
+6. 代码生成器模板中的通用字段
 ```
 属性
 ${company}         设置中的公司 java.lang.String

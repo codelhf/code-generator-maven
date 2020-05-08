@@ -5,14 +5,17 @@
 #else
     #set($RequestMapping = "${className}")
 #end
-require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
+define(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
     var edit_${tableName}_dialog;
+    // 全局变量
+    var globalData = {};
     // 默认加载
-    $(function() {
+    var init = function() {
         bindEvent(); //绑定点击事件
         resetForm(); //清空表单
         init${ClassName}List(1, true);//初始化
-    });
+    };
+
     //页面的所有点击事件, 由于先于页面加载,使用$(document)才能生效
     function bindEvent() {
         //[查询]按钮的onclick事件
@@ -41,13 +44,13 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
         // ----------------------------- 新增 & 修改 & 删除按钮----------------------------------------
         //新增
         $(document).on('click', '#add_${tableName}', function() {
-            edit_${tableName}_dialog = $('#edit_${tableName}_div').ui_dialog({
-                title: '新增',
-                width: 800,
-                height: 500
-            }).showModal();
             require(['../tpl/edit.tpl'], function(editTpl) {
                 $('#edit_${tableName}_div').html(editTpl({}));
+                edit_${tableName}_dialog = $('#edit_${tableName}_div').ui_dialog({
+                    title: '新增',
+                    width: 800,
+                    height: 500
+                }).showModal();
             });
         });
         //修改
@@ -62,19 +65,19 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
                 pop.warn(pop.msg.please_choose_one, function(){});
                 return;
             }
-            edit_${tableName}_dialog = $('#edit_${tableName}_div').ui_dialog({
-                title: '修改',
-                width: 800,
-                height: 500
-            }).showModal();
 
             require(['../tpl/edit.tpl'], function(editTpl) {
                 ajaxUtil.callrest("/${RequestMapping}/" + entity_id, function(result) {
                     if(result && result.code !== 'SUCCESS') {
-                        pop.warn("加载数据失败：" + result.msg, function(){});
-                    } else {
-                        $('#edit_${tableName}_div').html(editTpl(result.data));
+                        pop.warn(pop.msg.failure + result.msg, function(){});
+                        return;
                     }
+                    $('#edit_${tableName}_div').html(editTpl(result.data));
+                    edit_${tableName}_dialog = $('#edit_${tableName}_div').ui_dialog({
+                        title: '修改',
+                        width: 800,
+                        height: 500
+                    }).showModal();
                 });
             });
         });
@@ -92,9 +95,9 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
             ids = ids.join(',');
             ajaxUtil.delrest("/${RequestMapping}/" + ids, function(result) {
                 if (result && result.code !== 'SUCCESS') {
-                    pop.warn(pop.msg.delete_failure + "失败原因：" + result.msg, function(){});
+                    pop.warn(pop.msg.delete_failure + result.msg, function(){});
                 } else {
-                    init${ClassName}List(1, true);
+                    init${ClassName}List(1, false);
                 }
             })
         });
@@ -102,6 +105,7 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
         $(document).on("click", "#save_edit_${tableName}", function() {
             var edit_${tableName}_form = $('#edit_${tableName}_form');
             if (!edit_${tableName}_form.valid()) {
+                pop.warn(pop.msg.failure, function(){});
                 return;
             }
             // 防止重复提交
@@ -169,14 +173,14 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
     //新增
     function add${ClassName}(edit_${tableName}_form_data) {
         ajaxUtil.postrest("/${RequestMapping}", function(result) {
-            if(result && result.code === 'SUCCESS') {
-                pop.warn("保存数据成功!", function(){
-                    edit_${tableName}_dialog.close();
-                    init${ClassName}List(1, true);
+            if(result && result.code !== 'SUCCESS') {
+                pop.warn(pop.msg.add_failure + result.msg, function(){
                     $("#save_edit_${tableName}").removeAttr("disabled");
                 });
             } else {
-                pop.warn(pop.msg.update_failure + "失败原因：" + result.msg, function(){
+                pop.warn("保存数据成功!", function(){
+                    edit_${tableName}_dialog.close();
+                    init${ClassName}List(1, false);
                     $("#save_edit_${tableName}").removeAttr("disabled");
                 });
             }
@@ -185,17 +189,20 @@ require(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
     //修改
     function update${ClassName}(edit_${tableName}_form_data) {
         ajaxUtil.putrest("/${RequestMapping}/" + edit_${tableName}_form_data.${pkColumn.propertyName}, function(result) {
-            if(result.code == 'SUCCESS') {
-                pop.warn("更新数据成功！", function(){
-                    edit_${tableName}_dialog.close();
-                    init${ClassName}List(1, true);
+            if(result && result.code !== 'SUCCESS') {
+                pop.warn(pop.msg.update_failure + result.msg, function(){
                     $("#save_edit_${tableName}").removeAttr("disabled");
                 });
             } else {
-                pop.warn(pop.msg.update_failure + "失败原因：" + result.msg, function(){
+                pop.warn("更新数据成功！", function(){
+                    edit_${tableName}_dialog.close();
+                    init${ClassName}List(1, false);
                     $("#save_edit_${tableName}").removeAttr("disabled");
                 });
             }
         }, edit_${tableName}_form_data);
     }
+
+    // 初始化(放在最下面return时使用)
+    init();
 });
