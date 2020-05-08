@@ -151,13 +151,11 @@ define(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
         });
     }
 
-    //获取模糊查询数据
+    //获取模糊查询参数
     function getQueryParam() {
-        var queryParam = {
-            condition: $.trim($("#fuzzy_search_input").val()),
-            sort: 'updateTime-'
-        };
-        return queryParam;
+        globalData.condition = $.trim($("#fuzzy_search_input").val());
+        globalData.sort = 'updateTime-';
+        return globalData;
     }
 
     //获取选择的对象id
