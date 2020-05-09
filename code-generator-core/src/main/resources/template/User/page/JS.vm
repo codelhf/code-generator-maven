@@ -37,7 +37,7 @@ define(['commonutil', 'ompage', 'pluspop'], function(ajaxUtil, page, pop) {
             } else {
                 $("input[name='checkboxs']").each(function () {
                     _this.checked = false;
-                    $(this).parent('.js-checkbox').addClass('checked');
+                    $(this).parent('.js-checkbox').removeClass('checked');
                 });
             }
         });
