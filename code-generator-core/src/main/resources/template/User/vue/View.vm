@@ -5,14 +5,14 @@
     <el-form :model="listQuery" :inline="true" label-width="120px" label-suffix=":">
       <el-row>
         <el-form-item label="关键字">
-          <el-input v-model="listQuery.keyword" placeholder="请输入关键字" />
+          <el-input v-model="listQuery.condition" placeholder="请输入关键字" />
         </el-form-item>
       </el-row>
       <el-row>
         <el-col :span="24" style="text-align: center">
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
-            <el-button type="primary" icon="el-icon-refresh" @click="handleReset">重置</el-button>
+            <el-button type="primary" icon="el-icon-refresh-left" @click="handleReset">重置</el-button>
             <el-button type="primary" icon="el-icon-plus" @click="handleCreate">新增${ClassName}</el-button>
           </el-form-item>
         </el-col>
@@ -70,7 +70,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleFormClose('${className}Form')">返回</el-button>
-        <el-button type="primary" @click="handleSubmit('${className}Form')">确定</el-button>
+        <el-button type="primary" @click="handleFormSubmit('${className}Form')">确定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -94,8 +94,10 @@ export default {
       listQuery: {
         currentPage: 1,
         pageLimit: 10,
-        sort: '+update_time',
-        keyword: ''
+        sort: '-update_time',
+        condition: '',
+        opType: '${className}',
+        opTime: new Date().getTime()
       },
       dialogFormVisible: false,
       ${className}: {
@@ -148,8 +150,10 @@ export default {
       this.listQuery = {
         currentPage: 1,
         pageLimit: 10,
-        sort: '+update_time',
-        keyword: ''
+        sort: '-update_time',
+        condition: '',
+        opType: '${className}',
+        opTime: new Date().getTime()
       }
     },
     handleCreate() {
@@ -182,7 +186,7 @@ export default {
       this.${className} = {};
       this.dialogFormVisible = false;
     },
-    handleSubmit(formName) {
+    handleFormSubmit(formName) {
       #set($a = 'this.$refs[formName].validate')$a(valid => {
         if (valid) {
           if (!this.${className}.id) {
