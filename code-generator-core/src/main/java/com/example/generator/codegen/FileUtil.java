@@ -84,7 +84,7 @@ public class FileUtil {
     public static String getProjectPath(String configFilePath) {
 //        String path = new File(FileUtil.class.getClassLoader().getResource("").getFile()).getPath() + File.separator;
         StringBuilder sb = new StringBuilder();
-        sb.append(configFilePath, 0, configFilePath.indexOf("src"));
+        sb.append(configFilePath, 0, configFilePath.indexOf("generatorConfig"));
         return sb.toString();
     }
 

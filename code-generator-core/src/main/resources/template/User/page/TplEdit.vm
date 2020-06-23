@@ -12,7 +12,7 @@
             <div class="clear mgb-20">
 #end
                 <div class="col-6 select-ty">
-                    <span><span style="color: red">*</span> ${column.getColumnName()}：</span>
+                    <span><span style="color: red;width: 10px">*</span> ${column.getColumnName()}：</span>
                     <input type="text" id="${propertyName}" name="${propertyName}" value="{{${propertyName}}}" required="true"/>
                 </div>
 #if($step % 2 == 0 || $step == (${fullColumn.size()} - 1))
