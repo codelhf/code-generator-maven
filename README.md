@@ -42,7 +42,7 @@ mvn clean install
     <jdbcConnection>
         <!--driverClass非必须参数(支持MySQL、Oracle、SQLServer)-->
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/lottery?characterEncoding=utf-8"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/cloud_user?characterEncoding=utf-8"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
     </jdbcConnection>
@@ -135,16 +135,14 @@ mvn clean install
 
     <!-- 数据库对应数据表-->
     <tables>
-        <table tableName="lottery_people" domainName="People">
-        </table>
-        <table tableName="lottery_prize" domainName="Prize">
-            <columnOverride columnName="image" jdbcType="VARCHAR"/>
+        <table tableName="sys_log" domainName="SysLog">
+            <columnOverride columnName="head_img" jdbcType="VARCHAR"/>
         </table>
     </tables>
 
     <!-- 数据库对应数据视图-->
     <views>
-        <view viewName="lottery_result" domainName="Result">
+        <view viewName="v_sys_log" domainName="ViewSysLog">
         </view>
     </views>
 
