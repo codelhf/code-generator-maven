@@ -63,7 +63,7 @@ public class FileUtil {
     /**
      * 获取生成文件路径
      */
-    public static String getGeneratePath(String configFilePath, String directory, String packageName) {
+    public static String getGeneratePath(String directory, String packageName, String projectDir) {
         StringBuilder sb = new StringBuilder();
         if (!directory.endsWith("/")) {
             directory = directory + "/";
@@ -72,37 +72,9 @@ public class FileUtil {
         if (directory.startsWith("./")){
             //截取"."
             directory = directory.substring(1);
-            sb.append(getProjectPath(configFilePath));
+            sb.append(projectDir);
         }
         sb.append(directory).append(package2Path(packageName));
-        return sb.toString();
-    }
-
-    /**
-     * 获取项目路径,最后带"/"或"\\"
-     */
-    public static String getProjectPath(String configFilePath) {
-//        String path = new File(FileUtil.class.getClassLoader().getResource("").getFile()).getPath() + File.separator;
-        StringBuilder sb = new StringBuilder();
-        sb.append(configFilePath, 0, configFilePath.indexOf("generatorConfig"));
-        return sb.toString();
-    }
-
-    /**
-     * 获取源码路径
-     */
-    public static String getSourcePath(String configFilePath) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getProjectPath(configFilePath)).append("src").append(File.separator).append("main").append(File.separator).append("java").append(File.separator);
-        return sb.toString();
-    }
-
-    /**
-     * 获取资源文件路径
-     */
-    public static String getResourcePath(String configFilePath) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getProjectPath(configFilePath)).append("src").append(File.separator).append("main").append(File.separator).append("resources").append(File.separator);
         return sb.toString();
     }
 

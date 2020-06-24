@@ -41,15 +41,13 @@ public class CodeGeneratorMojo extends AbstractMojo {
     /**
      * Location of the configuration file.
      */
-    @Parameter(property = "code.generator.configurationFile",
-            defaultValue = "${project.basedir}/src/main/resources/generatorConfig.xml", required = true)
+    @Parameter(property = "code.generator.configurationFile", defaultValue = "${project.basedir}/src/main/resources/generatorConfig.xml")
     private File configurationFile;
 
     /**
      * Output Directory.
      */
-    @Parameter(property = "code.generator.outputDirectory",
-            defaultValue = "${project.build.directory}/generated-sources/code-generator", required = true)
+    @Parameter(property = "code.generator.outputDirectory", defaultValue = "${project.build.directory}/generated-sources/code-generator")
     private File outputDirectory;
 
     /**
@@ -86,7 +84,7 @@ public class CodeGeneratorMojo extends AbstractMojo {
             throw new MojoExecutionException(Messages.getString("RuntimeError.1", configurationFile.toString()));
         }
 
-        Configuration config = ConfigUtil.getConfiguration(configurationFile);
+        Configuration config = ConfigUtil.getConfiguration(configurationFile, project.getBasedir().getAbsolutePath());
         CodeGenerator codeGenerator = new CodeGenerator(config);
         codeGenerator.generate();
 

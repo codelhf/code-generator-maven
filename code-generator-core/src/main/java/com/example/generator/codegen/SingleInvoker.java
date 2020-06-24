@@ -81,14 +81,14 @@ public class SingleInvoker {
         //模板工具
         data.put("StringUtil", StringUtil.class);
 
-        String configFilePath = configuration.getConfigFilePath();
+        String projectDir = configuration.getProjectDir();
         VelocityEngine velocityEngine = VelocityUtil.getInstance();
         for (TemplateConfig template: templateList) {
             Template tpl = velocityEngine.getTemplate(template.getTemplate());
             //设置包名,设置Template获取当前模板配置
             data.put("Template", template);
             //文件生成路径支持相对路径和绝对路径
-            String filePath = FileUtil.getGeneratePath(configFilePath, template.getDirectory(), template.getPackageName());
+            String filePath = FileUtil.getGeneratePath(template.getDirectory(), template.getPackageName(), projectDir);
             String fileName = null;
             if (template.isCommon()) {
                 //后缀加文件格式

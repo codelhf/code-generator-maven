@@ -16,7 +16,7 @@ mvn clean install
 <plugin>
     <groupId>com.example.generator</groupId>
     <artifactId>code-generator-maven-plugin</artifactId>
-    <version>2.2.0-SNAPSHOT</version>
+    <version>2.2.1-SNAPSHOT</version>
     <!--<configuration>-->
         <!--<configurationFile>src/test/resources/generatorConfig-test.xml</configurationFile>-->
     <!--</configuration>-->

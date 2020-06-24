@@ -15,9 +15,9 @@ public class Configuration implements Serializable {
      */
     private String resource;
     /**
-     * generatorConfig配置文件路径
+     * 项目路径
      */
-    private String configFilePath;
+    private String projectDir;
     /**
      * 数据源
      */
@@ -49,8 +49,8 @@ public class Configuration implements Serializable {
 
     public void validate() throws InvalidConfigurationException {
         List<String> errors = new ArrayList<>();
-        if (configFilePath == null || "".equals(configFilePath.trim())) {
-            errors.add("configFilePath can not be empty");
+        if (projectDir == null || "".equals(projectDir.trim())) {
+            errors.add("projectDir can not be empty");
         }
         if (jdbcConnection == null) {
             errors.add("jdbcConnection can not be empty");
@@ -103,12 +103,12 @@ public class Configuration implements Serializable {
         this.resource = resource;
     }
 
-    public String getConfigFilePath() {
-        return configFilePath;
+    public String getProjectDir() {
+        return projectDir;
     }
 
-    public void setConfigFilePath(String configFilePath) {
-        this.configFilePath = configFilePath;
+    public void setProjectDir(String projectDir) {
+        this.projectDir = projectDir;
     }
 
     public JdbcConnection getJdbcConnection() {

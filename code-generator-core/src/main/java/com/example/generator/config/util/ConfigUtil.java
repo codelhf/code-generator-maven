@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ConfigUtil {
 
-    public static Configuration getConfiguration(File configurationFile) {
+    public static Configuration getConfiguration(File configurationFile, String projectDir) {
         Configuration configuration = null;
         try {
             if (!configurationFile.exists()) {
@@ -24,7 +24,7 @@ public class ConfigUtil {
             List<String> errors = new ArrayList<>();
             ConfigurationXmlParser parser = new ConfigurationXmlParser(errors);
             configuration = parser.parseConfiguration(configurationFile);
-            configuration.setConfigFilePath(configurationFile.getAbsolutePath());
+            configuration.setProjectDir(projectDir);
             configuration.validate();
         } catch (Exception e) {
             e.printStackTrace();

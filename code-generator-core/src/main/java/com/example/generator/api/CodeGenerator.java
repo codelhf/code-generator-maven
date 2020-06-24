@@ -55,7 +55,7 @@ public class CodeGenerator {
         connectionUtil.close();
     }
 
-    private static void single(String tableName, String className, List<ColumnOverride> columnOverrideList,
+    private void single(String tableName, String className, List<ColumnOverride> columnOverrideList,
                                GeneratedKey generatedKey, boolean isView, Configuration configuration, ConnectionUtil connectionUtil) {
         SingleInvoker invoker = new SingleInvoker();
         invoker.setTableName(tableName);

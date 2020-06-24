@@ -5,7 +5,7 @@ package com.example.generator.demo.common;
  * @Description: 服务端响应状态码
  * @Company: example
  * @Author: liuhf
- * @CreateTime: 2020/04/24 22:31:44
+ * @CreateTime: 2020/06/24 18:29:01
  */
 public enum ResponseCode {
 
